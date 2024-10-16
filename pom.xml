@@ -12,7 +12,16 @@
     <artifactId>javacv</artifactId>
     <version>1.5.6</version>
 </dependency>
-
+<dependency>
+    <groupId>org.openjfx</groupId>
+    <artifactId>javafx-web</artifactId>
+    <version>23</version>
+</dependency>
+<dependency>
+        <groupId>com.google.apis</groupId>
+        <artifactId>google-api-services-youtube</artifactId>
+        <version>v3-rev222-1.25.0</version>
+    </dependency>
 <dependency>
     <groupId>org.bytedeco</groupId>
     <artifactId>javacv-platform</artifactId>
