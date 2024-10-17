@@ -4,4 +4,4 @@ target/
 .classpath
 .project
 README.md
-/src/resources/JEM_private_key.txt
+/src/resources/JEM_private_key.json
