@@ -1,8 +1,7 @@
 package view;
 
-import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
+import model.dao.*;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -11,7 +10,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
 
 import resources.GlobalVariables;
 import javax.swing.JPasswordField;
@@ -24,31 +22,8 @@ public class LoginView extends JFrame {
 	private JPanel contentPane;
 	private JTextField textFieldErabiltzailea;
 	private JPasswordField passwordField;
+	UserDAO userDAO = new UserDAO();
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		// Set the look and feel to the system's look and feel
-		try {
-			javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		// Run the application
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					LoginView frame = new LoginView();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-	
 	/**
 	 * Create the frame.
 	 */
@@ -101,7 +76,26 @@ public class LoginView extends JFrame {
 		// Login button listener
 		btnLoginEgin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
+					boolean isUser;
+					try {
+						// Check the login
+						isUser = userDAO.checkLogin(textFieldErabiltzailea.getText(), passwordField.getText());
+						if (isUser) {
+							// If the login is correct
+							System.out.println("Login ondo egin da.");
+							System.out.println(GlobalVariables.loggedUser.toString());
+							
+						} else {
+							// If the login is incorrect
+							System.out.println("Capau");
+						}
+			
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+
 			}
 		});
 		

@@ -18,15 +18,20 @@
     <version>23</version>
 </dependency>
 <dependency>
-        <groupId>com.google.apis</groupId>
-        <artifactId>google-api-services-youtube</artifactId>
-        <version>v3-rev222-1.25.0</version>
-    </dependency>
+    <groupId>com.google.apis</groupId>
+    <artifactId>google-api-services-youtube</artifactId>
+    <version>v3-rev222-1.25.0</version>
+</dependency>
 <dependency>
     <groupId>org.bytedeco</groupId>
     <artifactId>javacv-platform</artifactId>
     <version>1.5.6</version>
 </dependency>
+	<dependency>
+	    <groupId>com.google.firebase</groupId>
+	    <artifactId>firebase-admin</artifactId>
+	    <version>9.3.0</version>
+	</dependency>
   </dependencies>
   <build>
     <sourceDirectory>src</sourceDirectory>
