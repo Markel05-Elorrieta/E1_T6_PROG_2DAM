@@ -1,25 +1,29 @@
 package view;
 
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 
 import resources.GlobalVariables;
-import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.SwingConstants;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import javax.swing.JSpinner;
+import javax.swing.JPasswordField;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class LoginView extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textFieldErabiltzailea;
-	private JTextField textField;
+	private JPasswordField passwordField;
 
 	/**
 	 * Launch the application.
@@ -78,19 +82,34 @@ public class LoginView extends JFrame {
 		lblPasahitza.setBounds(341, 229, 132, 22);
 		contentPane.add(lblPasahitza);
 		
-		textField = new JTextField();
-		textField.setColumns(10);
-		textField.setBounds(341, 262, 299, 29);
-		contentPane.add(textField);
-		
-		JButton btnNewButton = new JButton("Erregistratu");
-		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btnNewButton.setBounds(125, 463, 157, 35);
-		contentPane.add(btnNewButton);
+		JButton btnErregistroa = new JButton("Erregistratu");
+		btnErregistroa.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btnErregistroa.setBounds(125, 463, 157, 35);
+		contentPane.add(btnErregistroa);
 		
 		JButton btnLoginEgin = new JButton("Login egin");
 		btnLoginEgin.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btnLoginEgin.setBounds(716, 463, 157, 35);
 		contentPane.add(btnLoginEgin);
+		
+		passwordField = new JPasswordField();
+		passwordField.setBounds(341, 262, 299, 29);
+		contentPane.add(passwordField);
+		
+		// LISTENERS
+		
+		// Login button listener
+		btnLoginEgin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		
+		// Register button listener
+		btnErregistroa.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	
+            }
+		});
 	}
 }
