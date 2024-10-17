@@ -7,12 +7,15 @@ import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
 
+import model.BcryptMethods;
 import model.User;
 import resources.GlobalVariables;
+
 
 public class UserDAO {
 	
 	private DbConexion dbConexion = new DbConexion();
+	private BcryptMethods bCrypt = new BcryptMethods();
 	
 	public boolean checkLogin(String username, String password) throws Exception {
 		// Get the Firestore instance
@@ -27,7 +30,8 @@ public class UserDAO {
 			// If there is no user with that username
 			return false;
 		}
-		if (!userDoc.get(0).getString("pasahitza").equals(password)) {
+		String hashedPwd = userDoc.get(0).getString("pasahitza");
+		if (!bCrypt.checkPassword(password, hashedPwd)) {
 			// If the password is incorrect
 			return false;
 		}

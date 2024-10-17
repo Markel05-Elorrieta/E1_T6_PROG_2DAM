@@ -6,6 +6,7 @@ import model.dao.*;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -83,16 +84,14 @@ public class LoginView extends JFrame {
 						isUser = userDAO.checkLogin(textFieldErabiltzailea.getText(), passwordField.getText());
 						if (isUser) {
 							// If the login is correct
-							System.out.println("Login ondo egin da.");
-							System.out.println(GlobalVariables.loggedUser.toString());
+							JOptionPane.showMessageDialog(null, "Loged", "Login", JOptionPane.INFORMATION_MESSAGE);
 							
 						} else {
 							// If the login is incorrect
-							System.out.println("Capau");
+							JOptionPane.showMessageDialog(null, "Log false", "Login", JOptionPane.ERROR_MESSAGE);
 						}
 			
 					} catch (Exception e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 
