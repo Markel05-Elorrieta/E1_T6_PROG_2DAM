@@ -13,4 +13,8 @@ public class DbConexion {
 		Firestore db = firestoreOptions.getService();
 		return db;
     }
+    
+	public void closeConnection(Firestore db) throws Exception {
+		db.close();
+	}
 }
