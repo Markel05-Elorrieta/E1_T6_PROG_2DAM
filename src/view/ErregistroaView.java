@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,21 +8,28 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import com.toedter.calendar.JDateChooser;
-
-import model.BcryptMethods;
-import model.User;
-import model.dao.UserDAO;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 
+import com.toedter.calendar.JDateChooser;
+
+import model.BcryptMethods;
+import model.User;
+import model.dao.UserDAO;
+import model.exceptions.DateException;
+import model.exceptions.EmailException;
+import model.exceptions.EmptyFieldException;
+import model.exceptions.PasswordsNotMatchException;
+import model.exceptions.PhoneNumException;
+import model.metodoak.ValidateData;
 import resources.GlobalVariables;
 
 public class ErregistroaView extends JFrame {
@@ -38,6 +46,7 @@ public class ErregistroaView extends JFrame {
 	
 	private UserDAO userDAO = new UserDAO();
 	private BcryptMethods bCrypt = new BcryptMethods();
+	private ValidateData methods = new ValidateData();
 
 	/**
 	 * Create the frame.
@@ -65,6 +74,7 @@ public class ErregistroaView extends JFrame {
 		
 		txt_username = new JTextField();
 		txt_username.setColumns(10);
+		txt_username.setBorder(new LineBorder(new Color(0, 0, 0)));
 		txt_username.setBounds(135, 320, 299, 29);
 		contentPane.add(txt_username);
 		
@@ -75,6 +85,7 @@ public class ErregistroaView extends JFrame {
 		
 		txt_password = new JPasswordField();
 		txt_password.setBounds(135, 405, 299, 29);
+		txt_password.setBorder(new LineBorder(new Color(0, 0, 0)));
 		contentPane.add(txt_password);
 		
 		JLabel lblAbizenak = new JLabel("Abizenak");
@@ -84,6 +95,7 @@ public class ErregistroaView extends JFrame {
 		
 		txt_subname = new JTextField();
 		txt_subname.setColumns(10);
+		txt_subname.setBorder(new LineBorder(new Color(0, 0, 0)));
 		txt_subname.setBounds(135, 233, 299, 29);
 		contentPane.add(txt_subname);
 		
@@ -94,6 +106,7 @@ public class ErregistroaView extends JFrame {
 		
 		txt_name = new JTextField();
 		txt_name.setColumns(10);
+		txt_name.setBorder(new LineBorder(new Color(0, 0, 0)));
 		txt_name.setBounds(135, 149, 299, 29);
 		contentPane.add(txt_name);
 		
@@ -104,6 +117,7 @@ public class ErregistroaView extends JFrame {
 		
 		txt_tlf = new JTextField();
 		txt_tlf.setColumns(10);
+		txt_tlf.setBorder(new LineBorder(new Color(0, 0, 0)));
 		txt_tlf.setBounds(509, 149, 299, 29);
 		contentPane.add(txt_tlf);
 		
@@ -118,6 +132,7 @@ public class ErregistroaView extends JFrame {
 		contentPane.add(lblPasahitzaKonfirmatu);
 		
 		txt_repeatPassword = new JPasswordField();
+		txt_repeatPassword.setBorder(new LineBorder(new Color(0, 0, 0)));
 		txt_repeatPassword.setBounds(509, 405, 299, 29);
 		contentPane.add(txt_repeatPassword);
 		
@@ -134,21 +149,21 @@ public class ErregistroaView extends JFrame {
 		
 		txt_mail = new JTextField();
 		txt_mail.setColumns(10);
+		txt_mail.setBorder(new LineBorder(new Color(0, 0, 0)));
 		txt_mail.setBounds(509, 320, 299, 29);
 		contentPane.add(txt_mail);
 		
 		Calendar calendar = Calendar.getInstance();
-		calendar.set(2010, 0, 1);
+		calendar.set(2020, 0, 1);
 		Date maxdata = calendar.getTime();
 		JDateChooser dateChooser = new JDateChooser(maxdata);
 		dateChooser.setBounds(509, 233, 299, 29);
-		dateChooser.setLocale(Locale.forLanguageTag("es"));
+		dateChooser.setLocale(new Locale("es", "ES"));
 		dateChooser.setDateFormatString("yyyy-MM-dd");
 		dateChooser.setMaxSelectableDate(maxdata);
 		calendar.set(1900, 0, 1);
 		Date mindata = calendar.getTime();
 		dateChooser.getJCalendar().setMinSelectableDate(mindata);
-		dateChooser.getDateEditor().getUiComponent().setFocusable(false);
 		contentPane.add(dateChooser);
 		
 		JButton btnErregistratu = new JButton("☑️ Erregistratu");
@@ -175,23 +190,35 @@ public class ErregistroaView extends JFrame {
 				String name = txt_name.getText();
 				String subname = txt_subname.getText();
 				String username = txt_username.getText();
-				String password = String.valueOf(bCrypt.hashPassword(String.valueOf(txt_password.getPassword())));
-				String repeatPassword = String.valueOf(bCrypt.hashPassword(String.valueOf(txt_repeatPassword.getPassword())));
-				Date birthdate = new Date();
+				String password = txt_password.getText();
+				Date birthdate = dateChooser.getDate();
+				String repeatPassword = txt_repeatPassword.getText();
 				String email = txt_mail.getText();
-				int phone = Integer.parseInt(txt_tlf.getText());
-				
-				User newUser = new User(username, name, subname, password, birthdate, email, phone);
-				
+				String phoneStr = txt_tlf.getText();
+			
 				try {
+					methods.checkDate(birthdate);
+					int phoneNum = methods.checkPhoneNumber(phoneStr);
+					methods.checkPasswords(password, repeatPassword);
+					methods.checkEmail(email);
+					String hashedPwd = bCrypt.hashPassword(password);
+					User newUser = new User(username, name, subname, hashedPwd, birthdate, email, phoneNum);
+					methods.checkEmptyFields(newUser);
 					userDAO.registerUser(newUser);
-					System.out.println("resitrau");
+					JOptionPane.showMessageDialog(null, "REGISTRAU!", "Erregistratuta", JOptionPane.INFORMATION_MESSAGE);
+				} catch (PasswordsNotMatchException pnme) {
+					pnme.getMessage();
+				} catch (PhoneNumException pne) {
+					pne.getMessage();
+				} catch (DateException de) {
+					de.getMessage();
+				} catch (EmptyFieldException efe) {
+					efe.getMessage();
+				} catch (EmailException ee) {
+					ee.getMessage();
 				} catch (Exception e1) {
-					System.out.println("errorea");
-					e1.printStackTrace();
-				}
-				
-				
+					JOptionPane.showMessageDialog(null, "Errorea egon da sortzean!", "Errorea", JOptionPane.ERROR_MESSAGE);
+				}	
 			}
 		});
 		

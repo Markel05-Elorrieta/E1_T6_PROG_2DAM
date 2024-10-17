@@ -1,6 +1,5 @@
 package controller;
 
-import model.BcryptMethods;
 import view.LoginView;
 
 public class App {

@@ -13,6 +13,8 @@ import com.google.cloud.firestore.QuerySnapshot;
 
 import model.BcryptMethods;
 import model.User;
+import model.exceptions.*;
+import model.metodoak.*;
 import resources.GlobalVariables;
 
 
@@ -56,6 +58,12 @@ public class UserDAO {
 			// Get the collection of users
 			CollectionReference users = db.collection("usuarios");
 			// Create the map with the data of the
+			try {
+				this.checkUsername(newUser.getUsername());
+			} catch (UsernameException e) {
+				throw e;
+			}
+			
 			Map<String, Object> user = new HashMap<>();
 			// Add the data to the map
 			user.put("erabiltzailea", newUser.getUsername());
@@ -74,5 +82,24 @@ public class UserDAO {
 		} catch (Exception e) {
 			return false;
 		}
+	}
+	
+	private String checkUsername(String username) throws UsernameException, Exception {
+		// Get the Firestore instance
+		Firestore db = dbConexion.getConnection();
+		
+		// Get the user with the given username
+		ApiFuture<QuerySnapshot> query = db.collection("usuarios").whereEqualTo("erabiltzailea", username).get();
+		QuerySnapshot querySnapshot = query.get();
+		List<QueryDocumentSnapshot> userDoc = querySnapshot.getDocuments();
+
+		if (userDoc.isEmpty()) {
+			// If there is no user with that username
+			dbConexion.closeConnection(db);
+			return username;
+		}
+		// Close the connection
+		dbConexion.closeConnection(db);
+		throw new UsernameException();
 	}
 }

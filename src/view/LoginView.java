@@ -16,6 +16,9 @@ import resources.GlobalVariables;
 import javax.swing.JPasswordField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
+
 
 public class LoginView extends JFrame {
 
@@ -50,6 +53,7 @@ public class LoginView extends JFrame {
 		
 		textFieldErabiltzailea = new JTextField();
 		textFieldErabiltzailea.setBounds(341, 177, 299, 29);
+		textFieldErabiltzailea.setBorder(new LineBorder(new Color(0, 0, 0)));
 		contentPane.add(textFieldErabiltzailea);
 		textFieldErabiltzailea.setColumns(10);
 		
@@ -58,21 +62,31 @@ public class LoginView extends JFrame {
 		lblPasahitza.setBounds(341, 229, 132, 22);
 		contentPane.add(lblPasahitza);
 		
-		JButton btnErregistroa = new JButton("Erregistratu");
-		btnErregistroa.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btnErregistroa.setBounds(125, 463, 157, 35);
+		JButton btnErregistroa = new JButton("🆕 Erregistratu");
+		btnErregistroa.setVerticalAlignment(SwingConstants.BOTTOM);
+		btnErregistroa.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 20));
+		btnErregistroa.setBounds(114, 463, 196, 35);
 		btnErregistroa.setFocusPainted(false);
 		contentPane.add(btnErregistroa);
 		
-		JButton btnLoginEgin = new JButton("Login egin");
-		btnLoginEgin.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btnLoginEgin.setBounds(716, 463, 157, 35);
+		JButton btnLoginEgin = new JButton("☑️ Login egin");
+		btnLoginEgin.setVerticalAlignment(SwingConstants.BOTTOM);
+		btnLoginEgin.setHorizontalAlignment(SwingConstants.RIGHT);
+		btnLoginEgin.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 20));
+		btnLoginEgin.setBounds(654, 463, 206, 35);
 		btnLoginEgin.setFocusPainted(false);
 		contentPane.add(btnLoginEgin);
 		
 		passwordField = new JPasswordField();
 		passwordField.setBounds(341, 262, 299, 29);
+		passwordField.setBorder(new LineBorder(new Color(0, 0, 0)));
 		contentPane.add(passwordField);
+		
+		JLabel lblOngiEtorriJem = new JLabel("Ongi etorri JEM Fit aplikaziora! Sartzeko, login egin edo erregistratu.");
+		lblOngiEtorriJem.setHorizontalAlignment(SwingConstants.CENTER);
+		lblOngiEtorriJem.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblOngiEtorriJem.setBounds(0, 57, 984, 22);
+		contentPane.add(lblOngiEtorriJem);
 		
 		// LISTENERS
 		
