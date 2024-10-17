@@ -29,7 +29,7 @@ public class LoginView extends JFrame {
 	 */
 	public LoginView() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(280, 150, GlobalVariables.WINDOW_WIDTH, GlobalVariables.WINDOW_HEIGHT);
+		setBounds(GlobalVariables.WINDOW_X, GlobalVariables.WINDOW_Y, GlobalVariables.WINDOW_WIDTH, GlobalVariables.WINDOW_HEIGHT);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -60,11 +60,13 @@ public class LoginView extends JFrame {
 		JButton btnErregistroa = new JButton("Erregistratu");
 		btnErregistroa.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btnErregistroa.setBounds(125, 463, 157, 35);
+		btnErregistroa.setFocusPainted(false);
 		contentPane.add(btnErregistroa);
 		
 		JButton btnLoginEgin = new JButton("Login egin");
 		btnLoginEgin.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btnLoginEgin.setBounds(716, 463, 157, 35);
+		btnLoginEgin.setFocusPainted(false);
 		contentPane.add(btnLoginEgin);
 		
 		passwordField = new JPasswordField();
@@ -102,7 +104,9 @@ public class LoginView extends JFrame {
 		// Register button listener
 		btnErregistroa.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	
+            	dispose();
+            	ErregistroaView erregistroa = new ErregistroaView();
+            	erregistroa.setVisible(true);
             }
 		});
 	}
