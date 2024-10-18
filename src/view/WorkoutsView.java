@@ -12,7 +12,12 @@ import model.dao.WorkoutsDAO;
 import resources.GlobalVariables;
 import java.awt.CardLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
+import java.awt.Image;
+import java.awt.Toolkit;
+
 import javax.swing.SwingConstants;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
@@ -24,6 +29,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 
 public class WorkoutsView extends JFrame {
 
@@ -51,7 +57,15 @@ public class WorkoutsView extends JFrame {
 		contentPane.setLayout(null);
 
 		JButton btnNireProfila = new JButton("");
+		btnNireProfila.setToolTipText("Kaixo, " + GlobalVariables.loggedUser.getName() + "!");
+		btnNireProfila.setFont(new Font("Tahoma", Font.PLAIN, 6));
 		btnNireProfila.setBounds(890, 11, 53, 35);
+		btnNireProfila.setFocusPainted(false);
+		ImageIcon originalIcon = new ImageIcon(getClass().getResource("/resources/user_icon.png"));
+		Image originalImage = originalIcon.getImage();
+		Image resizedImage = originalImage.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);
+		btnNireProfila.setIcon(new ImageIcon(resizedImage));
+
 		contentPane.add(btnNireProfila);
 
 		JPanel panelWorkoutsInfo = new JPanel();
@@ -62,7 +76,7 @@ public class WorkoutsView extends JFrame {
 		JScrollPane scrollPane_WInfo = new JScrollPane();
 		scrollPane_WInfo.setBounds(0, 0, 610, 473);
 		panelWorkoutsInfo.add(scrollPane_WInfo);
-		
+
 		JLabel lblComingSoon = new JLabel("");
 		lblComingSoon.setFont(new Font("Tahoma", Font.PLAIN, 26));
 		scrollPane_WInfo.setRowHeaderView(lblComingSoon);
@@ -95,19 +109,19 @@ public class WorkoutsView extends JFrame {
 		panelForRadioButtons.setLayout(new BoxLayout(panelForRadioButtons, BoxLayout.Y_AXIS));
 
 		for (int i = 0; i < workoutsList.size(); i++) {
-		    rdbtnWorkout = new JRadioButton(workoutsList.get(i).getIzena());
-		    rdbtnWorkout.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-		    rdbtnWorkout.setActionCommand(workoutsList.get(i).getIzena());
-		    rdbtnWorkout.setBounds(6, 7 + (i * 30), 334, 23);
-		    rdbtnWorkout.setFocusPainted(false);
-		    // LISTENER FOR RADIO BUTTON WORKOUT
-		    rdbtnWorkout.addActionListener(new ActionListener() {
-		        public void actionPerformed(ActionEvent e) {
-		            lblComingSoon.setText("COMING SOON...");
-		        }
-		    });
-		    WorkoutsRBGroup.add(rdbtnWorkout);
-		    panelForRadioButtons.add(rdbtnWorkout);
+			rdbtnWorkout = new JRadioButton(workoutsList.get(i).getIzena());
+			rdbtnWorkout.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+			rdbtnWorkout.setActionCommand(workoutsList.get(i).getIzena());
+			rdbtnWorkout.setBounds(6, 7 + (i * 30), 334, 23);
+			rdbtnWorkout.setFocusPainted(false);
+			// LISTENER FOR RADIO BUTTON WORKOUT
+			rdbtnWorkout.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					lblComingSoon.setText("COMING SOON...");
+				}
+			});
+			WorkoutsRBGroup.add(rdbtnWorkout);
+			panelForRadioButtons.add(rdbtnWorkout);
 		}
 
 		scrollPane_Workouts.setViewportView(panelForRadioButtons);
@@ -117,7 +131,7 @@ public class WorkoutsView extends JFrame {
 		// NIRE PROFILA BUTTON
 		btnNireProfila.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				JOptionPane.showMessageDialog(null, "COMING SOON..." ,"Nire profila", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 	}
