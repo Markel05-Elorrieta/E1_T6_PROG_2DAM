@@ -13,6 +13,7 @@ import com.google.cloud.firestore.Firestore;
 import model.User;
 import model.dao.DbConexion;
 import model.dao.UserDAO;
+import resources.GlobalVariables;
 
 public class Backup extends Thread{
 	
@@ -24,6 +25,7 @@ public class Backup extends Thread{
 		if (isConnexion) {
 			start();
 		}else{
+			GlobalVariables.isConnexion = false;
 			JOptionPane.showMessageDialog(null, "a", "Backup Errorea", JOptionPane.ERROR_MESSAGE);
 		}
 
@@ -36,6 +38,7 @@ public class Backup extends Thread{
 		try {
 			this.userBackup();
 		} catch (Exception e) {
+			
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

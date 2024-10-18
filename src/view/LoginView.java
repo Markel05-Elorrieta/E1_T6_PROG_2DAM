@@ -100,6 +100,7 @@ public class LoginView extends JFrame {
 					try {
 						isUser = userDAO.checkLogin(textFieldErabiltzailea.getText(), passwordField.getText());
 						if (isUser) {
+							System.out.println("logeau");
 							dispose();
                             WorkoutsView workouts = new WorkoutsView();
                             workouts.setVisible(true);
