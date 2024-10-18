@@ -28,7 +28,7 @@ public class UserDAO {
 		Firestore db = dbConexion.getConnection();
 		
 		// Get the user with the given username
-        ApiFuture<QuerySnapshot> query = db.collection("usuarios").whereEqualTo("erabiltzailea", username).get();
+        ApiFuture<QuerySnapshot> query = db.collection("erabiltzaileak").whereEqualTo("erabiltzailea", username).get();
         QuerySnapshot querySnapshot = query.get();
         List<QueryDocumentSnapshot> userDoc = querySnapshot.getDocuments();
         
@@ -56,7 +56,7 @@ public class UserDAO {
 		
 		try {
 			// Get the collection of users
-			CollectionReference users = db.collection("usuarios");
+			CollectionReference users = db.collection("erabiltzaileak");
 			// Create the map with the data of the
 			try {
 				this.checkUsername(newUser.getUsername());
@@ -73,6 +73,7 @@ public class UserDAO {
 			user.put("jaiotze_data", newUser.getBirthdate());
 			user.put("email", newUser.getEmail());
 			user.put("telefonoa", newUser.getPhone());
+			user.put("maila", newUser.getMaila());
 			// Add the user to the collection
 			DocumentReference newUserDR = users.document();
 			newUserDR.set(user);
@@ -89,7 +90,7 @@ public class UserDAO {
 		Firestore db = dbConexion.getConnection();
 		
 		// Get the user with the given username
-		ApiFuture<QuerySnapshot> query = db.collection("usuarios").whereEqualTo("erabiltzailea", username).get();
+		ApiFuture<QuerySnapshot> query = db.collection("erabiltzaileak").whereEqualTo("erabiltzailea", username).get();
 		QuerySnapshot querySnapshot = query.get();
 		List<QueryDocumentSnapshot> userDoc = querySnapshot.getDocuments();
 

@@ -10,6 +10,7 @@ public class User {
 	private Date birthdate;
 	private String email;
 	private int phone;
+	private int maila;
 	
 	public User(String username, String name, String subname, String password, Date birthdate, String email, int phone) {
 		this.username = username;
@@ -19,6 +20,7 @@ public class User {
 		this.birthdate = birthdate;
 		this.email = email;
 		this.phone = phone;
+		this.maila = 0;
 	}
 	
 	public User() {
@@ -81,17 +83,18 @@ public class User {
 		this.phone = phone;
 	}
 	
+	public int getMaila() {
+		return maila;
+	}
+	
+	public void setMaila(int maila) {
+        this.maila = maila;   
+	}
+	
 	@Override
 	public String toString() {
-	    return "User{" +
-	        "username='" + username + '\'' +
-	        ", name='" + name + '\'' +
-	        ", subname='" + subname + '\'' +
-	        ", password='" + password + '\'' +
-	        ", birthdate=" + birthdate +
-	        ", email='" + email + '\'' +
-	        ", phone=" + phone +
-	        '}';
+		return "User [username=" + username + ", name=" + name + ", subname=" + subname + ", password=" + password
+				+ ", birthdate=" + birthdate + ", email=" + email + ", phone=" + phone + "]";
 	}
 	
 	

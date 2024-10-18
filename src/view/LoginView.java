@@ -34,6 +34,8 @@ public class LoginView extends JFrame {
 	public LoginView() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(GlobalVariables.WINDOW_X, GlobalVariables.WINDOW_Y, GlobalVariables.WINDOW_WIDTH, GlobalVariables.WINDOW_HEIGHT);
+		setResizable(false);
+		setTitle("Login - JEM Fit");
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -96,15 +98,14 @@ public class LoginView extends JFrame {
 
 					boolean isUser;
 					try {
-						// Check the login
 						isUser = userDAO.checkLogin(textFieldErabiltzailea.getText(), passwordField.getText());
 						if (isUser) {
-							// If the login is correct
-							JOptionPane.showMessageDialog(null, "Loged", "Login", JOptionPane.INFORMATION_MESSAGE);
+							dispose();
+                            WorkoutsView workouts = new WorkoutsView();
+                            workouts.setVisible(true);
 							
 						} else {
-							// If the login is incorrect
-							JOptionPane.showMessageDialog(null, "Log false", "Login", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(null, "Erabiltzailea edo pasahitza txarto dago!", "Login errorea", JOptionPane.ERROR_MESSAGE);
 						}
 			
 					} catch (Exception e1) {

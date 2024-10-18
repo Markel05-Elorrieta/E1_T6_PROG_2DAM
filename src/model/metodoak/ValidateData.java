@@ -22,14 +22,13 @@ public class ValidateData {
 	public int checkPhoneNumber(String phone) throws PhoneNumException {
 		try {
 			int phoneNum = Integer.parseInt(phone);
-			if (phoneNum < 000000000 || phoneNum > 999999999 && phone.length() != 9) {
+			if (phoneNum < 0 || phoneNum > 999999999 || phone.length() != 9) {
 				throw new PhoneNumException();
 			}
 			return phoneNum;
 		} catch (NumberFormatException e) {
 			throw new PhoneNumException();
 		}
-		
 	}
 	
 	public void checkDate(java.util.Date birthdate) throws DateException {
