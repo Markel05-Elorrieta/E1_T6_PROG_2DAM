@@ -1,5 +1,6 @@
 package model.dao;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,7 +45,7 @@ public class UserDAO {
 		// If the user exists and the password is correct
 		
 		// Create the User object with the data from the Firestore
-		GlobalVariables.loggedUser = new User(userDoc.get(0).getString("erabiltzailea"), userDoc.get(0).getString("izena"), userDoc.get(0).getString("abizenak"), hashedPwd, userDoc.get(0).getDate("jaiotze_data"), userDoc.get(0).getString("email"), userDoc.get(0).getDouble("telefonoa").intValue());
+		GlobalVariables.loggedUser = new User(userDoc.get(0).getString("erabiltzailea"), userDoc.get(0).getString("izena"), userDoc.get(0).getString("abizenak"), hashedPwd, userDoc.get(0).getDate("jaiotze_data"), userDoc.get(0).getString("email"), userDoc.get(0).getDouble("telefonoa").intValue(), userDoc.get(0).getDouble("maila").intValue());
 		// Close the connection
 		dbConexion.closeConnection(db);
         return true;
@@ -102,5 +103,36 @@ public class UserDAO {
 		// Close the connection
 		dbConexion.closeConnection(db);
 		throw new UsernameException();
+	}
+	
+	public ArrayList<User> getUsers() throws Exception {
+		// Get the Firestore instance
+		Firestore db = dbConexion.getConnection();
+
+		// Get the collection of users
+		CollectionReference users = db.collection("erabiltzaileak");
+		// Get all the users
+		ApiFuture<QuerySnapshot> query = users.get();
+		QuerySnapshot querySnapshot = query.get();
+		List<QueryDocumentSnapshot> userDocs = querySnapshot.getDocuments();
+
+		ArrayList<User> userList = new ArrayList<User>();
+		// Create the User objects with the data from the Firestore
+		for (QueryDocumentSnapshot userDoc : userDocs) {
+			User user = new User(
+					userDoc.getString("erabiltzailea"),
+					userDoc.getString("izena"),
+					userDoc.getString("abizenak"),
+					userDoc.getString("pasahitza"), 
+					userDoc.getDate("jaiotze_data"),
+					userDoc.getString("email"),
+					userDoc.getDouble("telefonoa").intValue(),
+					userDoc.getDouble("maila").intValue()
+				);
+			userList.add(user);
+		}
+		// Close the connection
+		dbConexion.closeConnection(db);
+		return userList;
 	}
 }
