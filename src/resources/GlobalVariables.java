@@ -11,4 +11,5 @@ public class GlobalVariables {
 	
 	// 
 	public static User loggedUser;
+	public static boolean isConnexion = false;
 }

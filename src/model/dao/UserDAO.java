@@ -15,7 +15,7 @@ import com.google.cloud.firestore.QuerySnapshot;
 import model.BcryptMethods;
 import model.User;
 import model.exceptions.*;
-import model.metodoak.*;
+import model.offline.UserOffline;
 import resources.GlobalVariables;
 
 
@@ -24,7 +24,15 @@ public class UserDAO {
 	private DbConexion dbConexion = new DbConexion();
 	private BcryptMethods bCrypt = new BcryptMethods();
 	
+	
 	public boolean checkLogin(String username, String password) throws Exception {
+		if (!GlobalVariables.isConnexion) {
+			System.out.println("hola");
+			UserOffline oserOff = new UserOffline();
+			return oserOff.checkLogin(username, password);
+
+		}
+		
 		// Get the Firestore instance
 		Firestore db = dbConexion.getConnection();
 		
