@@ -62,6 +62,10 @@ public class WorkoutsView extends JFrame {
 		JScrollPane scrollPane_WInfo = new JScrollPane();
 		scrollPane_WInfo.setBounds(0, 0, 610, 473);
 		panelWorkoutsInfo.add(scrollPane_WInfo);
+		
+		JLabel lblComingSoon = new JLabel("");
+		lblComingSoon.setFont(new Font("Tahoma", Font.PLAIN, 26));
+		scrollPane_WInfo.setRowHeaderView(lblComingSoon);
 
 		JLabel lblLogin_Header = new JLabel("WORKOUTS");
 		lblLogin_Header.setHorizontalAlignment(SwingConstants.CENTER);
@@ -91,31 +95,25 @@ public class WorkoutsView extends JFrame {
 		panelForRadioButtons.setLayout(new BoxLayout(panelForRadioButtons, BoxLayout.Y_AXIS));
 
 		for (int i = 0; i < workoutsList.size(); i++) {
-			rdbtnWorkout = new JRadioButton(workoutsList.get(i).getIzena());
-			rdbtnWorkout.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-			rdbtnWorkout.setActionCommand(workoutsList.get(i).getIzena());
-			rdbtnWorkout.setBounds(6, 7 + (i * 30), 334, 23);
-			rdbtnWorkout.setFocusPainted(false);
-			WorkoutsRBGroup.add(rdbtnWorkout);
-			panelForRadioButtons.add(rdbtnWorkout);
+		    rdbtnWorkout = new JRadioButton(workoutsList.get(i).getIzena());
+		    rdbtnWorkout.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		    rdbtnWorkout.setActionCommand(workoutsList.get(i).getIzena());
+		    rdbtnWorkout.setBounds(6, 7 + (i * 30), 334, 23);
+		    rdbtnWorkout.setFocusPainted(false);
+		    // LISTENER FOR RADIO BUTTON WORKOUT
+		    rdbtnWorkout.addActionListener(new ActionListener() {
+		        public void actionPerformed(ActionEvent e) {
+		            lblComingSoon.setText("COMING SOON...");
+		        }
+		    });
+		    WorkoutsRBGroup.add(rdbtnWorkout);
+		    panelForRadioButtons.add(rdbtnWorkout);
 		}
 
 		scrollPane_Workouts.setViewportView(panelForRadioButtons);
 
 		// LISTENERS
 
-		// RADIO BUTTONS
-		rdbtnWorkout.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				for (int i = 0; i < workoutsList.size(); i++) {
-                    if (WorkoutsRBGroup.getSelection().getActionCommand().equals(workoutsList.get(i).getIzena())) {
-                    	System.out.println("Selected workout: " + WorkoutsRBGroup.getSelection().getActionCommand());
-                    }
-			}
-		}
-		});
-		
-		
 		// NIRE PROFILA BUTTON
 		btnNireProfila.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
