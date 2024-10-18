@@ -10,9 +10,9 @@ public class User {
 	private Date birthdate;
 	private String email;
 	private int phone;
-	private int maila;
+	private int maila = 0;
 	
-	public User(String username, String name, String subname, String password, Date birthdate, String email, int phone) {
+	public User(String username, String name, String subname, String password, Date birthdate, String email, int phone, int maila) {
 		this.username = username;
 		this.name = name;
 		this.subname = subname;
@@ -20,7 +20,18 @@ public class User {
 		this.birthdate = birthdate;
 		this.email = email;
 		this.phone = phone;
-		this.maila = 0;
+		this.maila = maila;
+	}
+	
+	public User(String username, String name, String subname, String password, Date birthdate, String email,
+			int phone) {
+		this.username = username;
+		this.name = name;
+		this.subname = subname;
+		this.password = password;
+		this.birthdate = birthdate;
+		this.email = email;
+		this.phone = phone;
 	}
 	
 	public User() {
