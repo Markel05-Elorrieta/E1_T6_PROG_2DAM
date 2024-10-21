@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import model.BcryptMethods;
 import model.User;
+import resources.GlobalVariables;
 
 public class UserOffline {
 	
@@ -33,6 +34,7 @@ public class UserOffline {
 				user.setEmail(dis.readUTF());
 				user.setPhone(dis.readInt());
 				user.setMaila(dis.readInt());
+				dis.readUTF();
 				Date d = new Date(0);
 				user.setBirthdate(d);
 				System.out.println(user.toString());
@@ -51,6 +53,7 @@ public class UserOffline {
 		for (int i = 0; i < this.userList.size(); i++) {
 			if (this.userList.get(i).getUsername().equals(username)){
 				if (bCrypt.checkPassword(password, userList.get(i).getPassword())) {
+					GlobalVariables.loggedUser = this.userList.get(i);
 					System.out.println(userList.get(i).getPassword());
 			        return true;
 				}
