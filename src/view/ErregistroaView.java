@@ -29,6 +29,7 @@ import model.exceptions.EmailException;
 import model.exceptions.EmptyFieldException;
 import model.exceptions.PasswordsNotMatchException;
 import model.exceptions.PhoneNumException;
+import model.metodoak.GlobalButtons;
 import model.metodoak.ValidateData;
 import resources.GlobalVariables;
 
@@ -47,6 +48,7 @@ public class ErregistroaView extends JFrame {
 	private UserDAO userDAO = new UserDAO();
 	private BcryptMethods bCrypt = new BcryptMethods();
 	private ValidateData methods = new ValidateData();
+	private JButton btnAtzera = GlobalButtons.btnAtzera("LoginView");
 
 	/**
 	 * Create the frame.
@@ -175,12 +177,6 @@ public class ErregistroaView extends JFrame {
 		btnErregistratu.setBounds(711, 476, 209, 35);
 		contentPane.add(btnErregistratu);
 		
-		JButton btnAtzera = new JButton("⬅️ Atzera");
-		btnAtzera.setHorizontalAlignment(SwingConstants.RIGHT);
-		btnAtzera.setVerticalAlignment(SwingConstants.BOTTOM);
-		btnAtzera.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 20));
-		btnAtzera.setFocusPainted(false);
-		btnAtzera.setBounds(81, 476, 157, 35);
 		contentPane.add(btnAtzera);
 		
 		// LISTENERS

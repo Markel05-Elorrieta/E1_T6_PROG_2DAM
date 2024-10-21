@@ -100,11 +100,9 @@ public class LoginView extends JFrame {
 					try {
 						isUser = userDAO.checkLogin(textFieldErabiltzailea.getText(), passwordField.getText());
 						if (isUser) {
-							System.out.println("logeau");
 							dispose();
                             WorkoutsView workouts = new WorkoutsView();
                             workouts.setVisible(true);
-							
 						} else {
 							JOptionPane.showMessageDialog(null, "Erabiltzailea edo pasahitza txarto dago!", "Login errorea", JOptionPane.ERROR_MESSAGE);
 						}

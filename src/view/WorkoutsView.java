@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 
 import model.Workout;
 import model.dao.WorkoutsDAO;
+import model.metodoak.GlobalButtons;
 import resources.GlobalVariables;
 import java.awt.CardLayout;
 import javax.swing.JLabel;
@@ -64,6 +65,7 @@ public class WorkoutsView extends JFrame {
 		ImageIcon originalIcon = new ImageIcon(getClass().getResource("/resources/user_icon.png"));
 		Image originalImage = originalIcon.getImage();
 		Image resizedImage = originalImage.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);
+		
 		btnNireProfila.setIcon(new ImageIcon(resizedImage));
 
 		contentPane.add(btnNireProfila);
@@ -127,6 +129,7 @@ public class WorkoutsView extends JFrame {
 		scrollPane_Workouts.setViewportView(panelForRadioButtons);
 
 		// LISTENERS
+		
 
 		// NIRE PROFILA BUTTON
 		btnNireProfila.addActionListener(new ActionListener() {
