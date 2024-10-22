@@ -48,7 +48,7 @@ public class ErregistroaView extends JFrame {
 	private UserDAO userDAO = new UserDAO();
 	private BcryptMethods bCrypt = new BcryptMethods();
 	private ValidateData methods = new ValidateData();
-	private JButton btnAtzera = GlobalButtons.btnAtzera("LoginView");
+	private JButton btnAtzera;
 
 	/**
 	 * Create the frame.
@@ -177,6 +177,7 @@ public class ErregistroaView extends JFrame {
 		btnErregistratu.setBounds(711, 476, 209, 35);
 		contentPane.add(btnErregistratu);
 		
+		btnAtzera = GlobalButtons.btnAtzera("LoginView");
 		contentPane.add(btnAtzera);
 		
 		// LISTENERS
