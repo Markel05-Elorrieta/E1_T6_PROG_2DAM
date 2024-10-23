@@ -43,7 +43,7 @@ public class UserOffline {
 				user.setBirthdate(d);
 				aux.add(user);
 			}
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		this.userList = aux;

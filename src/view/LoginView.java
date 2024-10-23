@@ -3,6 +3,7 @@ package view;
 import java.awt.Font;
 import model.dao.*;
 import model.exceptions.LostDbConnection;
+import model.metodoak.GlobalButtons;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -19,8 +20,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
-import java.awt.Component;
-import javax.swing.Box;
 import javax.swing.JSeparator;
 
 
@@ -30,12 +29,14 @@ public class LoginView extends JFrame {
 	private JPanel contentPane;
 	private JTextField textFieldErabiltzailea;
 	private JPasswordField passwordField;
+	private JLabel lblConnecStatus;
+	private GlobalButtons globalButtons = new GlobalButtons();
 	UserDAO userDAO = new UserDAO();
 
 	/**
 	 * Create the frame.
 	 */
-	public LoginView() {
+	public LoginView(String erabiltzaileaParam) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(GlobalVariables.WINDOW_X, GlobalVariables.WINDOW_Y, GlobalVariables.WINDOW_WIDTH, GlobalVariables.WINDOW_HEIGHT);
 		setResizable(false);
@@ -60,6 +61,7 @@ public class LoginView extends JFrame {
 		textFieldErabiltzailea = new JTextField();
 		textFieldErabiltzailea.setBounds(341, 177, 299, 29);
 		textFieldErabiltzailea.setBorder(new LineBorder(new Color(0, 0, 0)));
+		textFieldErabiltzailea.setText(erabiltzaileaParam);
 		contentPane.add(textFieldErabiltzailea);
 		textFieldErabiltzailea.setColumns(10);
 		
@@ -100,6 +102,9 @@ public class LoginView extends JFrame {
 		lblBerria.setBounds(337, 426, 299, 22);
 		contentPane.add(lblBerria);
 		
+		lblConnecStatus = globalButtons.getLblConnecStatus();
+		contentPane.add(lblConnecStatus);
+		
 		JSeparator separator = new JSeparator();
 		separator.setBounds(261, 401, 447, 14);
 		contentPane.add(separator);
@@ -112,7 +117,6 @@ public class LoginView extends JFrame {
 					boolean isUser = false;
 					try {
 						try {
-			
 							isUser = userDAO.checkLogin(textFieldErabiltzailea.getText(), passwordField.getText());
 						} catch (LostDbConnection ldbc) {
 							isUser = userDAO.checkLogin(textFieldErabiltzailea.getText(), passwordField.getText());

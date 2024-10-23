@@ -24,14 +24,8 @@ import com.toedter.calendar.JDateChooser;
 import model.BcryptMethods;
 import model.User;
 import model.dao.UserDAO;
-import model.exceptions.DateException;
-import model.exceptions.EmailException;
-import model.exceptions.EmptyFieldException;
-import model.exceptions.LostDbConnection;
-import model.exceptions.PasswordsNotMatchException;
-import model.exceptions.PhoneNumException;
-import model.metodoak.GlobalButtons;
-import model.metodoak.ValidateData;
+import model.exceptions.*;
+import model.metodoak.*;
 import resources.GlobalVariables;
 
 public class ErregistroaView extends JFrame {
@@ -46,6 +40,7 @@ public class ErregistroaView extends JFrame {
 	private JPasswordField txt_repeatPassword;
 	private JTextField txt_mail;
 	
+	private GlobalButtons globalVariables = new GlobalButtons();
 	private UserDAO userDAO = new UserDAO();
 	private BcryptMethods bCrypt = new BcryptMethods();
 	private ValidateData methods = new ValidateData();
@@ -178,7 +173,7 @@ public class ErregistroaView extends JFrame {
 		btnErregistratu.setBounds(711, 476, 209, 35);
 		contentPane.add(btnErregistratu);
 		
-		btnAtzera = GlobalButtons.btnAtzera("LoginView");
+		btnAtzera = globalVariables.btnAtzera("LoginView");
 		contentPane.add(btnAtzera);
 		
 		// LISTENERS
@@ -208,7 +203,10 @@ public class ErregistroaView extends JFrame {
 					} catch (LostDbConnection lbdc) {
 						userDAO.registerUser(newUser);
 					}
-					JOptionPane.showMessageDialog(null, "REGISTRAU!", "Erregistratuta", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Erabiltzailea ondo erregistratu da!", "Erregistratuta", JOptionPane.INFORMATION_MESSAGE);
+					dispose();
+					LoginView login = new LoginView(username);
+					login.setVisible(true);
 				} catch (PasswordsNotMatchException pnme) {
 					pnme.getMessage();
 				} catch (PhoneNumException pne) {
@@ -228,7 +226,7 @@ public class ErregistroaView extends JFrame {
 		// Atzera botoia
 		btnAtzera.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				LoginView login = new LoginView();
+				LoginView login = new LoginView("");
 				login.setVisible(true);
 				dispose();
 			}

@@ -1,6 +1,6 @@
 package view;
 
-import java.awt.EventQueue;
+
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -9,30 +9,24 @@ import javax.swing.border.EmptyBorder;
 
 import model.Workout;
 import model.dao.WorkoutsDAO;
-import model.metodoak.GlobalButtons;
 import resources.GlobalVariables;
-import java.awt.CardLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import java.awt.Image;
-import java.awt.Toolkit;
 
 import javax.swing.SwingConstants;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
-import javax.swing.DefaultComboBoxModel;
+
 import javax.swing.ImageIcon;
-import java.awt.Component;
-import javax.swing.Box;
 import javax.swing.JSeparator;
 import java.awt.Color;
 
@@ -41,6 +35,7 @@ public class WorkoutsView extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JRadioButton rdbtnWorkout;
+	
 	private WorkoutsDAO workoutsDAO = new WorkoutsDAO();
 	private ArrayList<Workout> workoutsList = new ArrayList<Workout>();
 
@@ -64,7 +59,7 @@ public class WorkoutsView extends JFrame {
 		JButton btnNireProfila = new JButton("");
 		btnNireProfila.setToolTipText("Kaixo, " + GlobalVariables.loggedUser.getName() + "!");
 		btnNireProfila.setFont(new Font("Tahoma", Font.PLAIN, 6));
-		btnNireProfila.setBounds(890, 11, 53, 35);
+		btnNireProfila.setBounds(897, 21, 53, 35);
 		btnNireProfila.setFocusPainted(false);
 		ImageIcon originalIcon = new ImageIcon(getClass().getResource("/resources/user_icon.png"));
 		Image originalImage = originalIcon.getImage();

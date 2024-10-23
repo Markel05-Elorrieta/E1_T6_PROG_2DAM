@@ -17,9 +17,12 @@ import resources.GlobalVariables;
 
 public class Backup extends Thread{
 	DbConexion db;
+	GlobalButtons globalButtons;
 	
 	public void createBackup() {
 		db = new DbConexion();
+		
+		globalButtons = new GlobalButtons();
 	
 		GlobalVariables.isConnexion = db.testConnection();
 	
@@ -29,7 +32,7 @@ public class Backup extends Thread{
 	
 	@Override
 	public void run() {
-		
+		globalButtons.updateLblConnec();
 		while (!GlobalVariables.isConnexion) {
 			try {
 				Thread.sleep(10000);
@@ -42,6 +45,7 @@ public class Backup extends Thread{
 		
 		try {
 			System.out.println("Connected");
+			
 			this.userBackup();
 		} catch (Exception e) {
 			e.printStackTrace();

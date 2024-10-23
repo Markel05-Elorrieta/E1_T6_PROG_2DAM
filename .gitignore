@@ -5,3 +5,5 @@ target/
 .project
 README.md
 /src/resources/JEM_private_key.json
+/src/resources/backup/*
+/src/resources/updateDB/*

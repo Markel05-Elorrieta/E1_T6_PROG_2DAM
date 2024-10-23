@@ -11,7 +11,7 @@ public class App {
 		backup.createBackup();
 		
 		
-		LoginView login = new LoginView();
+		LoginView login = new LoginView("");
 		login.setVisible(true);
 		
 	
