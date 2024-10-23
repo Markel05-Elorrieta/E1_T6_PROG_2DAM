@@ -2,6 +2,7 @@ package view;
 
 import java.awt.Font;
 import model.dao.*;
+import model.exceptions.LostDbConnection;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -93,11 +94,11 @@ public class LoginView extends JFrame {
 		lblOngiEtorriJem.setBounds(0, 57, 984, 22);
 		contentPane.add(lblOngiEtorriJem);
 		
-		JLabel lblNewLabel = new JLabel("Berria zara? Erregistratu hemen.");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(337, 426, 299, 22);
-		contentPane.add(lblNewLabel);
+		JLabel lblBerria = new JLabel("Berria zara? Erregistratu hemen.");
+		lblBerria.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblBerria.setHorizontalAlignment(SwingConstants.CENTER);
+		lblBerria.setBounds(337, 426, 299, 22);
+		contentPane.add(lblBerria);
 		
 		JSeparator separator = new JSeparator();
 		separator.setBounds(261, 401, 447, 14);
@@ -108,18 +109,22 @@ public class LoginView extends JFrame {
 		// Login button listener
 		btnLoginEgin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-					boolean isUser;
+					boolean isUser = false;
 					try {
-						isUser = userDAO.checkLogin(textFieldErabiltzailea.getText(), passwordField.getText());
+						try {
+			
+							isUser = userDAO.checkLogin(textFieldErabiltzailea.getText(), passwordField.getText());
+						} catch (LostDbConnection ldbc) {
+							isUser = userDAO.checkLogin(textFieldErabiltzailea.getText(), passwordField.getText());
+						}
 						if (isUser) {
+		
 							dispose();
                             WorkoutsView workouts = new WorkoutsView();
                             workouts.setVisible(true);
 						} else {
 							JOptionPane.showMessageDialog(null, "Erabiltzailea edo pasahitza txarto dago!", "Login errorea", JOptionPane.ERROR_MESSAGE);
 						}
-			
 					} catch (Exception e1) {
 						e1.printStackTrace();
 					}

@@ -27,6 +27,7 @@ import model.dao.UserDAO;
 import model.exceptions.DateException;
 import model.exceptions.EmailException;
 import model.exceptions.EmptyFieldException;
+import model.exceptions.LostDbConnection;
 import model.exceptions.PasswordsNotMatchException;
 import model.exceptions.PhoneNumException;
 import model.metodoak.GlobalButtons;
@@ -202,7 +203,11 @@ public class ErregistroaView extends JFrame {
 					String hashedPwd = bCrypt.hashPassword(password);
 					User newUser = new User(username, name, subname, hashedPwd, birthdate, email, phoneNum);
 					methods.checkEmptyFields(newUser);
-					userDAO.registerUser(newUser);
+					try {
+						userDAO.registerUser(newUser);
+					} catch (LostDbConnection lbdc) {
+						userDAO.registerUser(newUser);
+					}
 					JOptionPane.showMessageDialog(null, "REGISTRAU!", "Erregistratuta", JOptionPane.INFORMATION_MESSAGE);
 				} catch (PasswordsNotMatchException pnme) {
 					pnme.getMessage();

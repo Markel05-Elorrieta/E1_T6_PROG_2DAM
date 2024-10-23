@@ -16,30 +16,34 @@ import model.dao.UserDAO;
 import resources.GlobalVariables;
 
 public class Backup extends Thread{
+	DbConexion db;
 	
 	public void createBackup() {
-		DbConexion db = new DbConexion();
+		db = new DbConexion();
 	
-		boolean isConnexion = db.testConnection();
+		GlobalVariables.isConnexion = db.testConnection();
 	
-		if (isConnexion) {
-			start();
-		}else{
-			GlobalVariables.isConnexion = false;
-			JOptionPane.showMessageDialog(null, "a", "Backup Errorea", JOptionPane.ERROR_MESSAGE);
-		}
-
+		start();
 	}
 	
 	
 	@Override
 	public void run() {
 		
+		while (!GlobalVariables.isConnexion) {
+			try {
+				Thread.sleep(10000);
+				GlobalVariables.isConnexion = db.testConnection();
+				System.out.println("Trying to connect to the database");
+			} catch (InterruptedException e) {
+				
+			}
+		}
+		
 		try {
+			System.out.println("Connected");
 			this.userBackup();
 		} catch (Exception e) {
-			
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
