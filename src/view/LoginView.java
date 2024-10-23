@@ -18,6 +18,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
+import java.awt.Component;
+import javax.swing.Box;
+import javax.swing.JSeparator;
 
 
 public class LoginView extends JFrame {
@@ -67,15 +70,15 @@ public class LoginView extends JFrame {
 		JButton btnErregistroa = new JButton("🆕 Erregistratu");
 		btnErregistroa.setVerticalAlignment(SwingConstants.BOTTOM);
 		btnErregistroa.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 20));
-		btnErregistroa.setBounds(114, 463, 196, 35);
+		btnErregistroa.setBounds(378, 468, 206, 35);
 		btnErregistroa.setFocusPainted(false);
 		contentPane.add(btnErregistroa);
 		
-		JButton btnLoginEgin = new JButton("☑️ Login egin");
-		btnLoginEgin.setVerticalAlignment(SwingConstants.BOTTOM);
+		JButton btnLoginEgin = new JButton("☑️ Login");
 		btnLoginEgin.setHorizontalAlignment(SwingConstants.RIGHT);
+		btnLoginEgin.setVerticalAlignment(SwingConstants.BOTTOM);
 		btnLoginEgin.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 20));
-		btnLoginEgin.setBounds(654, 463, 206, 35);
+		btnLoginEgin.setBounds(402, 330, 161, 35);
 		btnLoginEgin.setFocusPainted(false);
 		contentPane.add(btnLoginEgin);
 		
@@ -89,6 +92,16 @@ public class LoginView extends JFrame {
 		lblOngiEtorriJem.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		lblOngiEtorriJem.setBounds(0, 57, 984, 22);
 		contentPane.add(lblOngiEtorriJem);
+		
+		JLabel lblNewLabel = new JLabel("Berria zara? Erregistratu hemen.");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(337, 426, 299, 22);
+		contentPane.add(lblNewLabel);
+		
+		JSeparator separator = new JSeparator();
+		separator.setBounds(261, 401, 447, 14);
+		contentPane.add(separator);
 		
 		// LISTENERS
 		
