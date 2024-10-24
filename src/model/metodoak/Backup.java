@@ -10,11 +10,11 @@ import javax.swing.JOptionPane;
 
 import com.google.cloud.firestore.Firestore;
 
-import model.User;
-import model.Workout;
 import model.dao.DbConexion;
 import model.dao.UserDAO;
 import model.dao.WorkoutsDAO;
+import model.objects.User;
+import model.objects.Workout;
 import resources.GlobalVariables;
 
 public class Backup extends Thread{

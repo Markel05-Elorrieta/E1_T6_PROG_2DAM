@@ -11,8 +11,8 @@ import java.sql.Date;
 import java.util.ArrayList;
 
 import model.BcryptMethods;
-import model.User;
 import model.dao.UserDAO;
+import model.objects.User;
 import resources.GlobalVariables;
 
 public class UserOffline {
@@ -30,25 +30,34 @@ public class UserOffline {
 			FileInputStream fis = new FileInputStream(file);
 			DataInputStream dis = new DataInputStream(fis);
 			while (fis.getChannel().position() < fis.getChannel().size()) {
-				User user = new User();
-				user.setUsername(dis.readUTF());
-				user.setName(dis.readUTF());
-				user.setSubname(dis.readUTF());
-				user.setPassword(dis.readUTF());
-				user.setEmail(dis.readUTF());
-				user.setPhone(dis.readInt());
-				user.setMaila(dis.readInt());
-				Date d = new Date(0);
-				user.setBirthdate(d);
-				aux.add(user);
-				fis.close();
-				dis.close();
+				try {
+					User user = new User();
+					user.setUsername(dis.readUTF());
+					user.setName(dis.readUTF());
+					user.setSubname(dis.readUTF());
+					user.setPassword(dis.readUTF());
+					user.setEmail(dis.readUTF());
+					user.setPhone(dis.readInt());
+					user.setMaila(dis.readInt());
+					Date d = new Date(0);
+					user.setBirthdate(d);
+					dis.readUTF();
+					aux.add(user);
+				} catch (Exception e) {
+					System.out.println("first");
+					e.printStackTrace();
+                    break;
+				}
+				
 			}
+			fis.close();
+			dis.close();
 		} catch (Exception e) {
+			System.out.println("second");
 			e.printStackTrace();
 		}
 		this.userList = aux;
-	
+		
 	}
 	
 	public boolean checkLogin(String username, String password) {

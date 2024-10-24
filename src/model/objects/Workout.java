@@ -1,4 +1,4 @@
-package model;
+package model.objects;
 
 public class Workout {
 	
@@ -12,6 +12,10 @@ public class Workout {
 		this.maila = maila;
 		this.video_url = video_url;
 		this.ariketaSize = ariketaSize;
+	}
+	
+	public Workout() {
+		
 	}
 
 	public String getIzena() {

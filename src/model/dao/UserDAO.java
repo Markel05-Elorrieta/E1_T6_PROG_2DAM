@@ -13,9 +13,9 @@ import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
 
 import model.BcryptMethods;
-import model.User;
 import model.exceptions.*;
 import model.metodoak.Backup;
+import model.objects.User;
 import model.offline.UserOffline;
 import resources.GlobalVariables;
 

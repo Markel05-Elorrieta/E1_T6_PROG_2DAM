@@ -22,10 +22,10 @@ import javax.swing.border.LineBorder;
 import com.toedter.calendar.JDateChooser;
 
 import model.BcryptMethods;
-import model.User;
 import model.dao.UserDAO;
 import model.exceptions.*;
 import model.metodoak.*;
+import model.objects.User;
 import resources.GlobalVariables;
 
 public class ErregistroaView extends JFrame {
