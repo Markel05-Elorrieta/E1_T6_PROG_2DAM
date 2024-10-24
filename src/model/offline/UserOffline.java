@@ -27,7 +27,6 @@ public class UserOffline {
 		try {
 			
 			File file = new File("src/resources/backup/UsersBackup.dat");
-			System.out.println(file.getAbsolutePath());
 			FileInputStream fis = new FileInputStream(file);
 			DataInputStream dis = new DataInputStream(fis);
 			while (fis.getChannel().position() < fis.getChannel().size()) {

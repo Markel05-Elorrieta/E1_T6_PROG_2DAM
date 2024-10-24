@@ -111,6 +111,15 @@ public class LoginView extends JFrame {
 		
 		// LISTENERS
 		
+		// Enter key listener
+		passwordField.addKeyListener(new java.awt.event.KeyAdapter() {
+		    public void keyPressed(java.awt.event.KeyEvent evt) {
+		        if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+		            btnLoginEgin.doClick(); // Trigger the login button's action listener
+		        }
+		    }
+		});
+		
 		// Login button listener
 		btnLoginEgin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

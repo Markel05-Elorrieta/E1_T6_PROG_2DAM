@@ -24,11 +24,12 @@ public class UserDAO {
 	
 	private DbConexion dbConexion = new DbConexion();
 	private BcryptMethods bCrypt = new BcryptMethods();
-	private UserOffline userOff = new UserOffline();
+	
 	
 	
 	public boolean checkLogin(String username, String password) throws Exception {
 		if (!GlobalVariables.isConnexion) {
+			UserOffline userOff = new UserOffline();
 			return userOff.checkLogin(username, password);
 		}
 		// Get the Firestore instance
@@ -66,6 +67,7 @@ public class UserDAO {
 	
 	public boolean registerUser(User newUser) throws Exception {
 		if (!GlobalVariables.isConnexion) {	
+			UserOffline userOff = new UserOffline();
 			return userOff.registerUser(newUser);
 		}
 		// Get the Firestore instance
