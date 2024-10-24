@@ -11,7 +11,9 @@ import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
 
-import model.Workout;
+import model.exceptions.LostDbConnection;
+import model.objects.Workout;
+import model.offline.WorkoutsOffline;
 import resources.GlobalVariables;
 
 public class WorkoutsDAO {
@@ -19,27 +21,34 @@ public class WorkoutsDAO {
 	private Firestore db;
 
 	 public ArrayList<Workout> getWorkouts() throws Exception {
+			if (!GlobalVariables.isConnexion) {
+				WorkoutsOffline workoutsOff = new WorkoutsOffline();
+				return workoutsOff.getWorkouts();
+			}
 	        ArrayList<Workout> workoutsList = new ArrayList<>();
 	        
 	        db = dbConexion.getConnection();
-
-	        // Query the workouts collection
-	        ApiFuture<QuerySnapshot> query = db.collection("workouts")
-	                .whereLessThanOrEqualTo("maila", GlobalVariables.loggedUser.getMaila()).get();
-	        QuerySnapshot querySnapshot = query.get();
-
-	        // Process each workout document
-	        for (QueryDocumentSnapshot document : querySnapshot) {
-	            String izena = document.getString("izena");
-	            int maila = document.getLong("maila").intValue();
-	            String video_url = document.getString("video_url");
-	            int ariketaSize = countAriketakByWorkoutId(document.getId());
-
-	            Workout workout = new Workout(izena, maila, video_url, ariketaSize);
-	            workoutsList.add(workout);
-	        }
-	        dbConexion.closeConnection(db);
-	        return workoutsList;
+	        try {
+		        // Query the workouts collection
+		        ApiFuture<QuerySnapshot> query = db.collection("workouts").whereLessThanOrEqualTo("maila", GlobalVariables.loggedUser.getMaila()).get();
+		        QuerySnapshot querySnapshot = query.get();
+	
+		        // Process each workout document
+		        for (QueryDocumentSnapshot document : querySnapshot) {
+		            String izena = document.getString("izena");
+		            int maila = document.getLong("maila").intValue();
+		            String video_url = document.getString("video_url");
+		            int ariketaSize = countAriketakByWorkoutId(document.getId());
+	
+		            Workout workout = new Workout(izena, maila, video_url, ariketaSize);
+		            workoutsList.add(workout);
+		        }
+		        dbConexion.closeConnection(db);
+		        return workoutsList;
+			} catch (Exception e) {
+				dbConexion.closeConnection(db);
+				throw new LostDbConnection();
+			}
 	    }
 	    private int countAriketakByWorkoutId(String workoutID) throws InterruptedException, ExecutionException {
 	        // Query the workouts collection for the specific workout ID

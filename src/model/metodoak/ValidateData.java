@@ -1,6 +1,6 @@
 package model.metodoak;
-import model.User;
 import model.exceptions.*;
+import model.objects.User;
 
 public class ValidateData {
 	public String checkPasswords(String password, String repeatPassword) throws PasswordsNotMatchException {

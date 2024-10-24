@@ -1,6 +1,6 @@
 package resources;
 
-import model.User;
+import model.objects.User;
 
 public class GlobalVariables {
 	// JFRAME VARIABLES

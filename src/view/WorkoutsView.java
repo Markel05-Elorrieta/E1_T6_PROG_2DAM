@@ -7,8 +7,9 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.border.EmptyBorder;
 
-import model.Workout;
 import model.dao.WorkoutsDAO;
+import model.exceptions.LostDbConnection;
+import model.objects.Workout;
 import resources.GlobalVariables;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -44,7 +45,7 @@ public class WorkoutsView extends JFrame {
 	 * 
 	 * @throws Exception
 	 */
-	public WorkoutsView() throws Exception {
+	public WorkoutsView() {
 		setTitle("Workouts - JEM Fit · Erabiltzailea: " + GlobalVariables.loggedUser.getUsername());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(GlobalVariables.WINDOW_X, GlobalVariables.WINDOW_Y, GlobalVariables.WINDOW_WIDTH,
@@ -129,9 +130,17 @@ public class WorkoutsView extends JFrame {
 		panelWorkouts.add(scrollPane_Workouts);
 
 		ButtonGroup WorkoutsRBGroup = new ButtonGroup();
-
-		workoutsList = workoutsDAO.getWorkouts();
-
+		try {
+			try {
+				workoutsList = workoutsDAO.getWorkouts();
+			} catch (LostDbConnection ldbc) {
+				workoutsList = workoutsDAO.getWorkouts();
+			}
+		}catch (Exception e) {
+	        e.printStackTrace();
+		}
+		
+		
 		JPanel panelForRadioButtons = new JPanel();
 		panelForRadioButtons.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panelForRadioButtons.setBorder(null);
