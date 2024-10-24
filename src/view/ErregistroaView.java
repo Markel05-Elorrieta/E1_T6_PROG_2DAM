@@ -211,10 +211,11 @@ public class ErregistroaView extends JFrame {
 					methods.checkEmptyFields(newUser);
 					try {
 						userDAO.registerUser(newUser);
+						JOptionPane.showMessageDialog(null, "Erabiltzailea ondo erregistratu da!", "Erregistratuta", JOptionPane.INFORMATION_MESSAGE);
 					} catch (LostDbConnection lbdc) {
-						userDAO.registerUser(newUser);
+						JOptionPane.showMessageDialog(null, "Ezin zara erristratu konexio gabe!", "Errorea", JOptionPane.ERROR_MESSAGE);
+						username = "";
 					}
-					JOptionPane.showMessageDialog(null, "Erabiltzailea ondo erregistratu da!", "Erregistratuta", JOptionPane.INFORMATION_MESSAGE);
 					dispose();
 					LoginView login = new LoginView(username);
 					login.setVisible(true);
