@@ -13,19 +13,9 @@ import javax.swing.SwingConstants;
 import resources.GlobalVariables;
 
 public class GlobalButtons {
-	private JLabel lblConnecStatus;
 	
 	public GlobalButtons() {
-		lblConnecStatus = new JLabel("");
-		lblConnecStatus.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblConnecStatus.setBounds(900, 0, 66, 14);
-		if (!GlobalVariables.isConnexion) {
-			lblConnecStatus.setText("Offline");
-			lblConnecStatus.setForeground(Color.RED);
-		} else {
-			lblConnecStatus.setText("Online");
-			lblConnecStatus.setForeground(Color.GREEN);
-		}
+		
 
 	}
 	public JButton btnAtzera(String where) {
@@ -37,21 +27,4 @@ public class GlobalButtons {
 		btnAtzera.setBounds(59, 11, 167, 35);
         return btnAtzera;
 	}
-	
-	public void updateLblConnec() {
-		if (!GlobalVariables.isConnexion) {
-			lblConnecStatus.setText("Offline");
-			lblConnecStatus.setForeground(Color.RED);
-		} else {
-			lblConnecStatus.setText("Online");
-			lblConnecStatus.setForeground(Color.GREEN);
-		}
-	}
-	public JLabel getLblConnecStatus() {
-		return lblConnecStatus;
-	}
-	
-	
-	
-	
 }

@@ -26,7 +26,6 @@ import javax.swing.JSeparator;
 public class LoginView extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
 	private JTextField textFieldErabiltzailea;
 	private JPasswordField passwordField;
 	private JLabel lblConnecStatus;
@@ -42,12 +41,10 @@ public class LoginView extends JFrame {
 		setResizable(false);
 		setTitle("Login - JEM Fit");
 		
-		
 		BackgroundImageView panel = new BackgroundImageView();
 		setContentPane(panel);
 		panel.setLayout(null);
 		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(panel);
 		
 		JLabel lblLogin_Header = new JLabel("LOGIN");
 		lblLogin_Header.setHorizontalAlignment(SwingConstants.CENTER);
@@ -103,9 +100,6 @@ public class LoginView extends JFrame {
 		lblBerria.setHorizontalAlignment(SwingConstants.CENTER);
 		lblBerria.setBounds(337, 426, 299, 22);
 		panel.add(lblBerria);
-		
-		lblConnecStatus = globalButtons.getLblConnecStatus();
-		panel.add(lblConnecStatus);
 		
 		JSeparator separator = new JSeparator();
 		separator.setBounds(261, 401, 447, 14);

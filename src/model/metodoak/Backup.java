@@ -23,8 +23,6 @@ public class Backup extends Thread{
 	
 	public void createBackup() {
 		db = new DbConexion();
-		
-		globalButtons = new GlobalButtons();
 	
 		GlobalVariables.isConnexion = db.testConnection();
 	
@@ -34,7 +32,6 @@ public class Backup extends Thread{
 	
 	@Override
 	public void run() {
-		globalButtons.updateLblConnec();
 		while (!GlobalVariables.isConnexion) {
 			try {
 				Thread.sleep(10000);
