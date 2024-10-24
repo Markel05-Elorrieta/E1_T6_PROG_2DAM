@@ -20,15 +20,15 @@ public class UserOffline {
 	private ArrayList<User> userList = new ArrayList<User>();
 	private BcryptMethods bCrypt = new BcryptMethods();
 	
-	public UserOffline() throws IOException {
+	public UserOffline(){
 		
 		ArrayList<User> aux = new ArrayList<User>();
-		File file = new File("src/resources/backup/UsersBackup.dat");
-		System.out.println(file.getAbsolutePath());
-		FileInputStream fis = new FileInputStream(file);
-		DataInputStream dis = new DataInputStream(fis);
-		
+	
 		try {
+			
+			File file = new File("src/resources/backup/UsersBackup.dat");
+			FileInputStream fis = new FileInputStream(file);
+			DataInputStream dis = new DataInputStream(fis);
 			while (fis.getChannel().position() < fis.getChannel().size()) {
 				User user = new User();
 				user.setUsername(dis.readUTF());
@@ -38,17 +38,17 @@ public class UserOffline {
 				user.setEmail(dis.readUTF());
 				user.setPhone(dis.readInt());
 				user.setMaila(dis.readInt());
-				dis.readUTF();
 				Date d = new Date(0);
 				user.setBirthdate(d);
 				aux.add(user);
+				fis.close();
+				dis.close();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		this.userList = aux;
-		fis.close();
-		dis.close();
+	
 	}
 	
 	public boolean checkLogin(String username, String password) {

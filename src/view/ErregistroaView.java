@@ -54,103 +54,112 @@ public class ErregistroaView extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(GlobalVariables.WINDOW_X, GlobalVariables.WINDOW_Y, GlobalVariables.WINDOW_WIDTH, GlobalVariables.WINDOW_HEIGHT);
 		setResizable(false);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		
+		BackgroundImageView panel = new BackgroundImageView();
+		setContentPane(panel);
+		panel.setLayout(null);
+		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		
 		JLabel lblLogin_Header = new JLabel("ERREGISTROA");
+		lblLogin_Header.setForeground(Color.BLACK);
 		lblLogin_Header.setHorizontalAlignment(SwingConstants.CENTER);
 		lblLogin_Header.setFont(new Font("Segoe UI Black", Font.PLAIN, 30));
 		lblLogin_Header.setBounds(0, 11, 984, 35);
-		contentPane.add(lblLogin_Header);
+		panel.add(lblLogin_Header);
 		
 		JLabel lblErabiltzaile = new JLabel("Erabiltzailea");
-		lblErabiltzaile.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 21));
+		lblErabiltzaile.setForeground(Color.WHITE);
+		lblErabiltzaile.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 21));
 		lblErabiltzaile.setBounds(135, 287, 132, 22);
-		contentPane.add(lblErabiltzaile);
+		panel.add(lblErabiltzaile);
 		
 		txt_username = new JTextField();
 		txt_username.setColumns(10);
 		txt_username.setBorder(new LineBorder(new Color(0, 0, 0)));
 		txt_username.setBounds(135, 320, 299, 29);
-		contentPane.add(txt_username);
+		panel.add(txt_username);
 		
 		JLabel lblPasahitza = new JLabel("Pasahitza");
-		lblPasahitza.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 21));
+		lblPasahitza.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 21));
+		lblPasahitza.setForeground(Color.WHITE);
 		lblPasahitza.setBounds(135, 372, 132, 22);
-		contentPane.add(lblPasahitza);
+		panel.add(lblPasahitza);
 		
 		txt_password = new JPasswordField();
 		txt_password.setBounds(135, 405, 299, 29);
 		txt_password.setBorder(new LineBorder(new Color(0, 0, 0)));
-		contentPane.add(txt_password);
+		panel.add(txt_password);
 		
 		JLabel lblAbizenak = new JLabel("Abizenak");
-		lblAbizenak.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 21));
+		lblAbizenak.setForeground(Color.WHITE);
+		lblAbizenak.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 21));
 		lblAbizenak.setBounds(135, 200, 132, 22);
-		contentPane.add(lblAbizenak);
+		panel.add(lblAbizenak);
 		
 		txt_subname = new JTextField();
 		txt_subname.setColumns(10);
 		txt_subname.setBorder(new LineBorder(new Color(0, 0, 0)));
 		txt_subname.setBounds(135, 233, 299, 29);
-		contentPane.add(txt_subname);
+		panel.add(txt_subname);
 		
 		JLabel lblIzena = new JLabel("Izena");
-		lblIzena.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 21));
+		lblIzena.setForeground(Color.WHITE);
+		lblIzena.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 21));
 		lblIzena.setBounds(135, 116, 132, 22);
-		contentPane.add(lblIzena);
+		panel.add(lblIzena);
 		
 		txt_name = new JTextField();
 		txt_name.setColumns(10);
 		txt_name.setBorder(new LineBorder(new Color(0, 0, 0)));
 		txt_name.setBounds(135, 149, 299, 29);
-		contentPane.add(txt_name);
+		panel.add(txt_name);
 		
 		JLabel lblTelefonoa = new JLabel("Telefonoa");
-		lblTelefonoa.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 21));
+		lblTelefonoa.setForeground(Color.WHITE);
+		lblTelefonoa.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 21));
 		lblTelefonoa.setBounds(509, 116, 132, 22);
-		contentPane.add(lblTelefonoa);
+		panel.add(lblTelefonoa);
 		
 		txt_tlf = new JTextField();
 		txt_tlf.setColumns(10);
 		txt_tlf.setBorder(new LineBorder(new Color(0, 0, 0)));
 		txt_tlf.setBounds(509, 149, 299, 29);
-		contentPane.add(txt_tlf);
+		panel.add(txt_tlf);
 		
 		JLabel lblJaiotzedata = new JLabel("Jaiotze-data");
-		lblJaiotzedata.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 21));
+		lblJaiotzedata.setForeground(Color.WHITE);
+		lblJaiotzedata.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 21));
 		lblJaiotzedata.setBounds(509, 200, 132, 22);
-		contentPane.add(lblJaiotzedata);
+		panel.add(lblJaiotzedata);
 		
 		JLabel lblPasahitzaKonfirmatu = new JLabel("Pasahitza konfirmatu");
-		lblPasahitzaKonfirmatu.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 21));
+		lblPasahitzaKonfirmatu.setForeground(Color.WHITE);
+		lblPasahitzaKonfirmatu.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 21));
 		lblPasahitzaKonfirmatu.setBounds(509, 372, 299, 22);
-		contentPane.add(lblPasahitzaKonfirmatu);
+		panel.add(lblPasahitzaKonfirmatu);
 		
 		txt_repeatPassword = new JPasswordField();
 		txt_repeatPassword.setBorder(new LineBorder(new Color(0, 0, 0)));
 		txt_repeatPassword.setBounds(509, 405, 299, 29);
-		contentPane.add(txt_repeatPassword);
+		panel.add(txt_repeatPassword);
 		
 		JLabel lblMessHello = new JLabel("Ongi etorri JEM Fit aplikaziora. Berria bazara, hemen erregistratu dezakezu!");
 		lblMessHello.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		lblMessHello.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMessHello.setBounds(0, 56, 984, 22);
-		contentPane.add(lblMessHello);
+		panel.add(lblMessHello);
 		
 		JLabel lblEmail = new JLabel("E-mail");
-		lblEmail.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 21));
+		lblEmail.setForeground(Color.WHITE);
+		lblEmail.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 21));
 		lblEmail.setBounds(509, 287, 132, 22);
-		contentPane.add(lblEmail);
+		panel.add(lblEmail);
 		
 		txt_mail = new JTextField();
 		txt_mail.setColumns(10);
 		txt_mail.setBorder(new LineBorder(new Color(0, 0, 0)));
 		txt_mail.setBounds(509, 320, 299, 29);
-		contentPane.add(txt_mail);
+		panel.add(txt_mail);
 		
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(2020, 0, 1);
@@ -163,18 +172,20 @@ public class ErregistroaView extends JFrame {
 		calendar.set(1900, 0, 1);
 		Date mindata = calendar.getTime();
 		dateChooser.getJCalendar().setMinSelectableDate(mindata);
-		contentPane.add(dateChooser);
+		panel.add(dateChooser);
 		
 		JButton btnErregistratu = new JButton("☑️ Erregistratu");
+		btnErregistratu.setBackground(new Color(255, 140, 0));
+		btnErregistratu.setForeground(Color.WHITE);
 		btnErregistratu.setHorizontalAlignment(SwingConstants.RIGHT);
 		btnErregistratu.setVerticalAlignment(SwingConstants.BOTTOM);
-		btnErregistratu.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 20));
+		btnErregistratu.setFont(new Font("Segoe UI Emoji", Font.BOLD, 20));
 		btnErregistratu.setFocusPainted(false);
 		btnErregistratu.setBounds(711, 476, 209, 35);
-		contentPane.add(btnErregistratu);
+		panel.add(btnErregistratu);
 		
 		btnAtzera = globalVariables.btnAtzera("LoginView");
-		contentPane.add(btnAtzera);
+		panel.add(btnAtzera);
 		
 		// LISTENERS
 		
