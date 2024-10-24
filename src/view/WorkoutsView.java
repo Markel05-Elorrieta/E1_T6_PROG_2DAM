@@ -100,6 +100,12 @@ public class WorkoutsView extends JFrame {
 		lblWorkoutInformazioa.setFont(new Font("Segoe UI", Font.BOLD | Font.ITALIC, 20));
 		lblWorkoutInformazioa.setBounds(-1, 17, 479, 27);
 		panelWorkoutsInfo.add(lblWorkoutInformazioa);
+		
+		JLabel lblAriketaSize = new JLabel("");
+		lblAriketaSize.setHorizontalAlignment(SwingConstants.CENTER);
+		lblAriketaSize.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		lblAriketaSize.setBounds(1, 264, 476, 36);
+		panelWorkoutsInfo.add(lblAriketaSize);
 
 		JLabel lblLogin_Header = new JLabel("WORKOUTS");
 		lblLogin_Header.setHorizontalAlignment(SwingConstants.CENTER);
@@ -146,6 +152,7 @@ public class WorkoutsView extends JFrame {
 			    	lblWorkoutTitle.setText(workout.getIzena());
 			    	int workoutMaila = (int) workout.getMaila();
 			    	lblWorkoutMaila.setText("Maila: " + workoutMaila);
+			    	lblAriketaSize.setText("Ariketa kopurua: " + workout.getAriketaSize());
 			    	btnStart.setEnabled(true);
 			    }
 			});
