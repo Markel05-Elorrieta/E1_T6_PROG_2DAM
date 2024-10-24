@@ -59,16 +59,25 @@ public class WorkoutsView extends JFrame {
 		JButton btnNireProfila = new JButton("");
 		btnNireProfila.setToolTipText("Kaixo, " + GlobalVariables.loggedUser.getName() + "!");
 		btnNireProfila.setFont(new Font("Tahoma", Font.PLAIN, 6));
-		btnNireProfila.setBounds(897, 21, 53, 35);
+		btnNireProfila.setBounds(884, 11, 53, 35);
 		btnNireProfila.setFocusPainted(false);
 		ImageIcon originalIcon = new ImageIcon(getClass().getResource("/resources/user_icon.png"));
 		Image originalImage = originalIcon.getImage();
 		Image resizedImage = originalImage.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);
-		
 		btnNireProfila.setIcon(new ImageIcon(resizedImage));
-
 		contentPane.add(btnNireProfila);
 
+		JButton btnLogout = new JButton("");
+		btnLogout.setToolTipText("Logout...");
+		btnLogout.setFont(new Font("Tahoma", Font.PLAIN, 6));
+		ImageIcon originalIcon1 = new ImageIcon(getClass().getResource("/resources/logout-negro.png"));
+		Image originalImage1 = originalIcon1.getImage();
+		Image resizedImage1 = originalImage1.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);
+		btnLogout.setIcon(new ImageIcon(resizedImage1));
+		btnLogout.setFocusPainted(false);
+		btnLogout.setBounds(935, 11, 33, 35);
+		contentPane.add(btnLogout);
+		
 		JPanel panelWorkoutsInfo = new JPanel();
 		panelWorkoutsInfo.setBorder(null);
 		panelWorkoutsInfo.setBounds(506, 57, 478, 484);
@@ -181,6 +190,16 @@ public class WorkoutsView extends JFrame {
 		btnStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("START WORKOUT");
+			}
+		});
+		
+		// LOGOUT BUTTON
+		btnLogout.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				GlobalVariables.loggedUser = null;
+				dispose();
+                LoginView login = new LoginView("");
+                login.setVisible(true);
 			}
 		});
 	}
