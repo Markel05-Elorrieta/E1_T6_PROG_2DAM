@@ -71,39 +71,6 @@ public class UserOffline {
 		}
 		return false;
 	}
-
-	public boolean registerUser(User newUser) {
-		for (int i = 0; i < this.userList.size(); i++) {
-			if (this.userList.get(i).getUsername().equals(newUser.getUsername())) {
-				return false;
-			}
-		}
-		
-		try {
-			File file = new File("src/resources/updateDB/newUsers.dat");
-			FileOutputStream fos = new FileOutputStream(file,true);
-			DataOutputStream dos = new DataOutputStream(fos);
-			
-			dos.writeUTF(newUser.getUsername());
-			dos.writeUTF(newUser.getName());
-			dos.writeUTF(newUser.getSubname());
-			dos.writeUTF(newUser.getPassword());
-			dos.writeUTF(newUser.getEmail());
-			dos.writeInt(newUser.getPhone());
-			dos.writeInt(newUser.getMaila());
-			dos.writeUTF(newUser.getBirthdate().toString());
-			
-			fos.close();
-			dos.close();
-			
-			return true;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		
-		return false;
-	}
 }
 
 

@@ -150,9 +150,14 @@ public class LoginView extends JFrame {
 		// Register button listener
 		btnErregistroa.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	dispose();
-            	ErregistroaView erregistroa = new ErregistroaView();
-            	erregistroa.setVisible(true);
+            	if(GlobalVariables.isConnexion) {
+            		dispose();
+                	ErregistroaView erregistroa = new ErregistroaView();
+                	erregistroa.setVisible(true);
+            	}else {
+            		JOptionPane.showMessageDialog(null, "Ezin zara erristratu konexio gabe!", "Errorea", JOptionPane.ERROR_MESSAGE);
+            	}
+            	
             }
 		});
 	}

@@ -67,8 +67,7 @@ public class UserDAO {
 	
 	public boolean registerUser(User newUser) throws Exception {
 		if (!GlobalVariables.isConnexion) {	
-			UserOffline userOff = new UserOffline();
-			return userOff.registerUser(newUser);
+			throw new LostDbConnection();
 		}
 		// Get the Firestore instance
 		Firestore db = dbConexion.getConnection();
