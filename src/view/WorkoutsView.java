@@ -30,6 +30,10 @@ import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JSeparator;
 import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import javax.swing.SpringLayout;
 
 public class WorkoutsView extends JFrame {
 
@@ -85,14 +89,16 @@ public class WorkoutsView extends JFrame {
 		JPanel panelWorkoutsInfo = new JPanel();
 		panelWorkoutsInfo.setBackground(new Color(124, 252, 0));
 		panelWorkoutsInfo.setBorder(null);
+		panelWorkoutsInfo.setBackground(new Color(0, 0, 0, 0));
+		panelWorkoutsInfo.setOpaque(false);
 		panelWorkoutsInfo.setBounds(506, 57, 469, 476);
 		panel.add(panelWorkoutsInfo);
 		panelWorkoutsInfo.setLayout(null);
 		
 		JLabel lblWorkoutTitle = new JLabel("");
 		lblWorkoutTitle.setHorizontalAlignment(SwingConstants.CENTER);
-		lblWorkoutTitle.setFont(new Font("Tahoma", Font.PLAIN, 35));
-		lblWorkoutTitle.setBounds(1, 98, 468, 46);
+		lblWorkoutTitle.setFont(new Font("Tahoma", Font.PLAIN, 36));
+		lblWorkoutTitle.setBounds(0, 90, 468, 46);
 		panelWorkoutsInfo.add(lblWorkoutTitle);
 		
 		JLabel lblWorkoutMaila = new JLabel("Aukeratu workout bat...");
@@ -114,8 +120,8 @@ public class WorkoutsView extends JFrame {
 		
 		JLabel lblWorkoutInformazioa = new JLabel("Workout informazioa");
 		lblWorkoutInformazioa.setHorizontalAlignment(SwingConstants.CENTER);
-		lblWorkoutInformazioa.setFont(new Font("Segoe UI", Font.BOLD | Font.ITALIC, 20));
-		lblWorkoutInformazioa.setBounds(-1, 17, 470, 27);
+		lblWorkoutInformazioa.setFont(new Font("Segoe UI", Font.BOLD | Font.ITALIC, 23));
+		lblWorkoutInformazioa.setBounds(1, 11, 470, 36);
 		panelWorkoutsInfo.add(lblWorkoutInformazioa);
 		
 		JLabel lblAriketaSize = new JLabel("");
@@ -132,19 +138,22 @@ public class WorkoutsView extends JFrame {
 		panel.add(lblLogin_Header);
 
 		JPanel panelWorkouts = new JPanel();
-		panelWorkouts.setBackground(Color.YELLOW);
+		panelWorkouts.setBackground(new Color(0, 0, 0, 0));
+		panelWorkouts.setOpaque(false); 
 		panelWorkouts.setBounds(3, 57, 490, 477);
 		panel.add(panelWorkouts);
 		panelWorkouts.setLayout(null);
 
 		JLabel lblZureWorkoutak = new JLabel("Zure workout-ak");
-		lblZureWorkoutak.setFont(new Font("Segoe UI", Font.BOLD | Font.ITALIC, 20));
-		lblZureWorkoutak.setBounds(38, 11, 173, 27);
+		lblZureWorkoutak.setHorizontalAlignment(SwingConstants.CENTER);
+		lblZureWorkoutak.setFont(new Font("Segoe UI", Font.BOLD | Font.ITALIC, 23));
+		lblZureWorkoutak.setBounds(0, 11, 490, 32);
 		panelWorkouts.add(lblZureWorkoutak);
 
 		JScrollPane scrollPane_Workouts = new JScrollPane();
 		scrollPane_Workouts.setBorder(null);
-		scrollPane_Workouts.setBounds(48, 49, 432, 424);
+		scrollPane_Workouts.setBackground(Color.ORANGE);
+		scrollPane_Workouts.setBounds(25, 49, 455, 424);
 		panelWorkouts.add(scrollPane_Workouts);
 
 		ButtonGroup WorkoutsRBGroup = new ButtonGroup();
@@ -160,16 +169,16 @@ public class WorkoutsView extends JFrame {
 		
 		
 		JPanel panelForRadioButtons = new JPanel();
-		panelForRadioButtons.setBackground(Color.YELLOW);
 		panelForRadioButtons.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panelForRadioButtons.setBorder(null);
-		panelForRadioButtons.setLayout(new BoxLayout(panelForRadioButtons, BoxLayout.Y_AXIS));
+		panelForRadioButtons.setBackground(Color.ORANGE);
+		panelForRadioButtons.setOpaque(false);
+		//panelForRadioButtons.setLayout(new BoxLayout(panelForRadioButtons, BoxLayout.Y_AXIS));
 
 		for (int i = 0; i < workoutsList.size(); i++) {
 			rdbtnWorkout = new JRadioButton(workoutsList.get(i).getIzena());
 			rdbtnWorkout.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 			rdbtnWorkout.setActionCommand(i + "");
-			rdbtnWorkout.setBackground(Color.YELLOW);
 			rdbtnWorkout.setBounds(6, 7 + (i * 30), 334, 23);
 			rdbtnWorkout.setFocusPainted(false);
 			
@@ -190,6 +199,8 @@ public class WorkoutsView extends JFrame {
 		}
 
 		scrollPane_Workouts.setViewportView(panelForRadioButtons);
+		panelForRadioButtons.setLayout(null);
+		
 		
 		JSeparator separator = new JSeparator();
 		separator.setBackground(new Color(0, 0, 0));
@@ -209,7 +220,7 @@ public class WorkoutsView extends JFrame {
 		// START BUTTON
 		btnStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("START WORKOUT");
+				JOptionPane.showMessageDialog(null, "COMING SOON..." ,"Workout hasi", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 		
