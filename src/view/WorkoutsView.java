@@ -125,6 +125,7 @@ public class WorkoutsView extends JFrame {
 		panelWorkoutsInfo.add(lblAriketaSize);
 
 		JLabel lblLogin_Header = new JLabel("WORKOUTS");
+		lblLogin_Header.setForeground(Color.WHITE);
 		lblLogin_Header.setHorizontalAlignment(SwingConstants.CENTER);
 		lblLogin_Header.setFont(new Font("Segoe UI Black", Font.PLAIN, 30));
 		lblLogin_Header.setBounds(0, 11, 984, 35);

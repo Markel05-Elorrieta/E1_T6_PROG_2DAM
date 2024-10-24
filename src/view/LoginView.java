@@ -47,17 +47,21 @@ public class LoginView extends JFrame {
 		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		
 		JLabel lblLogin_Header = new JLabel("LOGIN");
+		lblLogin_Header.setForeground(Color.WHITE);
 		lblLogin_Header.setHorizontalAlignment(SwingConstants.CENTER);
 		lblLogin_Header.setFont(new Font("Segoe UI Black", Font.PLAIN, 30));
 		lblLogin_Header.setBounds(0, 11, 984, 35);
 		panel.add(lblLogin_Header);
 		
 		JLabel lblErabiltzaile = new JLabel("Erabiltzailea");
+		lblErabiltzaile.setForeground(Color.WHITE);
 		lblErabiltzaile.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 21));
 		lblErabiltzaile.setBounds(341, 144, 132, 22);
 		panel.add(lblErabiltzaile);
 		
 		textFieldErabiltzailea = new JTextField();
+		textFieldErabiltzailea.setHorizontalAlignment(SwingConstants.CENTER);
+		textFieldErabiltzailea.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		textFieldErabiltzailea.setBounds(341, 177, 299, 29);
 		textFieldErabiltzailea.setBorder(new LineBorder(new Color(0, 0, 0)));
 		textFieldErabiltzailea.setText(erabiltzaileaParam);
@@ -65,11 +69,14 @@ public class LoginView extends JFrame {
 		textFieldErabiltzailea.setColumns(10);
 		
 		JLabel lblPasahitza = new JLabel("Pasahitza");
+		lblPasahitza.setForeground(Color.WHITE);
 		lblPasahitza.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 21));
 		lblPasahitza.setBounds(341, 229, 132, 22);
 		panel.add(lblPasahitza);
 		
 		JButton btnErregistroa = new JButton("🆕 Erregistratu");
+		btnErregistroa.setBackground(Color.GRAY);
+		btnErregistroa.setForeground(Color.WHITE);
 		btnErregistroa.setVerticalAlignment(SwingConstants.BOTTOM);
 		btnErregistroa.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 20));
 		btnErregistroa.setBounds(378, 468, 206, 35);
@@ -77,14 +84,18 @@ public class LoginView extends JFrame {
 		panel.add(btnErregistroa);
 		
 		JButton btnLoginEgin = new JButton("☑️ Login");
+		btnLoginEgin.setBackground(Color.ORANGE);
+		btnLoginEgin.setForeground(Color.WHITE);
 		btnLoginEgin.setHorizontalAlignment(SwingConstants.RIGHT);
 		btnLoginEgin.setVerticalAlignment(SwingConstants.BOTTOM);
-		btnLoginEgin.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 20));
+		btnLoginEgin.setFont(new Font("Segoe UI Emoji", Font.BOLD, 20));
 		btnLoginEgin.setBounds(402, 330, 161, 35);
 		btnLoginEgin.setFocusPainted(false);
 		panel.add(btnLoginEgin);
 		
 		passwordField = new JPasswordField();
+		passwordField.setHorizontalAlignment(SwingConstants.CENTER);
+		passwordField.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		passwordField.setBounds(341, 262, 299, 29);
 		passwordField.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panel.add(passwordField);
@@ -96,6 +107,7 @@ public class LoginView extends JFrame {
 		panel.add(lblOngiEtorriJem);
 		
 		JLabel lblBerria = new JLabel("Berria zara? Erregistratu hemen.");
+		lblBerria.setForeground(Color.WHITE);
 		lblBerria.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		lblBerria.setHorizontalAlignment(SwingConstants.CENTER);
 		lblBerria.setBounds(337, 426, 299, 22);
@@ -111,7 +123,7 @@ public class LoginView extends JFrame {
 		passwordField.addKeyListener(new java.awt.event.KeyAdapter() {
 		    public void keyPressed(java.awt.event.KeyEvent evt) {
 		        if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
-		            btnLoginEgin.doClick(); // Trigger the login button's action listener
+		            btnLoginEgin.doClick();
 		        }
 		    }
 		});
@@ -120,6 +132,11 @@ public class LoginView extends JFrame {
 		btnLoginEgin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 					boolean isUser = false;
+				if (passwordField.getText().isEmpty() || textFieldErabiltzailea.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Erabiltzailea edo pasahitza hutsik dago!", "Bete hutsuneak",
+							JOptionPane.ERROR_MESSAGE);
+					return;
+				}
 					try {
 						try {
 							isUser = userDAO.checkLogin(textFieldErabiltzailea.getText(), passwordField.getText());
@@ -127,7 +144,6 @@ public class LoginView extends JFrame {
 							isUser = userDAO.checkLogin(textFieldErabiltzailea.getText(), passwordField.getText());
 						}
 						if (isUser) {
-		
 							dispose();
                             WorkoutsView workouts = new WorkoutsView();
                             workouts.setVisible(true);
@@ -137,19 +153,18 @@ public class LoginView extends JFrame {
 					} catch (Exception e1) {
 						e1.printStackTrace();
 					}
-
 			}
 		});
 		
 		// Register button listener
 		btnErregistroa.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	if(GlobalVariables.isConnexion) {
+            	if (GlobalVariables.isConnexion) {
             		dispose();
                 	ErregistroaView erregistroa = new ErregistroaView();
                 	erregistroa.setVisible(true);
-            	}else {
-            		JOptionPane.showMessageDialog(null, "Ezin zara erristratu konexio gabe!", "Errorea", JOptionPane.ERROR_MESSAGE);
+            	} else {
+            		JOptionPane.showMessageDialog(null, "Ezin zara erregistratu konexiorik gabe!", "Errorea", JOptionPane.ERROR_MESSAGE);
             	}
             	
             }

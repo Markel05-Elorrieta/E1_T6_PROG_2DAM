@@ -14,10 +14,10 @@ import resources.GlobalVariables;
 
 public class GlobalButtons {
 	
-	public GlobalButtons() {
-		
+	public GlobalButtons() {	
 
 	}
+	
 	public JButton btnAtzera(String where) {
 		JButton btnAtzera = new JButton("⬅️ Atzera");
 		btnAtzera.setHorizontalAlignment(SwingConstants.RIGHT);

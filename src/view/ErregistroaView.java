@@ -61,7 +61,7 @@ public class ErregistroaView extends JFrame {
 		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		
 		JLabel lblLogin_Header = new JLabel("ERREGISTROA");
-		lblLogin_Header.setForeground(Color.BLACK);
+		lblLogin_Header.setForeground(Color.WHITE);
 		lblLogin_Header.setHorizontalAlignment(SwingConstants.CENTER);
 		lblLogin_Header.setFont(new Font("Segoe UI Black", Font.PLAIN, 30));
 		lblLogin_Header.setBounds(0, 11, 984, 35);
@@ -144,6 +144,7 @@ public class ErregistroaView extends JFrame {
 		panel.add(txt_repeatPassword);
 		
 		JLabel lblMessHello = new JLabel("Ongi etorri JEM Fit aplikaziora. Berria bazara, hemen erregistratu dezakezu!");
+		lblMessHello.setForeground(Color.BLACK);
 		lblMessHello.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		lblMessHello.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMessHello.setBounds(0, 56, 984, 22);
@@ -213,7 +214,7 @@ public class ErregistroaView extends JFrame {
 						userDAO.registerUser(newUser);
 						JOptionPane.showMessageDialog(null, "Erabiltzailea ondo erregistratu da!", "Erregistratuta", JOptionPane.INFORMATION_MESSAGE);
 					} catch (LostDbConnection lbdc) {
-						JOptionPane.showMessageDialog(null, "Ezin zara erristratu konexio gabe!", "Errorea", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "Ezin zara erregistratu konexiorik gabe!", "Errorea", JOptionPane.ERROR_MESSAGE);
 						username = "";
 					}
 					dispose();
