@@ -156,4 +156,34 @@ public class UserDAO {
 		dbConexion.closeConnection(db);
 		return userList;
 	}
+	
+	public void updateUser(User updateUser) throws Exception {
+		if (!GlobalVariables.isConnexion) {
+			UserOffline userOff = new UserOffline();
+			// return userOff.updateUser(updateUser);
+		}
+			// Get the Firestore instance
+			Firestore db = dbConexion.getConnection();
+			// Get the collection of users
+			CollectionReference users = db.collection("erabiltzaileak");
+			// Get the user with the given username
+			ApiFuture<QuerySnapshot> query = users.whereEqualTo("erabiltzailea", updateUser.getUsername()).get();
+			QuerySnapshot querySnapshot = query.get();
+			List<QueryDocumentSnapshot> userDoc = querySnapshot.getDocuments();
+			// Update the user with the new data
+			DocumentReference userDR = users.document(userDoc.get(0).getId());
+			userDR.update("izena", updateUser.getName());
+			userDR.update("abizenak", updateUser.getSubname());
+			userDR.update("jaiotze_data", updateUser.getBirthdate());
+			userDR.update("email", updateUser.getEmail());
+			userDR.update("telefonoa", updateUser.getPhone());
+			userDR.update("maila", updateUser.getMaila());
+			userDR.update("argazkia", updateUser.getpPhoto());
+			// userDR.update("pasahitza", updateUser.getPassword());
+			
+			// Update loggedUser
+			User.updateLoggedUser(updateUser);
+			// Close the connection
+			dbConexion.closeConnection(db);
+	}
 }

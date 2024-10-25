@@ -8,17 +8,31 @@ import javax.swing.border.EmptyBorder;
 
 import resources.GlobalVariables;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.awt.Color;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.JPasswordField;
 import com.toedter.calendar.JDateChooser;
 
+import model.dao.UserDAO;
+import model.exceptions.DateException;
+import model.exceptions.EmailException;
+import model.exceptions.EmptyFieldException;
+import model.exceptions.LostDbConnection;
+import model.exceptions.PasswordsNotMatchException;
+import model.exceptions.PhoneNumException;
 import model.metodoak.GlobalButtons;
+import model.metodoak.Images;
+import model.metodoak.ValidateData;
+import model.objects.User;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -26,18 +40,25 @@ import java.util.Locale;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.SwingConstants;
 
 public class NireProfilaView extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField txtIzena;
-	private JTextField txtAbizena;
-	private JTextField txtErabiltzaile;
-	private JTextField txtTelefono;
-	private JTextField txtEmail;
+	private JTextField txt_name;
+	private JTextField txt_subname;
+	private JTextField txt_tlf;
+	private JTextField txt_mail;
 	private GlobalButtons globalButtons = new GlobalButtons();
+	
+	private ValidateData methods = new ValidateData();
+	private UserDAO userDAO = new UserDAO();
+	private Images images = new Images();
+	
+	
+	private String newPhoto = null;
 
 	/**
 	 * Create the frame.
@@ -59,12 +80,12 @@ public class NireProfilaView extends JFrame {
 		lblIzena.setBounds(148, 119, 132, 22);
 		panel.add(lblIzena);
 		
-		txtIzena = new JTextField();
-		txtIzena.setColumns(10);
-		txtIzena.setBorder(new LineBorder(new Color(0, 0, 0)));
-		txtIzena.setBounds(148, 152, 299, 29);
-		txtIzena.setText(GlobalVariables.loggedUser.getName());
-		panel.add(txtIzena);
+		txt_name = new JTextField();
+		txt_name.setColumns(10);
+		txt_name.setBorder(new LineBorder(new Color(0, 0, 0)));
+		txt_name.setBounds(148, 152, 299, 29);
+		txt_name.setText(GlobalVariables.loggedUser.getName());
+		panel.add(txt_name);
 		
 		JLabel lblAbizenak = new JLabel("Abizenak");
 		lblAbizenak.setForeground(Color.WHITE);
@@ -72,25 +93,12 @@ public class NireProfilaView extends JFrame {
 		lblAbizenak.setBounds(148, 203, 132, 22);
 		panel.add(lblAbizenak);
 		
-		txtAbizena = new JTextField();
-		txtAbizena.setColumns(10);
-		txtAbizena.setBorder(new LineBorder(new Color(0, 0, 0)));
-		txtAbizena.setBounds(148, 236, 299, 29);
-		txtAbizena.setText(GlobalVariables.loggedUser.getSubname());
-		panel.add(txtAbizena);
-		
-		JLabel lblErabiltzaile = new JLabel("Erabiltzailea");
-		lblErabiltzaile.setForeground(Color.WHITE);
-		lblErabiltzaile.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 21));
-		lblErabiltzaile.setBounds(148, 290, 132, 22);
-		panel.add(lblErabiltzaile);
-		
-		txtErabiltzaile = new JTextField();
-		txtErabiltzaile.setColumns(10);
-		txtErabiltzaile.setBorder(new LineBorder(new Color(0, 0, 0)));
-		txtErabiltzaile.setBounds(148, 323, 299, 29);
-		txtErabiltzaile.setText(GlobalVariables.loggedUser.getUsername());
-		panel.add(txtErabiltzaile);
+		txt_subname = new JTextField();
+		txt_subname.setColumns(10);
+		txt_subname.setBorder(new LineBorder(new Color(0, 0, 0)));
+		txt_subname.setBounds(148, 236, 299, 29);
+		txt_subname.setText(GlobalVariables.loggedUser.getSubname());
+		panel.add(txt_subname);
 		
 		JLabel lblPasahitza = new JLabel("Pasahitza");
 		lblPasahitza.setForeground(Color.WHITE);
@@ -113,13 +121,13 @@ public class NireProfilaView extends JFrame {
 		lblJaiotzedata.setBounds(522, 203, 132, 22);
 		panel.add(lblJaiotzedata);
 		
-		txtTelefono = new JTextField();
-		txtTelefono.setColumns(10);
-		txtTelefono.setBorder(new LineBorder(new Color(0, 0, 0)));
-		txtTelefono.setBounds(522, 152, 299, 29);
+		txt_tlf = new JTextField();
+		txt_tlf.setColumns(10);
+		txt_tlf.setBorder(new LineBorder(new Color(0, 0, 0)));
+		txt_tlf.setBounds(522, 152, 299, 29);
 		String tlf = Integer.toString(GlobalVariables.loggedUser.getPhone());
-		txtTelefono.setText(tlf);
-		panel.add(txtTelefono);
+		txt_tlf.setText(tlf);
+		panel.add(txt_tlf);
 		
 		JLabel lblTelefonoa = new JLabel("Telefonoa");
 		lblTelefonoa.setForeground(Color.WHITE);
@@ -133,12 +141,12 @@ public class NireProfilaView extends JFrame {
 		lblEmail.setBounds(522, 290, 132, 22);
 		panel.add(lblEmail);
 		
-		txtEmail = new JTextField();
-		txtEmail.setColumns(10);
-		txtEmail.setBorder(new LineBorder(new Color(0, 0, 0)));
-		txtEmail.setBounds(522, 323, 299, 29);
-		txtEmail.setText(GlobalVariables.loggedUser.getEmail());
-		panel.add(txtEmail);
+		txt_mail = new JTextField();
+		txt_mail.setColumns(10);
+		txt_mail.setBorder(new LineBorder(new Color(0, 0, 0)));
+		txt_mail.setBounds(522, 323, 299, 29);
+		txt_mail.setText(GlobalVariables.loggedUser.getEmail());
+		panel.add(txt_mail);
 		
 		JButton btnAtzera = globalButtons.btnAtzera("NireProfilaView");
 		panel.add(btnAtzera);
@@ -167,10 +175,9 @@ public class NireProfilaView extends JFrame {
 		profilePhoto.setForeground(Color.WHITE);
 		profilePhoto.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 21));
 		profilePhoto.setBounds(689, 375, 132, 121);
-		
+
 		Image originalImage = GlobalVariables.loggedUser.getpPhotoIC().getImage();
 		Image resizedImage = originalImage.getScaledInstance(60, 60, java.awt.Image.SCALE_SMOOTH);
-		
 		profilePhoto.setIcon(new ImageIcon(resizedImage));
 		panel.add(profilePhoto);
 		
@@ -179,6 +186,12 @@ public class NireProfilaView extends JFrame {
 		btnAldatuArgazkia.setBounds(522, 413, 148, 35);
 		btnAldatuArgazkia.setFocusPainted(false);
 		panel.add(btnAldatuArgazkia);
+		
+		JButton btnSave = new JButton("Save");
+		btnSave.setBounds(751, 25, 89, 23);
+		panel.add(btnSave);
+		
+		
 
 		// LISTENERS
 		
@@ -195,7 +208,24 @@ public class NireProfilaView extends JFrame {
 		// ALDATU ARGAZKIA BUTTON
 		btnAldatuArgazkia.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				 JFileChooser fileChooser = new JFileChooser();
+				 FileNameExtensionFilter filter = new FileNameExtensionFilter("Argazkiak","png", "jpg");
+				 fileChooser.setFileFilter(filter);
+				 int returnValue = fileChooser.showOpenDialog(null);
+				 if (returnValue == JFileChooser.APPROVE_OPTION) {
+				    File selectedFile = fileChooser.getSelectedFile();
+				    if (selectedFile.getName().endsWith("png") || selectedFile.getName().endsWith("jpg")){
+				    	  newPhoto = images.encode(selectedFile);
+						    
+						  // Update img
+						  Image originalImage = images.decode(newPhoto).getImage(); 
+						  Image resizedImage = originalImage.getScaledInstance(60, 60, java.awt.Image.SCALE_SMOOTH);
+						  profilePhoto.setIcon(new ImageIcon(resizedImage));
+				    }else {
+				    	JOptionPane.showMessageDialog(null, "JPG edo PNG fitxategi bat igo!", "Error", JOptionPane.INFORMATION_MESSAGE);
+				    }
+				  
+				 }
 			}
 		});
 		
@@ -204,6 +234,54 @@ public class NireProfilaView extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				ChangePasswordView changePasswordView = new ChangePasswordView();
 				changePasswordView.setVisible(true);
+			}
+		});
+		
+		btnSave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String name = txt_name.getText();
+				String subname = txt_subname.getText();
+				Date birthdate = dateChooser.getDate();
+				String email = txt_mail.getText();
+				String phoneStr = txt_tlf.getText();
+				
+				
+			
+				try {
+					methods.checkDate(birthdate);
+					int phoneNum = methods.checkPhoneNumber(phoneStr);
+				
+					methods.checkEmail(email);
+
+					User updateUser = new User(GlobalVariables.loggedUser.getUsername(), name, subname, GlobalVariables.loggedUser.getPassword(), birthdate, email, phoneNum);
+					if(newPhoto != null) {
+						updateUser.setpPhoto(newPhoto);
+					}else{
+						updateUser.setpPhoto(GlobalVariables.loggedUser.getpPhoto());
+					}
+					methods.checkEmptyFields(updateUser);
+				
+					userDAO.updateUser(updateUser);
+					JOptionPane.showMessageDialog(null, "Erabiltzailea ondo modifikatu da!", "Erabiltzailea", JOptionPane.INFORMATION_MESSAGE);
+					
+					/*
+					dispose();
+					LoginView login = new LoginView(username);
+					login.setVisible(true);
+					*/
+				} catch (PasswordsNotMatchException pnme) {
+					pnme.getMessage();
+				} catch (PhoneNumException pne) {
+					pne.getMessage();
+				} catch (DateException de) {
+					de.getMessage();
+				} catch (EmptyFieldException efe) {
+					efe.getMessage();
+				} catch (EmailException ee) {
+					ee.getMessage();
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null, "Errorea egon da aldatzean!", "Errorea", JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		});
 	}

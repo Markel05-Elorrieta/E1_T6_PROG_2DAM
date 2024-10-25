@@ -5,6 +5,8 @@ import java.util.Date;
 
 import javax.swing.ImageIcon;
 
+import model.metodoak.Images;
+import resources.GlobalVariables;
 
 import java.util.Base64;
 
@@ -119,14 +121,11 @@ public class User {
 	}
 	
 	public ImageIcon getpPhotoIC() {
+		Images images = new Images();
 
-        // Decode the base64 string to a byte array
-        byte[] imageBytes = Base64.getDecoder().decode(pPhoto);
-
-        // Convert the byte array to an ImageIcon
-        ImageIcon  image = new ImageIcon(imageBytes);
+	    ImageIcon image = images.decode(pPhoto);
         
-       return image;
+        return image;
 	}
 	
 	public void setpPhoto(String pPhoto) {
@@ -141,6 +140,17 @@ public class User {
 	public String toString() {
 		return "User [username=" + username + ", name=" + name + ", subname=" + subname + ", password=" + password
 				+ ", birthdate=" + birthdate + ", email=" + email + ", phone=" + phone + ", maila=" + maila + "]";
+	}
+	
+	public static void updateLoggedUser(User user) {
+		GlobalVariables.loggedUser.setEmail(user.email);
+		GlobalVariables.loggedUser.setName(user.name);
+		GlobalVariables.loggedUser.setSubname(user.subname);
+		GlobalVariables.loggedUser.setBirthdate(user.birthdate);
+		GlobalVariables.loggedUser.setPhone(user.phone);
+		GlobalVariables.loggedUser.setpPhoto(user.pPhoto);
+		// GlobalVariables.loggedUser.setPassword(user.password);
+		
 	}
 	
 	
