@@ -27,7 +27,9 @@ public class ChangePasswordView extends JFrame {
 	 */
 	public ChangePasswordView() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 452, 277);
+		setBounds(250, 250, 452, 277);
+		setResizable(false);
+		setTitle("Pasahitza aldatu - JEM Fit · Erabiltzailea: ");
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 

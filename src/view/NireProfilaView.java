@@ -204,7 +204,6 @@ public class NireProfilaView extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				ChangePasswordView changePasswordView = new ChangePasswordView();
 				changePasswordView.setVisible(true);
-				dispose();
 			}
 		});
 	}
