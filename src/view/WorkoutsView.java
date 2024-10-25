@@ -23,17 +23,11 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
-
-import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
-
 import javax.swing.ImageIcon;
 import javax.swing.JSeparator;
 import java.awt.Color;
-import java.awt.FlowLayout;
-import java.awt.BorderLayout;
-import java.awt.CardLayout;
-import javax.swing.SpringLayout;
+
 
 public class WorkoutsView extends JFrame {
 
@@ -69,7 +63,6 @@ public class WorkoutsView extends JFrame {
 		btnNireProfila.setBounds(884, 11, 53, 35);
 		btnNireProfila.setFocusPainted(false);
 		
-
 		Image originalImage = GlobalVariables.loggedUser.getpPhotoIC().getImage();
 		Image resizedImage = originalImage.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);
 		btnNireProfila.setIcon(new ImageIcon(resizedImage));
@@ -215,7 +208,9 @@ public class WorkoutsView extends JFrame {
 		// NIRE PROFILA BUTTON
 		btnNireProfila.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "COMING SOON..." ,"Nire profila", JOptionPane.INFORMATION_MESSAGE);
+				dispose();
+				NireProfilaView profile = new NireProfilaView();
+				profile.setVisible(true);
 			}
 		});
 		
