@@ -38,7 +38,7 @@ import javax.swing.SpringLayout;
 public class WorkoutsView extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
+
 	private JRadioButton rdbtnWorkout;
 	
 	private WorkoutsDAO workoutsDAO = new WorkoutsDAO();
@@ -67,8 +67,9 @@ public class WorkoutsView extends JFrame {
 		btnNireProfila.setFont(new Font("Tahoma", Font.PLAIN, 6));
 		btnNireProfila.setBounds(884, 11, 53, 35);
 		btnNireProfila.setFocusPainted(false);
-		ImageIcon originalIcon = new ImageIcon(getClass().getResource("/resources/user_icon.png"));
-		Image originalImage = originalIcon.getImage();
+		
+
+		Image originalImage = GlobalVariables.loggedUser.getpPhotoIC().getImage();
 		Image resizedImage = originalImage.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);
 		btnNireProfila.setIcon(new ImageIcon(resizedImage));
 		panel.add(btnNireProfila);
@@ -78,7 +79,7 @@ public class WorkoutsView extends JFrame {
 		btnLogout.setForeground(Color.WHITE);
 		btnLogout.setToolTipText("Logout...");
 		btnLogout.setFont(new Font("Tahoma", Font.PLAIN, 6));
-		ImageIcon originalIcon1 = new ImageIcon(getClass().getResource("/resources/logout-negro.png"));
+		ImageIcon originalIcon1 = new ImageIcon(getClass().getResource("/resources/images/logout-negro.png"));
 		Image originalImage1 = originalIcon1.getImage();
 		Image resizedImage1 = originalImage1.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);
 		btnLogout.setIcon(new ImageIcon(resizedImage1));

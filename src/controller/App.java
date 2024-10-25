@@ -2,6 +2,7 @@ package controller;
 
 import model.metodoak.Backup;
 import view.LoginView;
+import view.ProfileView;
 
 public class App {
 
@@ -16,7 +17,6 @@ public class App {
 		login.setVisible(true);
 		
 	
-		
 		/*test*/
 		
 		// test to hash passwords
@@ -24,8 +24,13 @@ public class App {
 		BcryptMethods bCrypt = new BcryptMethods();
 		String password = "jonva";
 	    System.out.println(bCrypt.hashPassword(password));
-	    */
+	    
 		
+		
+		// test profile view
+		ProfileView profile = new ProfileView();
+		profile.setVisible(true);
+		*/
 
 
 	

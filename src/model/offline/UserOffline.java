@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import model.BcryptMethods;
 import model.dao.UserDAO;
+import model.exceptions.noBackupException;
 import model.objects.User;
 import resources.GlobalVariables;
 
@@ -20,7 +21,7 @@ public class UserOffline {
 	private ArrayList<User> userList = new ArrayList<User>();
 	private BcryptMethods bCrypt = new BcryptMethods();
 	
-	public UserOffline(){
+	public UserOffline() throws noBackupException{
 		
 		ArrayList<User> aux = new ArrayList<User>();
 	
@@ -44,8 +45,7 @@ public class UserOffline {
 					dis.readUTF();
 					aux.add(user);
 				} catch (Exception e) {
-					System.out.println("first");
-					e.printStackTrace();
+
                     break;
 				}
 				
@@ -53,8 +53,7 @@ public class UserOffline {
 			fis.close();
 			dis.close();
 		} catch (Exception e) {
-			System.out.println("second");
-			e.printStackTrace();
+			throw new noBackupException();
 		}
 		this.userList = aux;
 		

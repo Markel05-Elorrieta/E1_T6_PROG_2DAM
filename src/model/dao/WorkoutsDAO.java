@@ -38,7 +38,8 @@ public class WorkoutsDAO {
 		            String izena = document.getString("izena");
 		            int maila = document.getLong("maila").intValue();
 		            String video_url = document.getString("video_url");
-		            int ariketaSize = countAriketakByWorkoutId(document.getId());
+		            List<String> ariketaList = (List<String>) document.get("ariketasID");
+		            int ariketaSize = ariketaList.size();
 	
 		            Workout workout = new Workout(izena, maila, video_url, ariketaSize);
 		            workoutsList.add(workout);
@@ -49,28 +50,6 @@ public class WorkoutsDAO {
 				dbConexion.closeConnection(db);
 				throw new LostDbConnection();
 			}
-	    }
-	    private int countAriketakByWorkoutId(String workoutID) throws InterruptedException, ExecutionException {
-	        // Query the workouts collection for the specific workout ID
-	        ApiFuture<QuerySnapshot> query = db.collection("workouts")
-	                .whereEqualTo(FieldPath.documentId(), workoutID).get();
-	        QuerySnapshot querySnapshot = query.get();
-
-	        // If no matching workout found, return 0
-	        if (querySnapshot.isEmpty()) {
-	            return 0;
-	        }
-
-	        // Get the reference to the ariketak subcollection
-	        QueryDocumentSnapshot workoutDocument = querySnapshot.getDocuments().get(0);
-	        CollectionReference ariketakCollection = workoutDocument.getReference().collection("ariketak");
-
-	        // Query the ariketak subcollection
-	        ApiFuture<QuerySnapshot> ariketakQuery = ariketakCollection.get();
-	        QuerySnapshot ariketakQuerySnapshot = ariketakQuery.get();
-
-	        // Return the count of documents in the ariketak subcollection
-	        return ariketakQuerySnapshot.size();
 	    }
 	    
 		 public ArrayList<Workout> getWorkoutsBackup() throws Exception {
@@ -87,7 +66,8 @@ public class WorkoutsDAO {
 		            String izena = document.getString("izena");
 		            int maila = document.getLong("maila").intValue();
 		            String video_url = document.getString("video_url");
-		            int ariketaSize = countAriketakByWorkoutId(document.getId());
+		            List<String> ariketaList = (List<String>) document.get("ariketasID");
+		            int ariketaSize = ariketaList.size();
 
 		            Workout workout = new Workout(izena, maila, video_url, ariketaSize);
 		            workoutsList.add(workout);
