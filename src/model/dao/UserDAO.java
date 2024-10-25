@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.CollectionReference;
 import com.google.cloud.firestore.DocumentReference;
@@ -14,7 +15,6 @@ import com.google.cloud.firestore.QuerySnapshot;
 
 import model.BcryptMethods;
 import model.exceptions.*;
-import model.metodoak.Backup;
 import model.objects.User;
 import model.offline.UserOffline;
 import resources.GlobalVariables;
@@ -51,10 +51,10 @@ public class UserDAO {
 				// If the password is incorrect
 				return false;
 			}
-			// If the user exists and the password is correct
-			
+			String st =(userDoc.get(0).getString("argazkia"));
+			System.out.println(st);
 			// Create the User object with the data from the Firestore
-			GlobalVariables.loggedUser = new User(userDoc.get(0).getString("erabiltzailea"), userDoc.get(0).getString("izena"), userDoc.get(0).getString("abizenak"), hashedPwd, userDoc.get(0).getDate("jaiotze_data"), userDoc.get(0).getString("email"), userDoc.get(0).getDouble("telefonoa").intValue(), userDoc.get(0).getDouble("maila").intValue());
+			GlobalVariables.loggedUser = new User(userDoc.get(0).getString("erabiltzailea"), userDoc.get(0).getString("izena"), userDoc.get(0).getString("abizenak"), hashedPwd, userDoc.get(0).getDate("jaiotze_data"), userDoc.get(0).getString("email"), userDoc.get(0).getDouble("telefonoa").intValue(), userDoc.get(0).getDouble("maila").intValue(), st);
 			// Close the connection
 			dbConexion.closeConnection(db);
 			return true;
@@ -92,6 +92,7 @@ public class UserDAO {
 			user.put("email", newUser.getEmail());
 			user.put("telefonoa", newUser.getPhone());
 			user.put("maila", newUser.getMaila());
+			user.put("argazkia", newUser.getpPhoto());
 			// Add the user to the collection
 			DocumentReference newUserDR = users.document();
 			newUserDR.set(user);
@@ -145,7 +146,9 @@ public class UserDAO {
 					userDoc.getDate("jaiotze_data"),
 					userDoc.getString("email"),
 					userDoc.getDouble("telefonoa").intValue(),
-					userDoc.getDouble("maila").intValue()
+					userDoc.getDouble("maila").intValue(),
+					userDoc.getString("argazkia")
+					
 				);
 			userList.add(user);
 		}

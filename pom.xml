@@ -41,6 +41,11 @@
 			<artifactId>jbcrypt</artifactId>
 			<version>0.4</version>
 		</dependency>
+		<dependency>
+			<groupId>AriketaFirebase</groupId>
+			<artifactId>AriketaFirebase</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<sourceDirectory>src</sourceDirectory>
@@ -57,8 +62,8 @@
 			<resource>
 				<directory>src</directory>
 				<includes>
-					<include>resources/*.png</include>
-					<include>resources/*.jpg</include>
+					<include>resources/images/*.png</include>
+					<include>resources/images/*.jpg</include>
 				</includes>
 			</resource>
 		</resources>

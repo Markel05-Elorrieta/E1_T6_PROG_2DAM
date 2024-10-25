@@ -3,6 +3,7 @@ package view;
 import java.awt.Font;
 import model.dao.*;
 import model.exceptions.LostDbConnection;
+import model.exceptions.noBackupException;
 import model.metodoak.GlobalButtons;
 
 import javax.swing.JButton;
@@ -131,26 +132,33 @@ public class LoginView extends JFrame {
 		// Login button listener
 		btnLoginEgin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-					boolean isUser = false;
+				boolean isUser = false;
+					
 				if (passwordField.getText().isEmpty() || textFieldErabiltzailea.getText().isEmpty()) {
 					JOptionPane.showMessageDialog(null, "Erabiltzailea edo pasahitza hutsik dago!", "Bete hutsuneak",
 							JOptionPane.ERROR_MESSAGE);
 					return;
 				}
+				
+				boolean errorMsg = true;
+				
 					try {
 						try {
 							isUser = userDAO.checkLogin(textFieldErabiltzailea.getText(), passwordField.getText());
 						} catch (LostDbConnection ldbc) {
 							isUser = userDAO.checkLogin(textFieldErabiltzailea.getText(), passwordField.getText());
+						} catch (noBackupException nbe) {
+							errorMsg = false;
 						}
 						if (isUser) {
 							dispose();
                             WorkoutsView workouts = new WorkoutsView();
                             workouts.setVisible(true);
-						} else {
+						} else if (errorMsg){
 							JOptionPane.showMessageDialog(null, "Erabiltzailea edo pasahitza txarto dago!", "Login errorea", JOptionPane.ERROR_MESSAGE);
 						}
 					} catch (Exception e1) {
+						System.out.println("er");
 						e1.printStackTrace();
 					}
 			}

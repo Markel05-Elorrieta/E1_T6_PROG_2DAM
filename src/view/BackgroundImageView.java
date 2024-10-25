@@ -9,7 +9,7 @@ public class BackgroundImageView extends JPanel {
 
     public BackgroundImageView() {
         // Carga la imagen desde la ruta del recurso
-        imagen = new ImageIcon(getClass().getResource("/resources/duytu2.jpg")).getImage();
+        imagen = new ImageIcon(getClass().getResource("/resources/images/duytu2.jpg")).getImage();
     }
 
     protected void paintComponent(Graphics g) {
