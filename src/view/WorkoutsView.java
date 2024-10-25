@@ -62,6 +62,7 @@ public class WorkoutsView extends JFrame {
 		setContentPane(panel);
 
 		JButton btnNireProfila = new JButton("");
+		btnNireProfila.setBorder(new EmptyBorder(0, 0, 0, 0));
 		btnNireProfila.setBackground(Color.WHITE);
 		btnNireProfila.setToolTipText("Kaixo, " + GlobalVariables.loggedUser.getName() + "!");
 		btnNireProfila.setFont(new Font("Tahoma", Font.PLAIN, 6));
@@ -74,7 +75,7 @@ public class WorkoutsView extends JFrame {
 		panel.add(btnNireProfila);
 
 		JButton btnLogout = new JButton("");
-		btnLogout.setBackground(Color.RED);
+		btnLogout.setBackground(new Color(255, 0, 0));
 		btnLogout.setForeground(Color.WHITE);
 		btnLogout.setToolTipText("Logout...");
 		btnLogout.setFont(new Font("Tahoma", Font.PLAIN, 6));
@@ -171,7 +172,7 @@ public class WorkoutsView extends JFrame {
 		JPanel panelForRadioButtons = new JPanel();
 		panelForRadioButtons.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panelForRadioButtons.setBorder(null);
-		panelForRadioButtons.setBackground(Color.ORANGE);
+		panelForRadioButtons.setBackground(new Color(255, 255, 128));
 		panelForRadioButtons.setOpaque(false);
 		//panelForRadioButtons.setLayout(new BoxLayout(panelForRadioButtons, BoxLayout.Y_AXIS));
 
