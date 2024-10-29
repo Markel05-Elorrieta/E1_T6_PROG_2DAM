@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import model.dao.UserDAO;
 import resources.GlobalVariables;
 
 import javax.swing.JLabel;
@@ -24,6 +25,7 @@ public class ChangePasswordView extends JFrame {
 	private JPasswordField passwdOraingoa;
 	private JPasswordField passwdBerria;
 	private JPasswordField passwdBerriaErrepikatu;
+	private UserDAO userDAO = new UserDAO();
 
 	/**
 	 * Create the frame.
@@ -87,7 +89,10 @@ public class ChangePasswordView extends JFrame {
 		
 		btnGorde.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				String oldPasswd = passwdOraingoa.getPassword().toString();
+				String newPasswd = passwdBerria.getPassword().toString();
+				String confirmNewPasswd = passwdBerriaErrepikatu.getPassword().toString();
+				userDAO.changePassword(GlobalVariables.loggedUser.getUsername(), oldPasswd, newPasswd, confirmNewPasswd);
 			}
 		});
 	}

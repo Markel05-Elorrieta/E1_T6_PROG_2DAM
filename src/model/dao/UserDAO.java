@@ -1,10 +1,13 @@
 package model.dao;
 
+import java.awt.HeadlessException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
+import javax.swing.JOptionPane;
 
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.CollectionReference;
@@ -24,8 +27,6 @@ public class UserDAO {
 	
 	private DbConexion dbConexion = new DbConexion();
 	private BcryptMethods bCrypt = new BcryptMethods();
-	
-	
 	
 	public boolean checkLogin(String username, String password) throws Exception {
 		if (!GlobalVariables.isConnexion) {
@@ -185,4 +186,58 @@ public class UserDAO {
 			// Close the connection
 			dbConexion.closeConnection(db);
 	}
+	
+	
+	public void changePassword(String username, String oldPassword, String newPassword, String confirmNewPassword) {
+		if (!GlobalVariables.isConnexion) {
+			try {
+				UserOffline userOff = new UserOffline();
+			} catch (noBackupException e) {
+				e.printStackTrace();
+			}
+			// return userOff.changePassword(username, newPassword);
+		}
+		// Get the Firestore instance
+		Firestore db = null;
+		try {
+			db = dbConexion.getConnection();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		// Get the collection of users
+		CollectionReference users = db.collection("erabiltzaileak");
+		// Get the user with the given username
+		ApiFuture<QuerySnapshot> query = users.whereEqualTo("erabiltzailea", username).get();
+		QuerySnapshot querySnapshot = null;
+		try {
+			querySnapshot = query.get();
+		} catch (InterruptedException | ExecutionException e) {
+			e.printStackTrace();
+		}
+		List<QueryDocumentSnapshot> userDoc = querySnapshot.getDocuments();
+		if (userDoc.isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Ez da erabiltzailea aurkitu!", "Errorea", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		String oldPasswdDB = userDoc.get(0).getString("pasahitza");
+			if (!BcryptMethods.checkPassword(oldPassword, oldPasswdDB)) {
+				JOptionPane.showMessageDialog(null, "Aurreko pasahitza ez da zuzena!", "Errorea",
+						JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+		if (!newPassword.equals(confirmNewPassword)) {
+			JOptionPane.showMessageDialog(null, "Pasahitz berriak ez dira berdinak!", "Errorea",
+					JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		DocumentReference userDR = users.document(userDoc.get(0).getId());
+		userDR.update("pasahitza", bCrypt.hashPassword(newPassword));
+		// Close the connection
+		try {
+			dbConexion.closeConnection(db);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 }
