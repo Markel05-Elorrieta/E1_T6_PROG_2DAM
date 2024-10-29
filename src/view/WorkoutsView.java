@@ -1,7 +1,5 @@
 package view;
 
-
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -28,13 +26,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JSeparator;
 import java.awt.Color;
 
-
 public class WorkoutsView extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
 	private JRadioButton rdbtnWorkout;
-	
+
 	private WorkoutsDAO workoutsDAO = new WorkoutsDAO();
 	private ArrayList<Workout> workoutsList = new ArrayList<Workout>();
 
@@ -49,7 +46,7 @@ public class WorkoutsView extends JFrame {
 		setBounds(GlobalVariables.WINDOW_X, GlobalVariables.WINDOW_Y, GlobalVariables.WINDOW_WIDTH,
 				GlobalVariables.WINDOW_HEIGHT);
 		setResizable(false);
-		
+
 		BackgroundImageView panel = new BackgroundImageView();
 		panel.setLayout(null);
 		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -62,9 +59,13 @@ public class WorkoutsView extends JFrame {
 		btnNireProfila.setFont(new Font("Tahoma", Font.PLAIN, 6));
 		btnNireProfila.setBounds(884, 11, 53, 35);
 		btnNireProfila.setFocusPainted(false);
-		
+
 		Image originalImage = GlobalVariables.loggedUser.getpPhotoIC().getImage();
-		Image resizedImage = originalImage.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);
+		int buttonWidth = btnNireProfila.getWidth();
+		int buttonHeight = btnNireProfila.getHeight();
+		Image resizedImage = originalImage.getScaledInstance(buttonWidth, buttonHeight, java.awt.Image.SCALE_SMOOTH);
+		btnNireProfila.setIcon(new ImageIcon(resizedImage));
+
 		btnNireProfila.setIcon(new ImageIcon(resizedImage));
 		panel.add(btnNireProfila);
 
@@ -80,7 +81,7 @@ public class WorkoutsView extends JFrame {
 		btnLogout.setFocusPainted(false);
 		btnLogout.setBounds(935, 11, 33, 35);
 		panel.add(btnLogout);
-		
+
 		JPanel panelWorkoutsInfo = new JPanel();
 		panelWorkoutsInfo.setBackground(new Color(124, 252, 0));
 		panelWorkoutsInfo.setBorder(null);
@@ -89,19 +90,19 @@ public class WorkoutsView extends JFrame {
 		panelWorkoutsInfo.setBounds(506, 57, 469, 476);
 		panel.add(panelWorkoutsInfo);
 		panelWorkoutsInfo.setLayout(null);
-		
+
 		JLabel lblWorkoutTitle = new JLabel("");
 		lblWorkoutTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		lblWorkoutTitle.setFont(new Font("Tahoma", Font.PLAIN, 36));
 		lblWorkoutTitle.setBounds(0, 90, 468, 46);
 		panelWorkoutsInfo.add(lblWorkoutTitle);
-		
+
 		JLabel lblWorkoutMaila = new JLabel("Aukeratu workout bat...");
 		lblWorkoutMaila.setHorizontalAlignment(SwingConstants.CENTER);
 		lblWorkoutMaila.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		lblWorkoutMaila.setBounds(1, 173, 467, 36);
 		panelWorkoutsInfo.add(lblWorkoutMaila);
-		
+
 		JButton btnStart = new JButton("▶️ Hasi");
 		btnStart.setHorizontalAlignment(SwingConstants.RIGHT);
 		btnStart.setForeground(Color.WHITE);
@@ -112,13 +113,13 @@ public class WorkoutsView extends JFrame {
 		btnStart.setBounds(159, 415, 147, 35);
 		btnStart.setEnabled(false);
 		panelWorkoutsInfo.add(btnStart);
-		
+
 		JLabel lblWorkoutInformazioa = new JLabel("Workout informazioa");
 		lblWorkoutInformazioa.setHorizontalAlignment(SwingConstants.CENTER);
 		lblWorkoutInformazioa.setFont(new Font("Segoe UI", Font.BOLD | Font.ITALIC, 23));
 		lblWorkoutInformazioa.setBounds(1, 11, 470, 36);
 		panelWorkoutsInfo.add(lblWorkoutInformazioa);
-		
+
 		JLabel lblAriketaSize = new JLabel("");
 		lblAriketaSize.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAriketaSize.setFont(new Font("Tahoma", Font.PLAIN, 22));
@@ -134,7 +135,7 @@ public class WorkoutsView extends JFrame {
 
 		JPanel panelWorkouts = new JPanel();
 		panelWorkouts.setBackground(new Color(0, 0, 0, 0));
-		panelWorkouts.setOpaque(false); 
+		panelWorkouts.setOpaque(false);
 		panelWorkouts.setBounds(3, 57, 490, 477);
 		panel.add(panelWorkouts);
 		panelWorkouts.setLayout(null);
@@ -158,17 +159,17 @@ public class WorkoutsView extends JFrame {
 			} catch (LostDbConnection ldbc) {
 				workoutsList = workoutsDAO.getWorkouts();
 			}
-		}catch (Exception e) {
-	        e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		
-		
+
 		JPanel panelForRadioButtons = new JPanel();
 		panelForRadioButtons.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panelForRadioButtons.setBorder(null);
 		panelForRadioButtons.setBackground(new Color(255, 255, 128));
 		panelForRadioButtons.setOpaque(false);
-		//panelForRadioButtons.setLayout(new BoxLayout(panelForRadioButtons, BoxLayout.Y_AXIS));
+		// panelForRadioButtons.setLayout(new BoxLayout(panelForRadioButtons,
+		// BoxLayout.Y_AXIS));
 
 		for (int i = 0; i < workoutsList.size(); i++) {
 			rdbtnWorkout = new JRadioButton(workoutsList.get(i).getIzena());
@@ -176,18 +177,18 @@ public class WorkoutsView extends JFrame {
 			rdbtnWorkout.setActionCommand(i + "");
 			rdbtnWorkout.setBounds(6, 7 + (i * 30), 334, 23);
 			rdbtnWorkout.setFocusPainted(false);
-			
+
 			// RADIO BUTTON LISTENER
 			rdbtnWorkout.addActionListener(new ActionListener() {
-			    public void actionPerformed(ActionEvent e) {	
-			    	int index = Integer.parseInt(WorkoutsRBGroup.getSelection().getActionCommand());
-			    	Workout workout = workoutsList.get(index);
-			    	lblWorkoutTitle.setText(workout.getIzena());
-			    	int workoutMaila = (int) workout.getMaila();
-			    	lblWorkoutMaila.setText("Maila: " + workoutMaila);
-			    	lblAriketaSize.setText("Ariketa kopurua: " + workout.getAriketaSize());
-			    	btnStart.setEnabled(true);
-			    }
+				public void actionPerformed(ActionEvent e) {
+					int index = Integer.parseInt(WorkoutsRBGroup.getSelection().getActionCommand());
+					Workout workout = workoutsList.get(index);
+					lblWorkoutTitle.setText(workout.getIzena());
+					int workoutMaila = (int) workout.getMaila();
+					lblWorkoutMaila.setText("Maila: " + workoutMaila);
+					lblAriketaSize.setText("Ariketa kopurua: " + workout.getAriketaSize());
+					btnStart.setEnabled(true);
+				}
 			});
 			WorkoutsRBGroup.add(rdbtnWorkout);
 			panelForRadioButtons.add(rdbtnWorkout);
@@ -195,8 +196,7 @@ public class WorkoutsView extends JFrame {
 
 		scrollPane_Workouts.setViewportView(panelForRadioButtons);
 		panelForRadioButtons.setLayout(null);
-		
-		
+
 		JSeparator separator = new JSeparator();
 		separator.setBackground(new Color(0, 0, 0));
 		separator.setOrientation(SwingConstants.VERTICAL);
@@ -213,21 +213,21 @@ public class WorkoutsView extends JFrame {
 				profile.setVisible(true);
 			}
 		});
-		
+
 		// START BUTTON
 		btnStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "COMING SOON..." ,"Workout hasi", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "COMING SOON...", "Workout hasi", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
-		
+
 		// LOGOUT BUTTON
 		btnLogout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				GlobalVariables.loggedUser = null;
 				dispose();
-                LoginView login = new LoginView("");
-                login.setVisible(true);
+				LoginView login = new LoginView("");
+				login.setVisible(true);
 			}
 		});
 	}

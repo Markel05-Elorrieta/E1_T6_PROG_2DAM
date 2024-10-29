@@ -68,12 +68,12 @@ public class ProfileView extends JFrame {
 		panel.setLayout(null);
 		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
 
-		JButton btnSave = new JButton("☑️ Save");
+		JButton btnSave = new JButton("☑️ Gorde aldaketak");
 		btnSave.setHorizontalAlignment(SwingConstants.RIGHT);
 		btnSave.setForeground(Color.WHITE);
 		btnSave.setBackground(Color.ORANGE);
 		btnSave.setFont(new Font("Segoe UI Emoji", Font.BOLD, 18));
-		btnSave.setBounds(405, 483, 142, 35);
+		btnSave.setBounds(355, 485, 240, 35);
 		panel.add(btnSave);
 
 		JLabel lblIzena = new JLabel("Izena");
@@ -189,8 +189,10 @@ public class ProfileView extends JFrame {
 		profilePhoto.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 21));
 		profilePhoto.setBounds(689, 375, 132, 121);
 
+		int widthLabel = profilePhoto.getWidth();
+		int heightLabel = profilePhoto.getHeight();
 		Image originalImage = GlobalVariables.loggedUser.getpPhotoIC().getImage();
-		Image resizedImage = originalImage.getScaledInstance(60, 60, java.awt.Image.SCALE_SMOOTH);
+		Image resizedImage = originalImage.getScaledInstance(widthLabel, heightLabel, java.awt.Image.SCALE_SMOOTH);
 		profilePhoto.setIcon(new ImageIcon(resizedImage));
 		panel.add(profilePhoto);
 
@@ -199,6 +201,13 @@ public class ProfileView extends JFrame {
 		btnAldatuArgazkia.setBounds(522, 413, 148, 35);
 		btnAldatuArgazkia.setFocusPainted(false);
 		panel.add(btnAldatuArgazkia);
+		
+		JLabel lblHemenZureProfilaren = new JLabel("Hemen zure profilaren datuak daukazu. Aldatu nahi duzun datuak eta, gorderi eman gordetzeko aldaketak.");
+		lblHemenZureProfilaren.setHorizontalAlignment(SwingConstants.CENTER);
+		lblHemenZureProfilaren.setForeground(Color.BLACK);
+		lblHemenZureProfilaren.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblHemenZureProfilaren.setBounds(0, 57, 984, 22);
+		panel.add(lblHemenZureProfilaren);
 
 		// LISTENERS
 
