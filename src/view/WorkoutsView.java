@@ -46,6 +46,8 @@ public class WorkoutsView extends JFrame {
 		setBounds(GlobalVariables.WINDOW_X, GlobalVariables.WINDOW_Y, GlobalVariables.WINDOW_WIDTH,
 				GlobalVariables.WINDOW_HEIGHT);
 		setResizable(false);
+		Image resizedIconImage = new ImageIcon(getClass().getResource("/resources/images/logo.png")).getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH);
+		setIconImage(resizedIconImage);
 
 		BackgroundImageView panel = new BackgroundImageView();
 		panel.setLayout(null);
