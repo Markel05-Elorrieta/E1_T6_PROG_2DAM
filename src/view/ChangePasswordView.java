@@ -5,6 +5,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import resources.GlobalVariables;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
@@ -26,10 +29,10 @@ public class ChangePasswordView extends JFrame {
 	 * Create the frame.
 	 */
 	public ChangePasswordView() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(250, 250, 452, 277);
 		setResizable(false);
-		setTitle("Pasahitza aldatu - JEM Fit · Erabiltzailea: ");
+		setTitle("Pasahitza aldatu - JEM Fit · Erabiltzailea: " + GlobalVariables.loggedUser.getUsername());
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -37,7 +40,7 @@ public class ChangePasswordView extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblOraingoPasahitza = new JLabel("Oraingo pasahitza:");
-		lblOraingoPasahitza.setBounds(60, 57, 108, 14);
+		lblOraingoPasahitza.setBounds(43, 54, 108, 14);
 		contentPane.add(lblOraingoPasahitza);
 		
 		passwdOraingoa = new JPasswordField();
@@ -51,7 +54,7 @@ public class ChangePasswordView extends JFrame {
 		contentPane.add(lblNewLabel_1);
 		
 		JLabel lblPasahitzaBerria = new JLabel("Pasahitza berria:");
-		lblPasahitzaBerria.setBounds(60, 100, 108, 14);
+		lblPasahitzaBerria.setBounds(43, 97, 108, 14);
 		contentPane.add(lblPasahitzaBerria);
 		
 		passwdBerria = new JPasswordField();
@@ -59,7 +62,7 @@ public class ChangePasswordView extends JFrame {
 		contentPane.add(passwdBerria);
 		
 		JLabel lblPasahitzaBerriaErrepikatu = new JLabel("Pasahitza berria errepikatu:");
-		lblPasahitzaBerriaErrepikatu.setBounds(60, 143, 147, 14);
+		lblPasahitzaBerriaErrepikatu.setBounds(43, 140, 175, 14);
 		contentPane.add(lblPasahitzaBerriaErrepikatu);
 		
 		passwdBerriaErrepikatu = new JPasswordField();
