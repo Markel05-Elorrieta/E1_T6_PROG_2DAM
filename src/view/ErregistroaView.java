@@ -27,11 +27,11 @@ import model.exceptions.*;
 import model.metodoak.*;
 import model.objects.User;
 import resources.GlobalVariables;
+import java.awt.Component;
 
 public class ErregistroaView extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
 	private JTextField txt_username;
 	private JPasswordField txt_password;
 	private JTextField txt_subname;
@@ -74,6 +74,8 @@ public class ErregistroaView extends JFrame {
 		panel.add(lblErabiltzaile);
 		
 		txt_username = new JTextField();
+		txt_username.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		txt_username.setHorizontalAlignment(SwingConstants.CENTER);
 		txt_username.setColumns(10);
 		txt_username.setBorder(new LineBorder(new Color(0, 0, 0)));
 		txt_username.setBounds(135, 320, 299, 29);
@@ -86,6 +88,8 @@ public class ErregistroaView extends JFrame {
 		panel.add(lblPasahitza);
 		
 		txt_password = new JPasswordField();
+		txt_password.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		txt_password.setHorizontalAlignment(SwingConstants.CENTER);
 		txt_password.setBounds(135, 405, 299, 29);
 		txt_password.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panel.add(txt_password);
@@ -97,6 +101,8 @@ public class ErregistroaView extends JFrame {
 		panel.add(lblAbizenak);
 		
 		txt_subname = new JTextField();
+		txt_subname.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		txt_subname.setHorizontalAlignment(SwingConstants.CENTER);
 		txt_subname.setColumns(10);
 		txt_subname.setBorder(new LineBorder(new Color(0, 0, 0)));
 		txt_subname.setBounds(135, 233, 299, 29);
@@ -109,6 +115,8 @@ public class ErregistroaView extends JFrame {
 		panel.add(lblIzena);
 		
 		txt_name = new JTextField();
+		txt_name.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		txt_name.setHorizontalAlignment(SwingConstants.CENTER);
 		txt_name.setColumns(10);
 		txt_name.setBorder(new LineBorder(new Color(0, 0, 0)));
 		txt_name.setBounds(135, 149, 299, 29);
@@ -121,6 +129,8 @@ public class ErregistroaView extends JFrame {
 		panel.add(lblTelefonoa);
 		
 		txt_tlf = new JTextField();
+		txt_tlf.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		txt_tlf.setHorizontalAlignment(SwingConstants.CENTER);
 		txt_tlf.setColumns(10);
 		txt_tlf.setBorder(new LineBorder(new Color(0, 0, 0)));
 		txt_tlf.setBounds(509, 149, 299, 29);
@@ -139,6 +149,8 @@ public class ErregistroaView extends JFrame {
 		panel.add(lblPasahitzaKonfirmatu);
 		
 		txt_repeatPassword = new JPasswordField();
+		txt_repeatPassword.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		txt_repeatPassword.setHorizontalAlignment(SwingConstants.CENTER);
 		txt_repeatPassword.setBorder(new LineBorder(new Color(0, 0, 0)));
 		txt_repeatPassword.setBounds(509, 405, 299, 29);
 		panel.add(txt_repeatPassword);
@@ -157,6 +169,8 @@ public class ErregistroaView extends JFrame {
 		panel.add(lblEmail);
 		
 		txt_mail = new JTextField();
+		txt_mail.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		txt_mail.setHorizontalAlignment(SwingConstants.CENTER);
 		txt_mail.setColumns(10);
 		txt_mail.setBorder(new LineBorder(new Color(0, 0, 0)));
 		txt_mail.setBounds(509, 320, 299, 29);
@@ -166,6 +180,7 @@ public class ErregistroaView extends JFrame {
 		calendar.set(2020, 0, 1);
 		Date maxdata = calendar.getTime();
 		JDateChooser dateChooser = new JDateChooser(maxdata);
+		dateChooser.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		dateChooser.setBounds(509, 233, 299, 29);
 		dateChooser.setLocale(new Locale("es", "ES"));
 		dateChooser.setDateFormatString("yyyy-MM-dd");

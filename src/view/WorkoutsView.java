@@ -209,7 +209,7 @@ public class WorkoutsView extends JFrame {
 		btnNireProfila.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-				NireProfilaView profile = new NireProfilaView();
+				ProfileView profile = new ProfileView();
 				profile.setVisible(true);
 			}
 		});

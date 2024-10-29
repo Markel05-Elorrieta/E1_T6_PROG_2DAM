@@ -4,13 +4,11 @@ import java.awt.Font;
 import model.dao.*;
 import model.exceptions.LostDbConnection;
 import model.exceptions.noBackupException;
-import model.metodoak.GlobalButtons;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
@@ -29,8 +27,6 @@ public class LoginView extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JTextField textFieldErabiltzailea;
 	private JPasswordField passwordField;
-	private JLabel lblConnecStatus;
-	private GlobalButtons globalButtons = new GlobalButtons();
 	UserDAO userDAO = new UserDAO();
 
 	/**
