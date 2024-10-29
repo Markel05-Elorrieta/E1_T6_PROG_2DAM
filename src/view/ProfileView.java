@@ -61,7 +61,7 @@ public class ProfileView extends JFrame {
 		setBounds(GlobalVariables.WINDOW_X, GlobalVariables.WINDOW_Y, GlobalVariables.WINDOW_WIDTH,
 				GlobalVariables.WINDOW_HEIGHT);
 		setResizable(false);
-		setTitle("Nire profila - JEM Fit · Erabilzailea: " + GlobalVariables.loggedUser.getUsername());
+		setTitle("Nire profila - JEM Fit · Erabiltzailea: " + GlobalVariables.loggedUser.getUsername());
 
 		BackgroundImageView panel = new BackgroundImageView();
 		setContentPane(panel);
@@ -202,12 +202,12 @@ public class ProfileView extends JFrame {
 		btnAldatuArgazkia.setFocusPainted(false);
 		panel.add(btnAldatuArgazkia);
 		
-		JLabel lblHemenZureProfilaren = new JLabel("Hemen zure profilaren datuak daukazu. Aldatu nahi duzun datuak eta, gorderi eman gordetzeko aldaketak.");
-		lblHemenZureProfilaren.setHorizontalAlignment(SwingConstants.CENTER);
-		lblHemenZureProfilaren.setForeground(Color.BLACK);
-		lblHemenZureProfilaren.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		lblHemenZureProfilaren.setBounds(0, 57, 984, 22);
-		panel.add(lblHemenZureProfilaren);
+		JLabel lblSubtitle = new JLabel("Hemen zure profilaren datuak daukazu. Aldatu nahi duzun datuak eta, gorderi eman gordetzeko aldaketak.");
+		lblSubtitle.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSubtitle.setForeground(Color.BLACK);
+		lblSubtitle.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblSubtitle.setBounds(0, 57, 984, 22);
+		panel.add(lblSubtitle);
 
 		// LISTENERS
 
