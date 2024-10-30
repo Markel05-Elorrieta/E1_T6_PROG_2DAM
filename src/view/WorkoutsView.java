@@ -59,7 +59,7 @@ public class WorkoutsView extends JFrame {
 		btnNireProfila.setBackground(Color.WHITE);
 		btnNireProfila.setToolTipText("Kaixo, " + GlobalVariables.loggedUser.getName() + "!");
 		btnNireProfila.setFont(new Font("Tahoma", Font.PLAIN, 6));
-		btnNireProfila.setBounds(884, 11, 53, 35);
+		btnNireProfila.setBounds(890, 11, 47, 35);
 		btnNireProfila.setFocusPainted(false);
 
 		Image originalImage = GlobalVariables.loggedUser.getpPhotoIC().getImage();

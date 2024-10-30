@@ -6,10 +6,12 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import model.BcryptMethods;
 import model.dao.UserDAO;
 import resources.GlobalVariables;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.SwingConstants;
@@ -26,6 +28,7 @@ public class ChangePasswordView extends JFrame {
 	private JPasswordField passwdBerria;
 	private JPasswordField passwdBerriaErrepikatu;
 	private UserDAO userDAO = new UserDAO();
+	private BcryptMethods bc = new BcryptMethods();
 
 	/**
 	 * Create the frame.
@@ -89,10 +92,27 @@ public class ChangePasswordView extends JFrame {
 		
 		btnGorde.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String oldPasswd = passwdOraingoa.getPassword().toString();
-				String newPasswd = passwdBerria.getPassword().toString();
-				String confirmNewPasswd = passwdBerriaErrepikatu.getPassword().toString();
-				userDAO.changePassword(GlobalVariables.loggedUser.getUsername(), oldPasswd, newPasswd, confirmNewPasswd);
+				String oldPasswd = passwdOraingoa.getText();
+				String newPasswd = passwdBerria.getText();
+				String confirmNewPasswd = passwdBerriaErrepikatu.getText();
+				
+				if (oldPasswd.isEmpty() || newPasswd.isEmpty() || confirmNewPasswd.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Eremu guztiak bete behar dira.", "Errorea",
+							JOptionPane.ERROR_MESSAGE);
+				} else if (!bc.checkPassword(oldPasswd, GlobalVariables.loggedUser.getPassword())) {
+					JOptionPane.showMessageDialog(null, "Oraingo pasahitza okerra da.", "Errorea",
+							JOptionPane.ERROR_MESSAGE);
+				} else if (newPasswd.equals(confirmNewPasswd)) {
+					try {
+						userDAO.changePassword(newPasswd);
+						dispose();
+						JOptionPane.showMessageDialog(null, "Pasahitza ondo aldatu da.", "Informazioa",
+								JOptionPane.INFORMATION_MESSAGE);
+					} catch (Exception e1) {
+						JOptionPane.showMessageDialog(null, "Errore bat gertatu da pasahitza aldatzean.", "Errorea",
+								JOptionPane.ERROR_MESSAGE);
+					}
+				}
 			}
 		});
 	}
