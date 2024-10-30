@@ -46,6 +46,8 @@ public class WorkoutsView extends JFrame {
 		setBounds(GlobalVariables.WINDOW_X, GlobalVariables.WINDOW_Y, GlobalVariables.WINDOW_WIDTH,
 				GlobalVariables.WINDOW_HEIGHT);
 		setResizable(false);
+		Image resizedIconImage = new ImageIcon(getClass().getResource("/resources/images/logo.png")).getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH);
+		setIconImage(resizedIconImage);
 
 		BackgroundImageView panel = new BackgroundImageView();
 		panel.setLayout(null);
@@ -57,7 +59,7 @@ public class WorkoutsView extends JFrame {
 		btnNireProfila.setBackground(Color.WHITE);
 		btnNireProfila.setToolTipText("Kaixo, " + GlobalVariables.loggedUser.getName() + "!");
 		btnNireProfila.setFont(new Font("Tahoma", Font.PLAIN, 6));
-		btnNireProfila.setBounds(884, 11, 53, 35);
+		btnNireProfila.setBounds(890, 11, 47, 35);
 		btnNireProfila.setFocusPainted(false);
 
 		Image originalImage = GlobalVariables.loggedUser.getpPhotoIC().getImage();

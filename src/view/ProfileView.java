@@ -62,6 +62,8 @@ public class ProfileView extends JFrame {
 				GlobalVariables.WINDOW_HEIGHT);
 		setResizable(false);
 		setTitle("Nire profila - JEM Fit · Erabiltzailea: " + GlobalVariables.loggedUser.getUsername());
+		Image resizedIconImage = new ImageIcon(getClass().getResource("/resources/images/logo.png")).getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH);
+		setIconImage(resizedIconImage);
 
 		BackgroundImageView panel = new BackgroundImageView();
 		setContentPane(panel);

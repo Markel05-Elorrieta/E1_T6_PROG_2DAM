@@ -1,10 +1,13 @@
 package view;
 
 import java.awt.Font;
+import java.awt.Image;
+
 import model.dao.*;
 import model.exceptions.LostDbConnection;
 import model.exceptions.noBackupException;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -37,6 +40,8 @@ public class LoginView extends JFrame {
 		setBounds(GlobalVariables.WINDOW_X, GlobalVariables.WINDOW_Y, GlobalVariables.WINDOW_WIDTH, GlobalVariables.WINDOW_HEIGHT);
 		setResizable(false);
 		setTitle("Login - JEM Fit");
+		Image resizedIconImage = new ImageIcon(getClass().getResource("/resources/images/logo.png")).getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH);
+		setIconImage(resizedIconImage);
 		
 		BackgroundImageView panel = new BackgroundImageView();
 		setContentPane(panel);

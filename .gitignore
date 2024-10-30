@@ -1,9 +1,13 @@
+# Ignore configuration files and directories
 .settings/
 bin/
 target/
 .classpath
 .project
+
+# Ignore specific files
 README.md
 /src/resources/JEM_private_key.json
+
+# Ignore backup files
 /src/resources/backup/*
-/src/resources/backup/UsersBackup.dat
