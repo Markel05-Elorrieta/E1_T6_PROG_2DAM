@@ -52,11 +52,11 @@ public class ChangePasswordView extends JFrame {
 		passwdOraingoa.setBounds(217, 54, 175, 20);
 		contentPane.add(passwdOraingoa);
 		
-		JLabel lblNewLabel_1 = new JLabel("PASAHITZA ALDAKETA");
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setBounds(0, 11, 434, 14);
-		contentPane.add(lblNewLabel_1);
+		JLabel lblPasahitzaAldaketa = new JLabel("PASAHITZA ALDAKETA");
+		lblPasahitzaAldaketa.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblPasahitzaAldaketa.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPasahitzaAldaketa.setBounds(0, 11, 434, 14);
+		contentPane.add(lblPasahitzaAldaketa);
 		
 		JLabel lblPasahitzaBerria = new JLabel("Pasahitza berria:");
 		lblPasahitzaBerria.setBounds(43, 97, 108, 14);
@@ -104,7 +104,7 @@ public class ChangePasswordView extends JFrame {
 							JOptionPane.ERROR_MESSAGE);
 				} else if (newPasswd.equals(confirmNewPasswd)) {
 					try {
-						userDAO.changePassword(newPasswd);
+						//userDAO.changePassword(newPasswd);
 						dispose();
 						JOptionPane.showMessageDialog(null, "Pasahitza ondo aldatu da.", "Informazioa",
 								JOptionPane.INFORMATION_MESSAGE);

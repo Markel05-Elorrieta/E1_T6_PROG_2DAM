@@ -22,6 +22,7 @@ import model.dao.UserDAO;
 import model.exceptions.DateException;
 import model.exceptions.EmailException;
 import model.exceptions.EmptyFieldException;
+import model.exceptions.LostDbConnection;
 import model.exceptions.PasswordsNotMatchException;
 import model.exceptions.PhoneNumException;
 import model.metodoak.GlobalButtons;
@@ -50,7 +51,6 @@ public class ProfileView extends JFrame {
 	private ValidateData methods = new ValidateData();
 	private UserDAO userDAO = new UserDAO();
 	private Images images = new Images();
-
 	private String newPhoto = null;
 
 	/**
@@ -280,8 +280,11 @@ public class ProfileView extends JFrame {
 						updateUser.setpPhoto(GlobalVariables.loggedUser.getpPhoto());
 					}
 					methods.checkEmptyFields(updateUser);
-
-					userDAO.updateUser(updateUser);
+					try {
+						userDAO.updateUser(updateUser);
+					}catch (LostDbConnection ldbc) {
+						userDAO.updateUser(updateUser);
+					}
 					JOptionPane.showMessageDialog(null, "Erabiltzailea ondo modifikatu da!", "Erabiltzailea",
 							JOptionPane.INFORMATION_MESSAGE);
 				} catch (PasswordsNotMatchException pnme) {

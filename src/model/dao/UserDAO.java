@@ -156,10 +156,12 @@ public class UserDAO {
 	public void updateUser(User updateUser) throws Exception {
 		if (!GlobalVariables.isConnexion) {
 			UserOffline userOff = new UserOffline();
-			// return userOff.updateUser(updateUser);
+			userOff.updateUser(updateUser);
 		}
 		// Get the Firestore instance
 		Firestore db = dbConexion.getConnection();
+		try {
+
 		// Get the collection of users
 		CollectionReference users = db.collection("erabiltzaileak");
 		// Get the user with the given username
@@ -180,22 +182,27 @@ public class UserDAO {
 		User.updateLoggedUser(updateUser);
 		// Close the connection
 		dbConexion.closeConnection(db);
+		} catch (Exception e) {
+			dbConexion.closeConnection(db);
+			throw new LostDbConnection();
+		}
 	}
 
-	public void changePassword(String newPassword) throws Exception {
+	public void changePassword(String newPassword, User updateUser) throws Exception {
+		String hashedPw = bCrypt.hashPassword(newPassword);
 		if (!GlobalVariables.isConnexion) {
 			UserOffline userOff = new UserOffline();
-			// return userOff.updatePasswd();
+			//userOff.changePassword(hashedPw, updateUser);
 		}
 		
-		String hashedPw = bCrypt.hashPassword(newPassword);
+		
 		
 		// Get the Firestore instance
 		Firestore db = dbConexion.getConnection();
 		// Get the collection of users
 		CollectionReference users = db.collection("erabiltzaileak");
 		// Get the user with the given username
-		ApiFuture<QuerySnapshot> query = users.whereEqualTo("erabiltzailea", GlobalVariables.loggedUser.getUsername()).get();
+		ApiFuture<QuerySnapshot> query = users.whereEqualTo("erabiltzailea", updateUser.getUsername()).get();
 		QuerySnapshot querySnapshot = query.get();
 		List<QueryDocumentSnapshot> userDoc = querySnapshot.getDocuments();
 		// Update the user with the new data

@@ -1,9 +1,13 @@
 package model.metodoak;
 
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.Date;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
@@ -44,7 +48,7 @@ public class Backup extends Thread{
 		
 		try {
 			System.out.println("Connected");
-			
+			this.updateUsers();
 			this.userBackup();
 			this.workoutBackup();
 		} catch (Exception e) {
@@ -99,5 +103,50 @@ public class Backup extends Thread{
 		}
 		fos.close();
 		dos.close();
+	}
+	
+	private void updateUsers() {
+		try {
+			File file = new File("src/resources/backup/UpdateUsers.dat");
+			FileInputStream fis = new FileInputStream(file);
+			DataInputStream dis = new DataInputStream(fis);
+			UserDAO userDAO = new UserDAO();
+			while (fis.getChannel().position() < fis.getChannel().size()) {
+				try {
+					User user = new User();
+					user.setUsername(dis.readUTF());
+					user.setName(dis.readUTF());
+					user.setSubname(dis.readUTF());
+					user.setPassword(dis.readUTF());
+					user.setEmail(dis.readUTF());
+					user.setPhone(dis.readInt());
+					user.setMaila(dis.readInt());
+					Date d = new Date(0);
+					user.setBirthdate(d);
+					dis.readUTF();
+					user.setpPhoto(dis.readUTF());
+					
+					userDAO.updateUser(user);
+
+				} catch (Exception e) {
+                    break;
+				}
+				
+			}
+			
+			dis.close();
+			fis.close();
+			
+	       if (file.delete()) {
+	            System.out.println("File deleted successfully: " + file.getPath());
+	        } else {
+	            System.out.println("Failed to delete the file: " + file.getPath());
+	        }
+			
+			
+
+		} catch (Exception e) {
+	        return;
+		}
 	}
 }
