@@ -70,6 +70,71 @@ public class UserOffline {
 		}
 		return false;
 	}
+	
+	public void updateUser(User updateUser) {
+		for (int i = 0; i < this.userList.size(); i++) {
+			if (this.userList.get(i).getUsername().equals(updateUser.getUsername())) {
+				
+				try {
+					
+					File file = new File("src/resources/backup/UpdateUsers.dat");
+					FileOutputStream fos = new FileOutputStream(file);
+					DataOutputStream dos = new DataOutputStream(fos);
+					
+			        dos.writeUTF(updateUser.getUsername());
+			        dos.writeUTF(updateUser.getName());
+			        dos.writeUTF(updateUser.getSubname());
+			        dos.writeUTF(updateUser.getPassword());
+			        dos.writeUTF(updateUser.getEmail());
+			        dos.writeInt(updateUser.getPhone());
+			        dos.writeInt(updateUser.getMaila());
+			        dos.writeUTF(updateUser.getBirthdate().toString());
+			        dos.writeUTF(updateUser.getpPhoto());
+			        
+			        fos.close();
+					dos.close();
+				    
+				} catch (Exception e) {
+				    e.printStackTrace(); 
+				}
+				
+				return;
+			}
+		}
+	}
+	
+	public void updateUser(String newPassword) {
+		for (int i = 0; i < this.userList.size(); i++) {
+			if (this.userList.get(i).getUsername().equals(GlobalVariables.loggedUser.getUsername())) {	
+				try {
+					
+					File file = new File("src/resources/backup/UpdatePassword.dat");
+					FileOutputStream fos = new FileOutputStream(file);
+					DataOutputStream dos = new DataOutputStream(fos);
+					
+			        dos.writeUTF(updateUser.getUsername());
+			        dos.writeUTF(updateUser.getName());
+			        dos.writeUTF(updateUser.getSubname());
+			        dos.writeUTF(updateUser.getPassword());
+			        dos.writeUTF(updateUser.getEmail());
+			        dos.writeInt(updateUser.getPhone());
+			        dos.writeInt(updateUser.getMaila());
+			        dos.writeUTF(updateUser.getBirthdate().toString());
+			        dos.writeUTF(updateUser.getpPhoto());
+			        
+			        fos.close();
+					dos.close();
+				    
+				} catch (Exception e) {
+				    e.printStackTrace(); 
+				}
+				
+				return;
+			}
+		}
+	}
+	
+	
 }
 
 
