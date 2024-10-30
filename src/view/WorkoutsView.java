@@ -59,7 +59,7 @@ public class WorkoutsView extends JFrame {
 		btnNireProfila.setBackground(Color.WHITE);
 		btnNireProfila.setToolTipText("Kaixo, " + GlobalVariables.loggedUser.getName() + "!");
 		btnNireProfila.setFont(new Font("Tahoma", Font.PLAIN, 6));
-		btnNireProfila.setBounds(890, 11, 47, 35);
+		btnNireProfila.setBounds(897, 11, 47, 35);
 		btnNireProfila.setFocusPainted(false);
 
 		Image originalImage = GlobalVariables.loggedUser.getpPhotoIC().getImage();
@@ -67,12 +67,10 @@ public class WorkoutsView extends JFrame {
 		int buttonHeight = btnNireProfila.getHeight();
 		Image resizedImage = originalImage.getScaledInstance(buttonWidth, buttonHeight, java.awt.Image.SCALE_SMOOTH);
 		btnNireProfila.setIcon(new ImageIcon(resizedImage));
-
-		btnNireProfila.setIcon(new ImageIcon(resizedImage));
 		panel.add(btnNireProfila);
 
 		JButton btnLogout = new JButton("");
-		btnLogout.setBackground(new Color(255, 0, 0));
+		btnLogout.setBackground(Color.RED);
 		btnLogout.setForeground(Color.WHITE);
 		btnLogout.setToolTipText("Logout...");
 		btnLogout.setFont(new Font("Tahoma", Font.PLAIN, 6));
@@ -81,7 +79,7 @@ public class WorkoutsView extends JFrame {
 		Image resizedImage1 = originalImage1.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);
 		btnLogout.setIcon(new ImageIcon(resizedImage1));
 		btnLogout.setFocusPainted(false);
-		btnLogout.setBounds(935, 11, 33, 35);
+		btnLogout.setBounds(942, 11, 33, 35);
 		panel.add(btnLogout);
 
 		JPanel panelWorkoutsInfo = new JPanel();
@@ -128,12 +126,12 @@ public class WorkoutsView extends JFrame {
 		lblAriketaSize.setBounds(1, 264, 468, 36);
 		panelWorkoutsInfo.add(lblAriketaSize);
 
-		JLabel lblLogin_Header = new JLabel("WORKOUTS");
-		lblLogin_Header.setForeground(Color.WHITE);
-		lblLogin_Header.setHorizontalAlignment(SwingConstants.CENTER);
-		lblLogin_Header.setFont(new Font("Segoe UI Black", Font.PLAIN, 30));
-		lblLogin_Header.setBounds(0, 11, 984, 35);
-		panel.add(lblLogin_Header);
+		JLabel lblHeader = new JLabel("WORKOUTS");
+		lblHeader.setForeground(Color.WHITE);
+		lblHeader.setHorizontalAlignment(SwingConstants.CENTER);
+		lblHeader.setFont(new Font("Segoe UI Black", Font.PLAIN, 30));
+		lblHeader.setBounds(0, 11, 984, 35);
+		panel.add(lblHeader);
 
 		JPanel panelWorkouts = new JPanel();
 		panelWorkouts.setBackground(new Color(0, 0, 0, 0));
@@ -219,7 +217,16 @@ public class WorkoutsView extends JFrame {
 		// START BUTTON
 		btnStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "COMING SOON...", "Workout hasi", JOptionPane.INFORMATION_MESSAGE);
+				dispose();
+				Workout workoutChoose = workoutsList.get(Integer.parseInt(WorkoutsRBGroup.getSelection().getActionCommand()));
+				try {
+					workoutChoose.setAriketasID(workoutsDAO.getAriketasIDByWorkout(workoutChoose));
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null, "Errorea ariketa ID-ak lortzean...", "Errorea",
+							JOptionPane.ERROR_MESSAGE);
+				}
+				AriketakView ariketak = new AriketakView(workoutChoose);
+				ariketak.setVisible(true);
 			}
 		});
 

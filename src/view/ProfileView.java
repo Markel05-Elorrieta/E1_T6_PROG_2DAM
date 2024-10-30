@@ -74,6 +74,7 @@ public class ProfileView extends JFrame {
 		btnSave.setHorizontalAlignment(SwingConstants.RIGHT);
 		btnSave.setForeground(Color.WHITE);
 		btnSave.setBackground(Color.ORANGE);
+		btnSave.setFocusPainted(false);
 		btnSave.setFont(new Font("Segoe UI Emoji", Font.BOLD, 18));
 		btnSave.setBounds(355, 485, 240, 35);
 		panel.add(btnSave);
