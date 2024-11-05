@@ -103,14 +103,14 @@ public class WorkoutsView extends JFrame {
 		lblWorkoutMaila.setBounds(1, 173, 467, 36);
 		panelWorkoutsInfo.add(lblWorkoutMaila);
 
-		JButton btnStart = new JButton("▶️ Hasi");
+		JButton btnStart = new JButton("↗️ Zabaldu");
 		btnStart.setHorizontalAlignment(SwingConstants.RIGHT);
 		btnStart.setForeground(Color.WHITE);
 		btnStart.setBackground(new Color(46, 139, 87));
 		btnStart.setVerticalAlignment(SwingConstants.BOTTOM);
 		btnStart.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 20));
 		btnStart.setFocusPainted(false);
-		btnStart.setBounds(159, 415, 147, 35);
+		btnStart.setBounds(153, 415, 174, 35);
 		btnStart.setEnabled(false);
 		panelWorkoutsInfo.add(btnStart);
 

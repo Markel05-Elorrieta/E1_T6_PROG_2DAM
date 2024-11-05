@@ -1,12 +1,10 @@
 package view;
 
-import java.awt.EventQueue;
 import java.awt.Image;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import model.dao.AriketakDAO;
@@ -20,18 +18,27 @@ import java.awt.Font;
 import java.awt.Color;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
-import javax.swing.JTabbedPane;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class AriketakView extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private AriketakDAO ariketakDAO = new AriketakDAO();
 	private ArrayList<Ariketa> ariketaList = new ArrayList<Ariketa>();
-
+	private Ariketa ariketaActual;
+	private int posAriketa = 0;
+	
 	/**
 	 * Create the frame.
 	 */
 	public AriketakView(Workout selectedWorkout) {
+		try {
+			ariketaList = ariketakDAO.getAriketak(selectedWorkout);
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Ezin izan dira ariketak kargatu. Barkatu eragozpenak.");
+		}
+
 		setTitle(selectedWorkout.getIzena() + " - JEM Fit · Erabiltzailea: " + GlobalVariables.loggedUser.getUsername());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(GlobalVariables.WINDOW_X, GlobalVariables.WINDOW_Y, GlobalVariables.WINDOW_WIDTH, GlobalVariables.WINDOW_HEIGHT);
@@ -39,26 +46,20 @@ public class AriketakView extends JFrame {
 		Image resizedIconImage = new ImageIcon(getClass().getResource("/resources/images/logo.png")).getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH);
 		setIconImage(resizedIconImage);
 		
-		try {
-			ariketaList = ariketakDAO.getAriketak(selectedWorkout);
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Ezin izan dira ariketak kargatu. Barkatu eragozpenak.");
-		}
-		
 		BackgroundImageView panel = new BackgroundImageView();
 		setContentPane(panel);
 		panel.setLayout(null);
 		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		
-		JButton btnAtera = new JButton("⏹️ Amaitu");
-		btnAtera.setVerticalAlignment(SwingConstants.BOTTOM);
-		btnAtera.setHorizontalAlignment(SwingConstants.RIGHT);
-		btnAtera.setForeground(Color.WHITE);
-		btnAtera.setFont(new Font("Segoe UI Emoji", Font.BOLD, 20));
-		btnAtera.setFocusPainted(false);
-		btnAtera.setBackground(Color.RED);
-		btnAtera.setBounds(327, 480, 170, 35);
-		panel.add(btnAtera);
+		JButton btnAmaitu = new JButton("⏹️ Amaitu");
+		btnAmaitu.setVerticalAlignment(SwingConstants.BOTTOM);
+		btnAmaitu.setHorizontalAlignment(SwingConstants.RIGHT);
+		btnAmaitu.setForeground(Color.WHITE);
+		btnAmaitu.setFont(new Font("Segoe UI Emoji", Font.BOLD, 20));
+		btnAmaitu.setFocusPainted(false);
+		btnAmaitu.setBackground(Color.RED);
+		btnAmaitu.setBounds(327, 480, 170, 35);
+		panel.add(btnAmaitu);
 		
 		JLabel lblKronometroNagusia = new JLabel("Crono princip");
 		lblKronometroNagusia.setFont(new Font("Tahoma", Font.PLAIN, 17));
@@ -93,10 +94,9 @@ public class AriketakView extends JFrame {
 		btnLogout.setBounds(942, 11, 33, 35);
 		panel.add(btnLogout);
 		
-		JLabel lblHeader = new JLabel("");
+		JLabel lblHeader = new JLabel("");	
 		lblHeader.setHorizontalAlignment(SwingConstants.CENTER);
 		lblHeader.setForeground(Color.WHITE);
-		lblHeader.setText("ARIKETA");
 		lblHeader.setFont(new Font("Segoe UI Black", Font.PLAIN, 30));
 		lblHeader.setBounds(0, 11, 984, 35);
 		panel.add(lblHeader);
@@ -104,10 +104,17 @@ public class AriketakView extends JFrame {
 		JLabel lblDeskrAriketa = new JLabel("");
 		lblDeskrAriketa.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDeskrAriketa.setForeground(Color.BLACK);
-		lblDeskrAriketa.setText("Deskribapena: " );
+		lblDeskrAriketa.setText("Ez dago deskribapenik.");
 		lblDeskrAriketa.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblDeskrAriketa.setBounds(0, 51, 984, 29);
 		panel.add(lblDeskrAriketa);
+		
+		if (!ariketaList.isEmpty()) {
+			
+			ariketaActual = ariketaList.get(posAriketa);
+			lblHeader.setText(ariketaActual.getIzena());
+			lblDeskrAriketa.setText("Deskribapena: " + ariketaActual.getDeskribapena());
+		}
 		
 		JLabel lblWorkouta = new JLabel("Workout-a: " + selectedWorkout.getIzena());
 		lblWorkouta.setHorizontalAlignment(SwingConstants.CENTER);
@@ -118,7 +125,6 @@ public class AriketakView extends JFrame {
 		
 		JButton btnStart = new JButton("▶️ Hasi");
 		btnStart.setVerticalAlignment(SwingConstants.BOTTOM);
-		btnStart.setHorizontalAlignment(SwingConstants.RIGHT);
 		btnStart.setForeground(Color.WHITE);
 		btnStart.setFont(new Font("Segoe UI Emoji", Font.BOLD, 20));
 		btnStart.setFocusPainted(false);
@@ -126,6 +132,20 @@ public class AriketakView extends JFrame {
 		btnStart.setBounds(526, 480, 170, 35);
 		panel.add(btnStart);
 		
+		// LISTENERS
 		
+		btnAmaitu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				WorkoutsView workoutsView = new WorkoutsView();
+				workoutsView.setVisible(true);
+			}
+		});
+		
+		btnStart.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 	}
 }
