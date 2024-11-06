@@ -11,9 +11,9 @@ public class ValidateData {
 		}
 	}
 	
-	public int checkEmail(String email) throws EmailException {
+	public String checkEmail(String email) throws EmailException {
 		if (email.contains("@") && email.contains(".")) {
-			return 1;
+			return email;
 		} else {
 			throw new EmailException();
 		}

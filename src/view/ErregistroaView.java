@@ -237,7 +237,7 @@ public class ErregistroaView extends JFrame {
 						username = "";
 					}
 					dispose();
-					LoginView login = new LoginView(username);
+					LoginView login = new LoginView(username.toLowerCase());
 					login.setVisible(true);
 				} catch (PasswordsNotMatchException pnme) {
 					pnme.getMessage();

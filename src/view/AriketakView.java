@@ -7,6 +7,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.border.EmptyBorder;
 
+import model.cronometers.KronometroAriketak;
+import model.cronometers.KronometroNagusia;
 import model.dao.AriketakDAO;
 import model.objects.Ariketa;
 import model.objects.Workout;
@@ -21,24 +23,37 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class AriketakView extends JFrame {
+public class AriketakView extends JFrame{
 
-	private static final long serialVersionUID = 1L;
-	private AriketakDAO ariketakDAO = new AriketakDAO();
-	private ArrayList<Ariketa> ariketaList = new ArrayList<Ariketa>();
-	private Ariketa ariketaActual;
-	private int posAriketa = 0;
+	public static final long serialVersionUID = 1L;
+	public AriketakDAO ariketakDAO = new AriketakDAO();
+	public ArrayList<Ariketa> ariketaList = new ArrayList<Ariketa>();
+	public Ariketa ariketaActual;
+	public int posAriketa = 0;
+	public JLabel lblAriketaHeader = new JLabel();
+	public JLabel lblDeskrAriketa = new JLabel();
+	public JLabel lblLandutakoMuskulua = new JLabel();
+	JLabel lblKronometroNagusia = new JLabel();
+	public JLabel lblKronometroAriketa = new JLabel();
+	
+	
+	
+	/* ----------------- */
+
+	
 	
 	/**
 	 * Create the frame.
 	 */
-	public AriketakView(Workout selectedWorkout) {
+	public AriketakView(Workout selectedWorkout, KronometroNagusia kronometroNagusia) {
 		try {
 			ariketaList = ariketakDAO.getAriketak(selectedWorkout);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Ezin izan dira ariketak kargatu. Barkatu eragozpenak.");
 		}
-
+		
+		AriketakView thisClass = this;
+		
 		setTitle(selectedWorkout.getIzena() + " - JEM Fit · Erabiltzailea: " + GlobalVariables.loggedUser.getUsername());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(GlobalVariables.WINDOW_X, GlobalVariables.WINDOW_Y, GlobalVariables.WINDOW_WIDTH, GlobalVariables.WINDOW_HEIGHT);
@@ -61,7 +76,7 @@ public class AriketakView extends JFrame {
 		btnAmaitu.setBounds(327, 480, 170, 35);
 		panel.add(btnAmaitu);
 		
-		JLabel lblKronometroNagusia = new JLabel("Crono princip");
+
 		lblKronometroNagusia.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		lblKronometroNagusia.setBounds(88, 152, 114, 29);
 		panel.add(lblKronometroNagusia);
@@ -94,14 +109,14 @@ public class AriketakView extends JFrame {
 		btnLogout.setBounds(942, 11, 33, 35);
 		panel.add(btnLogout);
 		
-		JLabel lblAriketaHeader = new JLabel("");	
+			
 		lblAriketaHeader.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAriketaHeader.setForeground(Color.WHITE);
 		lblAriketaHeader.setFont(new Font("Segoe UI Black", Font.PLAIN, 30));
 		lblAriketaHeader.setBounds(0, 11, 984, 35);
 		panel.add(lblAriketaHeader);
 		
-		JLabel lblDeskrAriketa = new JLabel("");
+		
 		lblDeskrAriketa.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDeskrAriketa.setForeground(Color.BLACK);
 		lblDeskrAriketa.setText("Ez dago deskribapenik.");
@@ -113,6 +128,7 @@ public class AriketakView extends JFrame {
 			ariketaActual = ariketaList.get(posAriketa);
 			lblAriketaHeader.setText("Ariketa: " + ariketaActual.getIzena());
 			lblDeskrAriketa.setText("Deskribapena: " + ariketaActual.getDeskribapena());
+			lblLandutakoMuskulua.setText("Landutako muskulua: " + ariketaActual.getLandutako_muskulua());
 		}
 		
 		JLabel lblWorkouta = new JLabel("Workout-a: " + selectedWorkout.getIzena());
@@ -131,12 +147,24 @@ public class AriketakView extends JFrame {
 		btnStart.setBounds(526, 480, 170, 35);
 		panel.add(btnStart);
 		
-		JLabel lblLandutakoMuskulua = new JLabel("Landutako muskulua: " + ariketaActual.getLandutako_muskulua());
+		
 		lblLandutakoMuskulua.setHorizontalAlignment(SwingConstants.CENTER);
 		lblLandutakoMuskulua.setForeground(Color.BLACK);
 		lblLandutakoMuskulua.setFont(new Font("Trebuchet MS", Font.PLAIN, 17));
 		lblLandutakoMuskulua.setBounds(0, 111, 984, 22);
 		panel.add(lblLandutakoMuskulua);
+		
+	
+		
+	
+		lblKronometroAriketa.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblKronometroAriketa.setBounds(88, 205, 114, 29);
+		panel.add(lblKronometroAriketa);
+		
+		kronometroNagusia.updateLbl(lblKronometroNagusia);
+		
+		
+		
 		
 		// LISTENERS
 		
@@ -150,8 +178,13 @@ public class AriketakView extends JFrame {
 		
 		btnStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+		     
+			KronometroAriketak ka = new KronometroAriketak(thisClass);
+			
 				
 			}
 		});
 	}
+	
+   
 }

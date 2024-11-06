@@ -86,7 +86,8 @@ public class UserDAO {
 
 			Map<String, Object> user = new HashMap<>();
 			// Add the data to the map
-			user.put("erabiltzailea", newUser.getUsername());
+			
+			user.put("erabiltzailea", newUser.getUsername().toLowerCase());
 			user.put("izena", newUser.getName());
 			user.put("abizenak", newUser.getSubname());
 			user.put("pasahitza", newUser.getPassword());

@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.border.EmptyBorder;
 
+import model.cronometers.KronometroNagusia;
 import model.dao.WorkoutsDAO;
 import model.exceptions.LostDbConnection;
 import model.objects.Workout;
@@ -225,7 +226,8 @@ public class WorkoutsView extends JFrame {
 					JOptionPane.showMessageDialog(null, "Errorea ariketa ID-ak lortzean...", "Errorea",
 							JOptionPane.ERROR_MESSAGE);
 				}
-				AriketakView ariketak = new AriketakView(workoutChoose);
+				KronometroNagusia kronometro = new KronometroNagusia();
+				AriketakView ariketak = new AriketakView(workoutChoose, kronometro);
 				ariketak.setVisible(true);
 			}
 		});
