@@ -63,7 +63,7 @@ public class AriketakView extends JFrame {
 		
 		JLabel lblKronometroNagusia = new JLabel("Crono princip");
 		lblKronometroNagusia.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		lblKronometroNagusia.setBounds(90, 91, 107, 29);
+		lblKronometroNagusia.setBounds(88, 152, 114, 29);
 		panel.add(lblKronometroNagusia);
 		
 		JButton btnNireProfila = new JButton("");
@@ -94,25 +94,24 @@ public class AriketakView extends JFrame {
 		btnLogout.setBounds(942, 11, 33, 35);
 		panel.add(btnLogout);
 		
-		JLabel lblHeader = new JLabel("");	
-		lblHeader.setHorizontalAlignment(SwingConstants.CENTER);
-		lblHeader.setForeground(Color.WHITE);
-		lblHeader.setFont(new Font("Segoe UI Black", Font.PLAIN, 30));
-		lblHeader.setBounds(0, 11, 984, 35);
-		panel.add(lblHeader);
+		JLabel lblAriketaHeader = new JLabel("");	
+		lblAriketaHeader.setHorizontalAlignment(SwingConstants.CENTER);
+		lblAriketaHeader.setForeground(Color.WHITE);
+		lblAriketaHeader.setFont(new Font("Segoe UI Black", Font.PLAIN, 30));
+		lblAriketaHeader.setBounds(0, 11, 984, 35);
+		panel.add(lblAriketaHeader);
 		
 		JLabel lblDeskrAriketa = new JLabel("");
 		lblDeskrAriketa.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDeskrAriketa.setForeground(Color.BLACK);
 		lblDeskrAriketa.setText("Ez dago deskribapenik.");
-		lblDeskrAriketa.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblDeskrAriketa.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblDeskrAriketa.setBounds(0, 51, 984, 29);
 		panel.add(lblDeskrAriketa);
 		
 		if (!ariketaList.isEmpty()) {
-			
 			ariketaActual = ariketaList.get(posAriketa);
-			lblHeader.setText(ariketaActual.getIzena());
+			lblAriketaHeader.setText("Ariketa: " + ariketaActual.getIzena());
 			lblDeskrAriketa.setText("Deskribapena: " + ariketaActual.getDeskribapena());
 		}
 		
@@ -131,6 +130,13 @@ public class AriketakView extends JFrame {
 		btnStart.setBackground(new Color(46, 139, 87));
 		btnStart.setBounds(526, 480, 170, 35);
 		panel.add(btnStart);
+		
+		JLabel lblLandutakoMuskulua = new JLabel("Landutako muskulua: " + ariketaActual.getLandutako_muskulua());
+		lblLandutakoMuskulua.setHorizontalAlignment(SwingConstants.CENTER);
+		lblLandutakoMuskulua.setForeground(Color.BLACK);
+		lblLandutakoMuskulua.setFont(new Font("Trebuchet MS", Font.PLAIN, 17));
+		lblLandutakoMuskulua.setBounds(0, 111, 984, 22);
+		panel.add(lblLandutakoMuskulua);
 		
 		// LISTENERS
 		
