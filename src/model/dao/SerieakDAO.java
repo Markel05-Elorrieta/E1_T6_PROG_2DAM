@@ -17,8 +17,8 @@ import resources.GlobalVariables;
 public class SerieakDAO {
 	private DbConexion dbConexion = new DbConexion();
 	private Firestore db;
-	
-	public ArrayList<Serie> getSerieByAriketaId(String ariketaID) throws Exception {
+
+	public ArrayList<Serie> getSerieByAriketaId(ArrayList<String> serieID) throws Exception {
 		if (!GlobalVariables.isConnexion) {
 			// AriketakOffline ariketakOff = new AriketakOffline();
 			// return workoutsOff.getAriketak(Workout workout);
@@ -28,21 +28,20 @@ public class SerieakDAO {
 		db = dbConexion.getConnection();
 		try {
 			
-				ApiFuture<QuerySnapshot> query = db.collection("serieak")
-						.whereEqualTo(FieldPath.documentId(), ariketaID).get();
-		
+			for (int i = 0; i < serieID.size(); i++) {
+				ApiFuture<QuerySnapshot> query = db.collection("serieak").whereEqualTo(FieldPath.documentId(), serieID.get(i)).get();
+
 				QuerySnapshot querySnapshot = query.get();
-				for (QueryDocumentSnapshot document : querySnapshot.getDocuments()) {
+				QueryDocumentSnapshot document = querySnapshot.getDocuments().get(0);
+				
 					String izena = document.getString("izena");
 					int iraupena = document.getLong("denbora").intValue();
 					int repetizioak = document.getLong("repes").intValue();
 
 					Serie serie = new Serie(izena, iraupena, repetizioak);
 					ariketaList.add(serie);
-				}
+			}
 
-			
-		
 			dbConexion.closeConnection(db);
 			return ariketaList;
 		} catch (Exception e) {

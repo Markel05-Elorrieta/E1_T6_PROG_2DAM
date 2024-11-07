@@ -23,14 +23,20 @@ import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.SystemColor;
+import javax.swing.border.LineBorder;
 
-public class AriketakView extends JFrame{
+import com.google.api.services.youtube.YouTube.Comments.MarkAsSpam;
+
+public class AriketakView extends JFrame {
 
 	public static final long serialVersionUID = 1L;
 	public AriketakDAO ariketakDAO = new AriketakDAO();
 	public ArrayList<Ariketa> ariketaList = new ArrayList<Ariketa>();
 	public Ariketa ariketaActual;
 	public int posAriketa = 0;
+	public int posSerieHurrengoa = 1;
+	public int posSerie = 0;
 	public JLabel lblAriketaHeader = new JLabel();
 	public JLabel lblDeskrAriketa = new JLabel();
 	public JLabel lblLandutakoMuskulua = new JLabel();
@@ -39,14 +45,11 @@ public class AriketakView extends JFrame{
 	public JLabel lblSerieName = new JLabel();
 	public JLabel lblSerieRepes = new JLabel();
 	public JButton btnHurrengoSerie = new JButton("Hurrengo serie");
-	
+
 	public KronometroNagusia kronometroNagusia;
-	
-	
+
 	/* ----------------- */
 
-	
-	
 	/**
 	 * Create the frame.
 	 */
@@ -56,22 +59,25 @@ public class AriketakView extends JFrame{
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Ezin izan dira ariketak kargatu. Barkatu eragozpenak.");
 		}
-		
+
 		AriketakView thisClass = this;
 		kronometroNagusia = paramKrono;
-		
-		setTitle(selectedWorkout.getIzena() + " - JEM Fit · Erabiltzailea: " + GlobalVariables.loggedUser.getUsername());
+
+		setTitle(
+				selectedWorkout.getIzena() + " - JEM Fit · Erabiltzailea: " + GlobalVariables.loggedUser.getUsername());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(GlobalVariables.WINDOW_X, GlobalVariables.WINDOW_Y, GlobalVariables.WINDOW_WIDTH, GlobalVariables.WINDOW_HEIGHT);
+		setBounds(GlobalVariables.WINDOW_X, GlobalVariables.WINDOW_Y, GlobalVariables.WINDOW_WIDTH,
+				GlobalVariables.WINDOW_HEIGHT);
 		setResizable(false);
-		Image resizedIconImage = new ImageIcon(getClass().getResource("/resources/images/logo.png")).getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH);
+		Image resizedIconImage = new ImageIcon(getClass().getResource("/resources/images/logo.png")).getImage()
+				.getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH);
 		setIconImage(resizedIconImage);
-		
+
 		BackgroundImageView panel = new BackgroundImageView();
 		setContentPane(panel);
 		panel.setLayout(null);
 		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		
+
 		JButton btnAmaitu = new JButton("⏹️ Amaitu");
 		btnAmaitu.setVerticalAlignment(SwingConstants.BOTTOM);
 		btnAmaitu.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -79,14 +85,18 @@ public class AriketakView extends JFrame{
 		btnAmaitu.setFont(new Font("Segoe UI Emoji", Font.BOLD, 20));
 		btnAmaitu.setFocusPainted(false);
 		btnAmaitu.setBackground(Color.RED);
-		btnAmaitu.setBounds(327, 480, 170, 35);
+		btnAmaitu.setBounds(308, 480, 170, 35);
 		panel.add(btnAmaitu);
 		
-
-		lblKronometroNagusia.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		lblKronometroNagusia.setBounds(88, 152, 114, 29);
+		lblKronometroNagusia.setHorizontalAlignment(SwingConstants.CENTER);
+		lblKronometroNagusia.setBorder(new LineBorder(Color.WHITE, 2));
+		lblKronometroNagusia.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblKronometroNagusia.setBounds(65, 73, 128, 29);
+		lblKronometroNagusia.setOpaque(true);
+		lblKronometroNagusia.setBackground(Color.WHITE);
+		lblKronometroNagusia.setVisible(false);
 		panel.add(lblKronometroNagusia);
-		
+
 		JButton btnNireProfila = new JButton("");
 		btnNireProfila.setToolTipText("Kaixo, " + GlobalVariables.loggedUser.getName() + "!");
 		btnNireProfila.setFont(new Font("Tahoma", Font.PLAIN, 6));
@@ -100,7 +110,7 @@ public class AriketakView extends JFrame{
 		Image resizedImage = originalImage.getScaledInstance(buttonWidth, buttonHeight, java.awt.Image.SCALE_SMOOTH);
 		btnNireProfila.setIcon(new ImageIcon(resizedImage));
 		panel.add(btnNireProfila);
-		
+
 		JButton btnLogout = new JButton("");
 		btnLogout.setToolTipText("Logout...");
 		btnLogout.setForeground(Color.WHITE);
@@ -114,92 +124,107 @@ public class AriketakView extends JFrame{
 		btnLogout.setFocusPainted(false);
 		btnLogout.setBounds(942, 11, 33, 35);
 		panel.add(btnLogout);
-		
-			
+
 		lblAriketaHeader.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAriketaHeader.setForeground(Color.WHITE);
 		lblAriketaHeader.setFont(new Font("Segoe UI Black", Font.PLAIN, 30));
 		lblAriketaHeader.setBounds(0, 11, 984, 35);
 		panel.add(lblAriketaHeader);
-		
-		
+
 		lblDeskrAriketa.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDeskrAriketa.setForeground(Color.BLACK);
 		lblDeskrAriketa.setText("Ez dago deskribapenik.");
 		lblDeskrAriketa.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblDeskrAriketa.setBounds(0, 51, 984, 29);
 		panel.add(lblDeskrAriketa);
-		
+
 		if (!ariketaList.isEmpty()) {
 			ariketaActual = ariketaList.get(posAriketa);
 			lblAriketaHeader.setText("Ariketa: " + ariketaActual.getIzena());
 			lblDeskrAriketa.setText("Deskribapena: " + ariketaActual.getDeskribapena());
 			lblLandutakoMuskulua.setText("Landutako muskulua: " + ariketaActual.getLandutako_muskulua());
 		}
-		
+
 		JLabel lblWorkouta = new JLabel("Workout-a: " + selectedWorkout.getIzena());
 		lblWorkouta.setHorizontalAlignment(SwingConstants.CENTER);
 		lblWorkouta.setForeground(Color.BLACK);
 		lblWorkouta.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		lblWorkouta.setBounds(0, 80, 984, 22);
 		panel.add(lblWorkouta);
-		
+
 		JButton btnStart = new JButton("▶️ Hasi");
 		btnStart.setVerticalAlignment(SwingConstants.BOTTOM);
 		btnStart.setForeground(Color.WHITE);
 		btnStart.setFont(new Font("Segoe UI Emoji", Font.BOLD, 20));
 		btnStart.setFocusPainted(false);
 		btnStart.setBackground(new Color(46, 139, 87));
-		btnStart.setBounds(526, 480, 170, 35);
+		btnStart.setBounds(507, 480, 170, 35);
 		panel.add(btnStart);
-		
-		JButton btnStop = new JButton("⏸️ Pause");
-		btnStop.setVerticalAlignment(SwingConstants.BOTTOM);
-		btnStop.setForeground(Color.WHITE);
-		btnStop.setFont(new Font("Segoe UI Emoji", Font.BOLD, 20));
-		btnStop.setFocusPainted(false);
-		btnStop.setBackground(new Color(46, 139, 87));
-		btnStop.setBounds(526, 480, 170, 35);
-		btnStop.setVisible(false);
-		panel.add(btnStop);
-		
-		
+
+		JButton btnPause = new JButton("⏸️ Pause");
+		btnPause.setVerticalAlignment(SwingConstants.BOTTOM);
+		btnPause.setForeground(Color.WHITE);
+		btnPause.setFont(new Font("Segoe UI Emoji", Font.BOLD, 20));
+		btnPause.setFocusPainted(false);
+		btnPause.setBackground(new Color(46, 139, 87));
+		btnPause.setBounds(507, 480, 170, 35);
+		btnPause.setVisible(false);
+		panel.add(btnPause);
+
 		lblLandutakoMuskulua.setHorizontalAlignment(SwingConstants.CENTER);
 		lblLandutakoMuskulua.setForeground(Color.BLACK);
 		lblLandutakoMuskulua.setFont(new Font("Trebuchet MS", Font.PLAIN, 17));
 		lblLandutakoMuskulua.setBounds(0, 111, 984, 22);
 		panel.add(lblLandutakoMuskulua);
-		
-	
-		
-	
-		lblKronometroAriketa.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		lblKronometroAriketa.setBounds(88, 205, 114, 29);
+		lblKronometroAriketa.setHorizontalAlignment(SwingConstants.CENTER);
+
+		lblKronometroAriketa.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblKronometroAriketa.setOpaque(true);
+		lblKronometroAriketa.setVisible(false);
+		lblKronometroAriketa.setBackground(Color.WHITE);
+		lblKronometroAriketa.setBounds(426, 349, 134, 29);
 		panel.add(lblKronometroAriketa);
-		
-		
+		lblSerieName.setFont(new Font("Tw Cen MT", Font.BOLD, 25));
+
 		lblSerieName.setHorizontalAlignment(SwingConstants.CENTER);
-		lblSerieName.setBounds(403, 232, 201, 14);
+		lblSerieName.setBounds(0, 181, 984, 35);
 		panel.add(lblSerieName);
-		
-		
+		lblSerieRepes.setFont(new Font("Verdana", Font.PLAIN, 19));
+
 		lblSerieRepes.setHorizontalAlignment(SwingConstants.CENTER);
-		lblSerieRepes.setBounds(403, 283, 201, 14);
+		lblSerieRepes.setBounds(0, 227, 984, 35);
 		panel.add(lblSerieRepes);
-		
-		JButton btnHurrengoSerie = new JButton("Hurrengo serie");
-		btnHurrengoSerie.setBounds(441, 428, 149, 23);
+
+		JButton btnHurrengoSerie = new JButton("➡️ Hurrengo seriea");
+		btnHurrengoSerie.setForeground(Color.WHITE);
+		btnHurrengoSerie.setVerticalAlignment(SwingConstants.BOTTOM);
+		btnHurrengoSerie.setHorizontalAlignment(SwingConstants.RIGHT);
+		btnHurrengoSerie.setFont(new Font("Segoe UI Emoji", Font.BOLD, 20));
+		btnHurrengoSerie.setBackground(SystemColor.textHighlight);
+		btnHurrengoSerie.setFocusPainted(false);
+		btnHurrengoSerie.setBounds(369, 434, 251, 35);
 		btnHurrengoSerie.setVisible(false);
 		panel.add(btnHurrengoSerie);
+		
+		JLabel lblKronoNagHeader = new JLabel("Workoutaren kronometroa");
+		lblKronoNagHeader.setHorizontalAlignment(SwingConstants.LEFT);
+		lblKronoNagHeader.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		lblKronoNagHeader.setBounds(65, 54, 186, 14);
+		lblKronoNagHeader.setVisible(false);
+		panel.add(lblKronoNagHeader);
+		
+		JLabel lblKronoArikHeader = new JLabel("Ariketaren kronometroa");
+		lblKronoArikHeader.setHorizontalAlignment(SwingConstants.CENTER);
+		lblKronoArikHeader.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		lblKronoArikHeader.setVisible(false);
+		lblKronoArikHeader.setBounds(426, 330, 134, 14);
+		panel.add(lblKronoArikHeader);
+		
 		KronometroAriketak ka = new KronometroAriketak(thisClass);
 		KronometroSerie ks = new KronometroSerie(thisClass);
 		
-		
-		
-		
-		
 		// LISTENERS
-		
+
 		btnAmaitu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				kronometroNagusia.stopCrono();
@@ -208,39 +233,72 @@ public class AriketakView extends JFrame{
 				workoutsView.setVisible(true);
 			}
 		});
-		
+
 		btnStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			
 				if (ka.isAlive()) {
+					kronometroNagusia.startRunning();
 					ka.startRunning();
-					
 				} else {
 					ka.start();
 					kronometroNagusia.updateLbl(lblKronometroNagusia);
 					ks.start();
 					btnHurrengoSerie.setVisible(true);
-					
-					
 				}
-				
-				
-		
-			btnStart.setVisible(false);
-			btnStop.setVisible(true);
-				
+
+				lblKronoNagHeader.setVisible(true);
+				lblKronometroNagusia.setVisible(true);
+				lblKronometroAriketa.setVisible(true);
+				lblKronoArikHeader.setVisible(true);
+				btnStart.setVisible(false);
+				btnPause.setVisible(true);
 			}
 		});
-		
-		btnStop.addActionListener(new ActionListener() {
+
+		btnPause.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			ka.stopRunning();
-			kronometroNagusia.stopRunning();
-			btnStart.setVisible(true);
-			btnStop.setVisible(false);
-			
-			
-				
+				ka.stopRunning();
+				kronometroNagusia.stopRunning();
+				btnStart.setVisible(true);
+				btnPause.setVisible(false);
+			}
+		});
+
+		btnHurrengoSerie.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (posSerieHurrengoa < ariketaActual.getSeries().size()) {
+					lblSerieName.setText("Seriea: " + ariketaActual.getSeries().get(posSerieHurrengoa).getIzena());
+					lblSerieRepes.setText("Repetizioak: " + String.valueOf(ariketaActual.getSeries().get(posSerieHurrengoa).getRepetizioak()));
+					ks.resetCrono();
+					posSerieHurrengoa++;
+				} else {
+					lblSerieName.setText("");
+					lblSerieRepes.setFont(new Font("Tahoma", Font.PLAIN, 17));
+					lblSerieRepes.setText("SERIEAK AMAITUTA");
+					ks.stopCrono();
+					ka.resetCrono();
+					ka.stopCrono();
+					posAriketa++;
+					posSerieHurrengoa = 0;
+					btnHurrengoSerie.setVisible(false);
+					if (posAriketa < ariketaList.size()) {
+						btnPause.setVisible(false);
+						btnStart.setVisible(true);
+						
+						ariketaActual = ariketaList.get(posAriketa);
+						lblAriketaHeader.setText("Ariketa: " + ariketaActual.getIzena());
+						lblDeskrAriketa.setText("Deskribapena: " + ariketaActual.getDeskribapena());
+						lblLandutakoMuskulua.setText("Landutako muskulua: " + ariketaActual.getLandutako_muskulua());
+						
+					} else {
+						JOptionPane.showMessageDialog(null, "Ariketa guztia bukatu da", "Ariketa bukatua",
+								JOptionPane.INFORMATION_MESSAGE);
+						kronometroNagusia.stopCrono();
+						ka.stopCrono();
+						WorkoutsView workoutsView = new WorkoutsView();
+						workoutsView.setVisible(true);
+					}	
+				}
 			}
 		});
 	}

@@ -40,10 +40,9 @@ public class AriketakDAO {
 				String deskribapena = document.getString("deskribapena");
 				String video_url = document.getString("video_url");
 				String landu_muskulua = document.getString("landutako_muskulua");
-				ArrayList<Serie> series = serieakDAO.getSerieByAriketaId(workout.getAriketasID().get(i));
+				ArrayList<String> seriesId = (ArrayList<String>) document.get("serieak");
+				ArrayList<Serie> series = serieakDAO.getSerieByAriketaId(seriesId);
 				
-	
-
 				Ariketa ariketa = new Ariketa(workout.getAriketasID().get(i), izena, deskribapena, landu_muskulua, iraupena, video_url, series);
 				ariketaList.add(ariketa);
 			}

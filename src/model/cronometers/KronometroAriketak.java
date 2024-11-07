@@ -33,7 +33,7 @@ public class KronometroAriketak extends Thread {
 					actualTime++;
 					if (segundoa == 60) {
 						minutua++;
-						segundoa = 0;
+						segundoa = 00;
 					}
 					frame.lblKronometroAriketa.setText(minutua + ":" + segundoa);
 
@@ -71,9 +71,9 @@ public class KronometroAriketak extends Thread {
 	}
 
 	public void resetCrono() {
-		actualTime = 0;
-		minutua = 0;
-		segundoa = 0;
+		actualTime = 00;
+		minutua = 00;
+		segundoa = 00;
 		
 	}
 
@@ -108,10 +108,10 @@ public class KronometroAriketak extends Thread {
 		frame.posAriketa++;
 		try {
 			frame.ariketaActual = frame.ariketaList.get(frame.posAriketa);
-			frame.lblAriketaHeader.setText(frame.ariketaActual.getIzena());
-			frame.lblDeskrAriketa.setText(frame.ariketaActual.getDeskribapena());
-			frame.lblLandutakoMuskulua.setText(frame.ariketaActual.getLandutako_muskulua());
-			frame.lblKronometroAriketa.setText("0:0");
+			frame.lblAriketaHeader.setText("Ariketa: " + frame.ariketaActual.getIzena());
+			frame.lblDeskrAriketa.setText("Deskribapena: " + frame.ariketaActual.getDeskribapena());
+			frame.lblLandutakoMuskulua.setText("Landutako muskulua: " + frame.ariketaActual.getLandutako_muskulua());
+			frame.lblKronometroAriketa.setText("00:00");
 			this.resetCrono();
 		} catch (IndexOutOfBoundsException e) {
 			/* llamar a mi amiga la db */

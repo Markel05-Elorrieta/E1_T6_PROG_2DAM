@@ -8,37 +8,20 @@ import javax.swing.JLabel;
 import view.AriketakView;
 
 public class KronometroSerie extends Thread {
-	
+
 	private int minutua = 0;
 	private int segundoa = 0;
 	private boolean stop = false;
 	private int posSerie = 0;
-	
+
 	private boolean isRunning = true;
 	private AriketakView frame;
-	
-	public KronometroSerie(AriketakView frame ) {
-		this.frame = frame;
-        frame.lblSerieName.setText(frame.ariketaActual.getSeries().get(posSerie).getIzena());
-        frame.lblSerieRepes.setText(String.valueOf(frame.ariketaActual.getSeries().get(posSerie).getRepetizioak()));
-		frame.btnHurrengoSerie.addActionListener(new ActionListener() {
-	        public void actionPerformed(ActionEvent e) {
-	            if (posSerie < frame.ariketaActual.getSeries().size()) {
-	            	System.out.println("hola");
-	                posSerie++;
-	                frame.lblSerieName.setText(frame.ariketaActual.getSeries().get(posSerie).getIzena());
-	                frame.lblSerieRepes.setText(String.valueOf(frame.ariketaActual.getSeries().get(posSerie).getRepetizioak()));
-	                resetCrono();
-	            } else {
-	                frame.lblSerieName.setText("AMAITUTA");
-	                frame.lblSerieRepes.setText("AMAITUTA");
-	                stopCrono();
-	            }
-	        }
-	    });
 
+	public KronometroSerie(AriketakView frame) {
+		this.frame = frame;
+		frame.lblSerieName.setText("Seriea: " + frame.ariketaActual.getSeries().get(posSerie).getIzena());
+		frame.lblSerieRepes.setText("Repetizioak: " + String.valueOf(frame.ariketaActual.getSeries().get(posSerie).getRepetizioak()));
 	}
-	
 
 	public void run() {
 		try {
@@ -53,7 +36,7 @@ public class KronometroSerie extends Thread {
 
 				}
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -70,11 +53,10 @@ public class KronometroSerie extends Thread {
 	public void stopRunning() {
 		isRunning = false;
 	}
-	
+
 	public void startRunning() {
 		isRunning = true;
 	}
-	
 
 	public boolean isRunning() {
 		return isRunning;
@@ -83,7 +65,7 @@ public class KronometroSerie extends Thread {
 	public void setRunning(boolean isRunning) {
 		this.isRunning = isRunning;
 	}
-	
+
 	public void resetCrono() {
 
 		minutua = 0;
@@ -98,7 +80,6 @@ public class KronometroSerie extends Thread {
 		return segundoa;
 	}
 
-
 	public void setMinutua(int minutua) {
 		this.minutua = minutua;
 	}
@@ -111,6 +92,5 @@ public class KronometroSerie extends Thread {
 		this.minutua = minutua;
 		this.segundoa = segundoa;
 	}
-	
 
 }
