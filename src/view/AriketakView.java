@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 
 import model.cronometers.KronometroAriketak;
 import model.cronometers.KronometroNagusia;
+import model.cronometers.KronometroSerie;
 import model.dao.AriketakDAO;
 import model.objects.Ariketa;
 import model.objects.Workout;
@@ -35,7 +36,11 @@ public class AriketakView extends JFrame{
 	public JLabel lblLandutakoMuskulua = new JLabel();
 	JLabel lblKronometroNagusia = new JLabel();
 	public JLabel lblKronometroAriketa = new JLabel();
+	public JLabel lblSerieName = new JLabel();
+	public JLabel lblSerieRepes = new JLabel();
+	public JButton btnHurrengoSerie = new JButton("Hurrengo serie");
 	
+	public KronometroNagusia kronometroNagusia;
 	
 	
 	/* ----------------- */
@@ -45,14 +50,15 @@ public class AriketakView extends JFrame{
 	/**
 	 * Create the frame.
 	 */
-	public AriketakView(Workout selectedWorkout, KronometroNagusia kronometroNagusia) {
+	public AriketakView(Workout selectedWorkout, KronometroNagusia paramKrono) {
 		try {
-			ariketaList = ariketakDAO.getAriketak(selectedWorkout);
+			ariketaList = ariketakDAO.getAriketakByWorkoutId(selectedWorkout);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Ezin izan dira ariketak kargatu. Barkatu eragozpenak.");
 		}
 		
 		AriketakView thisClass = this;
+		kronometroNagusia = paramKrono;
 		
 		setTitle(selectedWorkout.getIzena() + " - JEM Fit · Erabiltzailea: " + GlobalVariables.loggedUser.getUsername());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -147,6 +153,16 @@ public class AriketakView extends JFrame{
 		btnStart.setBounds(526, 480, 170, 35);
 		panel.add(btnStart);
 		
+		JButton btnStop = new JButton("⏸️ Pause");
+		btnStop.setVerticalAlignment(SwingConstants.BOTTOM);
+		btnStop.setForeground(Color.WHITE);
+		btnStop.setFont(new Font("Segoe UI Emoji", Font.BOLD, 20));
+		btnStop.setFocusPainted(false);
+		btnStop.setBackground(new Color(46, 139, 87));
+		btnStop.setBounds(526, 480, 170, 35);
+		btnStop.setVisible(false);
+		panel.add(btnStop);
+		
 		
 		lblLandutakoMuskulua.setHorizontalAlignment(SwingConstants.CENTER);
 		lblLandutakoMuskulua.setForeground(Color.BLACK);
@@ -161,7 +177,23 @@ public class AriketakView extends JFrame{
 		lblKronometroAriketa.setBounds(88, 205, 114, 29);
 		panel.add(lblKronometroAriketa);
 		
-		kronometroNagusia.updateLbl(lblKronometroNagusia);
+		
+		lblSerieName.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSerieName.setBounds(403, 232, 201, 14);
+		panel.add(lblSerieName);
+		
+		
+		lblSerieRepes.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSerieRepes.setBounds(403, 283, 201, 14);
+		panel.add(lblSerieRepes);
+		
+		JButton btnHurrengoSerie = new JButton("Hurrengo serie");
+		btnHurrengoSerie.setBounds(441, 428, 149, 23);
+		btnHurrengoSerie.setVisible(false);
+		panel.add(btnHurrengoSerie);
+		KronometroAriketak ka = new KronometroAriketak(thisClass);
+		KronometroSerie ks = new KronometroSerie(thisClass);
+		
 		
 		
 		
@@ -170,6 +202,7 @@ public class AriketakView extends JFrame{
 		
 		btnAmaitu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				kronometroNagusia.stopCrono();
 				dispose();
 				WorkoutsView workoutsView = new WorkoutsView();
 				workoutsView.setVisible(true);
@@ -178,13 +211,37 @@ public class AriketakView extends JFrame{
 		
 		btnStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-		     
-			KronometroAriketak ka = new KronometroAriketak(thisClass);
+			
+				if (ka.isAlive()) {
+					ka.startRunning();
+					
+				} else {
+					ka.start();
+					kronometroNagusia.updateLbl(lblKronometroNagusia);
+					ks.start();
+					btnHurrengoSerie.setVisible(true);
+					
+					
+				}
+				
+				
+		
+			btnStart.setVisible(false);
+			btnStop.setVisible(true);
+				
+			}
+		});
+		
+		btnStop.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			ka.stopRunning();
+			kronometroNagusia.stopRunning();
+			btnStart.setVisible(true);
+			btnStop.setVisible(false);
+			
 			
 				
 			}
 		});
 	}
-	
-   
 }

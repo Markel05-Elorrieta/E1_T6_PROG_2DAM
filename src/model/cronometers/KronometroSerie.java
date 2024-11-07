@@ -1,28 +1,44 @@
 package model.cronometers;
 
-import javax.swing.JFrame;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 
 import view.AriketakView;
-import view.WorkoutsView;
 
-public class KronometroAriketak extends Thread {
+public class KronometroSerie extends Thread {
 	
 	private int minutua = 0;
 	private int segundoa = 0;
 	private boolean stop = false;
-	private int actualTime = 0;
+	private int posSerie = 0;
+	
 	private boolean isRunning = true;
-	
-	
-
-	
 	private AriketakView frame;
 	
-	public KronometroAriketak(AriketakView frame) {
+	public KronometroSerie(AriketakView frame ) {
 		this.frame = frame;
+        frame.lblSerieName.setText(frame.ariketaActual.getSeries().get(posSerie).getIzena());
+        frame.lblSerieRepes.setText(String.valueOf(frame.ariketaActual.getSeries().get(posSerie).getRepetizioak()));
+		frame.btnHurrengoSerie.addActionListener(new ActionListener() {
+	        public void actionPerformed(ActionEvent e) {
+	            if (posSerie < frame.ariketaActual.getSeries().size()) {
+	            	System.out.println("hola");
+	                posSerie++;
+	                frame.lblSerieName.setText(frame.ariketaActual.getSeries().get(posSerie).getIzena());
+	                frame.lblSerieRepes.setText(String.valueOf(frame.ariketaActual.getSeries().get(posSerie).getRepetizioak()));
+	                resetCrono();
+	            } else {
+	                frame.lblSerieName.setText("AMAITUTA");
+	                frame.lblSerieRepes.setText("AMAITUTA");
+	                stopCrono();
+	            }
+	        }
+	    });
+
 	}
+	
 
 	public void run() {
 		try {
@@ -30,16 +46,14 @@ public class KronometroAriketak extends Thread {
 				Thread.sleep(1000);
 				if (isRunning) {
 					segundoa++;
-					actualTime++;
 					if (segundoa == 60) {
 						minutua++;
 						segundoa = 0;
 					}
-					frame.lblKronometroAriketa.setText(minutua + ":" + segundoa);
 
 				}
-
 			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -52,7 +66,7 @@ public class KronometroAriketak extends Thread {
 	public void startCrono() {
 		stop = false;
 	}
-	
+
 	public void stopRunning() {
 		isRunning = false;
 	}
@@ -69,18 +83,12 @@ public class KronometroAriketak extends Thread {
 	public void setRunning(boolean isRunning) {
 		this.isRunning = isRunning;
 	}
-
+	
 	public void resetCrono() {
-		actualTime = 0;
+
 		minutua = 0;
 		segundoa = 0;
-		
 	}
-
-	public String getDenbora() {
-		return minutua + ":" + segundoa;
-	}
-
 
 	public int getMinutua() {
 		return minutua;
@@ -104,26 +112,5 @@ public class KronometroAriketak extends Thread {
 		this.segundoa = segundoa;
 	}
 	
-	private void updateFrame() {
-		frame.posAriketa++;
-		try {
-			frame.ariketaActual = frame.ariketaList.get(frame.posAriketa);
-			frame.lblAriketaHeader.setText(frame.ariketaActual.getIzena());
-			frame.lblDeskrAriketa.setText(frame.ariketaActual.getDeskribapena());
-			frame.lblLandutakoMuskulua.setText(frame.ariketaActual.getLandutako_muskulua());
-			frame.lblKronometroAriketa.setText("0:0");
-			this.resetCrono();
-		} catch (IndexOutOfBoundsException e) {
-			/* llamar a mi amiga la db */
-			frame.kronometroNagusia.stopCrono();
-			this.stopCrono();
-		    JOptionPane.showMessageDialog(null, "Ariketa guztia bukatu da", "Ariketa bukatua", JOptionPane.INFORMATION_MESSAGE);
-		    frame.dispose();
-		    WorkoutsView workoutsView = new WorkoutsView();
-		    workoutsView.setVisible(true);
-			
-		}
-		
-	}
 
 }

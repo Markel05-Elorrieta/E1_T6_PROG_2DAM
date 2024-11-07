@@ -10,6 +10,8 @@ public class KronometroNagusia extends Thread {
 	private boolean stop = false;
 	private JLabel lblDenbora;
 	
+	private boolean isRunning = true;
+	
 	public KronometroNagusia() {
 
 	}
@@ -27,16 +29,18 @@ public class KronometroNagusia extends Thread {
 		try {
 			while (stop == false) {
 				Thread.sleep(1000);
-				segundoa++;
-				if (segundoa == 60) {
-					minutua++;
-					segundoa = 0;
+				if (isRunning) {
+					segundoa++;
+					if (segundoa == 60) {
+						minutua++;
+						segundoa = 0;
+					}
+					if (minutua == 60) {
+						ordua++;
+						minutua = 0;
+					}
+					lblDenbora.setText(ordua + ":" + minutua + ":" + segundoa);
 				}
-				if (minutua == 60) {
-					ordua++;
-					minutua = 0;
-				}
-				lblDenbora.setText(ordua + ":" + minutua + ":" + segundoa);
 			}
 			
 		} catch (Exception e) {
@@ -52,6 +56,23 @@ public class KronometroNagusia extends Thread {
 		stop = false;
 	}
 
+	public void stopRunning() {
+		isRunning = false;
+	}
+	
+	public void startRunning() {
+		isRunning = true;
+	}
+	
+
+	public boolean isRunning() {
+		return isRunning;
+	}
+
+	public void setRunning(boolean isRunning) {
+		this.isRunning = isRunning;
+	}
+	
 	public void resetCrono() {
 		ordua = 0;
 		minutua = 0;
