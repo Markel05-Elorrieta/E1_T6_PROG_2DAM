@@ -211,11 +211,18 @@ public class ProfileView extends JFrame {
 		lblSubtitle.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		lblSubtitle.setBounds(0, 57, 984, 22);
 		panel.add(lblSubtitle);
+		
+		JButton btnWorkoutHistoriala = new JButton("Workout historiala");
+		btnWorkoutHistoriala.setForeground(Color.WHITE);
+		btnWorkoutHistoriala.setBackground(Color.RED);
+		btnWorkoutHistoriala.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		btnWorkoutHistoriala.setFocusPainted(false);
+		btnWorkoutHistoriala.setBounds(183, 413, 222, 35);
+		panel.add(btnWorkoutHistoriala);
 
 		// LISTENERS
 
 		// ATZERA BUTTON
-
 		btnAtzera.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				WorkoutsView workoutsView = new WorkoutsView();
@@ -238,13 +245,12 @@ public class ProfileView extends JFrame {
 
 						// Update img
 						Image originalImage = images.decode(newPhoto).getImage();
-						Image resizedImage = originalImage.getScaledInstance(60, 60, java.awt.Image.SCALE_SMOOTH);
+						Image resizedImage = originalImage.getScaledInstance(widthLabel, heightLabel, java.awt.Image.SCALE_SMOOTH);
 						profilePhoto.setIcon(new ImageIcon(resizedImage));
 					} else {
 						JOptionPane.showMessageDialog(null, "JPG edo PNG fitxategi bat igo!", "Error",
 								JOptionPane.INFORMATION_MESSAGE);
 					}
-
 				}
 			}
 		});
@@ -301,6 +307,15 @@ public class ProfileView extends JFrame {
 					JOptionPane.showMessageDialog(null, "Errorea egon da aldatzean!", "Errorea",
 							JOptionPane.ERROR_MESSAGE);
 				}
+			}
+		});
+		
+		// WORKOUT HISTORIALA BUTTON
+		btnWorkoutHistoriala.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				WorkoutHistorialaView workoutHistoriala = new WorkoutHistorialaView();
+				workoutHistoriala.setVisible(true);
+				dispose();
 			}
 		});
 	}

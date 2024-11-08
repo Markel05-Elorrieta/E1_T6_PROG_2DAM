@@ -1,6 +1,7 @@
 package model.cronometers;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 public class KronometroKontaketa extends Thread{
 	
@@ -28,9 +29,11 @@ public class KronometroKontaketa extends Thread{
 
 	public void run() {
 		try {
-			for (int i = 5; i >= 0; i--) {
-				
+			for (int i = 3; i >= 0; i--) {	
 				lblKrono.setText(i + "");
+				if (i == 0) {
+					lblKrono.setText("HASI!");
+				}
 				Thread.sleep(1000);
 			}
 			lblKrono.setVisible(false);
@@ -39,7 +42,7 @@ public class KronometroKontaketa extends Thread{
 			kronometroAriketa.startRunning();
 			kronometroSerie.startRunning();
 		} catch (InterruptedException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Errorea kronometroan", "Errorea", JOptionPane.ERROR_MESSAGE);
 		}
 		
 	}

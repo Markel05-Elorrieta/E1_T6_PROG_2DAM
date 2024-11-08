@@ -7,6 +7,7 @@ public class Workout {
 	private String izena;
 	private int maila;
 	private String video_url;
+	private int denboraTotala;
 	private int ariketaSize;
 	private ArrayList<String> ariketasID = null;
 	
@@ -18,10 +19,25 @@ public class Workout {
 		this.ariketaSize = ariketaSize;
 	}
 	
+	public Workout(String izena, int maila, int denboraTotala) {
+		this.izena = izena;
+		this.maila = maila;
+		this.denboraTotala = denboraTotala;
+	}
+	
 	public Workout() {
 		
 	}
 	
+	
+	public int getDenboraTotala() {
+		return denboraTotala;
+	}
+        		
+	public void setDenboraTotala(int denboraTotala) {
+		this.denboraTotala = denboraTotala;
+	}
+
 	public String getWorkoutID() {
 		return workoutID;
 	}

@@ -1,11 +1,10 @@
 package model.dao;
 
+import java.nio.file.spi.FileSystemProvider;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.CollectionReference;
 import com.google.cloud.firestore.FieldPath;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
@@ -95,6 +94,28 @@ public class WorkoutsDAO {
 
 			dbConexion.closeConnection(db);
 			return ariketasID;
+		} catch (Exception e) {
+			dbConexion.closeConnection(db);
+			throw new LostDbConnection();
+		}
+	}
+	
+	public Workout getWorkoutById(String id) throws Exception {
+		db = dbConexion.getConnection();
+		try {
+			// Query the workouts collection
+			ApiFuture<QuerySnapshot> query = db.collection("workouts")
+					.whereEqualTo(FieldPath.documentId(), id).get();
+			QuerySnapshot querySnapshot = query.get();
+			
+			QueryDocumentSnapshot document = querySnapshot.getDocuments().get(0);
+			String izena = document.getString("izena");
+			int maila = document.getLong("maila").intValue();
+			int denboraTotala = document.getLong("tiempo_previsto").intValue();
+			
+			Workout workout = new Workout(izena, maila, denboraTotala);
+			dbConexion.closeConnection(db);
+			return workout;
 		} catch (Exception e) {
 			dbConexion.closeConnection(db);
 			throw new LostDbConnection();

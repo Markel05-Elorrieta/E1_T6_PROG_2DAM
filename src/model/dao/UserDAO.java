@@ -53,7 +53,7 @@ public class UserDAO {
 			}
 			String st = (userDoc.get(0).getString("argazkia"));
 			// Create the User object with the data from the Firestore
-			GlobalVariables.loggedUser = new User(userDoc.get(0).getString("erabiltzailea"),
+			GlobalVariables.loggedUser = new User(userDoc.get(0).getId(), userDoc.get(0).getString("erabiltzailea"),
 					userDoc.get(0).getString("izena"), userDoc.get(0).getString("abizenak"), hashedPwd,
 					userDoc.get(0).getDate("jaiotze_data"), userDoc.get(0).getString("email"),
 					userDoc.get(0).getDouble("telefonoa").intValue(), userDoc.get(0).getDouble("maila").intValue(), st);
@@ -141,7 +141,7 @@ public class UserDAO {
 		ArrayList<User> userList = new ArrayList<User>();
 		// Create the User objects with the data from the Firestore
 		for (QueryDocumentSnapshot userDoc : userDocs) {
-			User user = new User(userDoc.getString("erabiltzailea"), userDoc.getString("izena"),
+			User user = new User(userDoc.getId() ,userDoc.getString("erabiltzailea"), userDoc.getString("izena"),
 					userDoc.getString("abizenak"), userDoc.getString("pasahitza"), userDoc.getDate("jaiotze_data"),
 					userDoc.getString("email"), userDoc.getDouble("telefonoa").intValue(),
 					userDoc.getDouble("maila").intValue(), userDoc.getString("argazkia")
