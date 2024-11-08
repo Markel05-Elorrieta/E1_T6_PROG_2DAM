@@ -1,5 +1,7 @@
 package controller;
 
+
+import model.cronometers.KronometroSerie;
 import model.metodoak.Backup;
 import view.LoginView;
 import view.ProfileView;
@@ -27,7 +29,7 @@ public class App {
 		
 		*/
 
-
+		
 
 	
 	}

@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.border.EmptyBorder;
 
 import model.cronometers.KronometroAriketak;
+import model.cronometers.KronometroKontaketa;
 import model.cronometers.KronometroNagusia;
 import model.cronometers.KronometroSerie;
 import model.dao.AriketakDAO;
@@ -35,7 +36,6 @@ public class AriketakView extends JFrame {
 	public ArrayList<Ariketa> ariketaList = new ArrayList<Ariketa>();
 	public Ariketa ariketaActual;
 	public int posAriketa = 0;
-	public int posSerieHurrengoa = 1;
 	public int posSerie = 0;
 	public JLabel lblAriketaHeader = new JLabel();
 	public JLabel lblDeskrAriketa = new JLabel();
@@ -143,6 +143,8 @@ public class AriketakView extends JFrame {
 			lblAriketaHeader.setText("Ariketa: " + ariketaActual.getIzena());
 			lblDeskrAriketa.setText("Deskribapena: " + ariketaActual.getDeskribapena());
 			lblLandutakoMuskulua.setText("Landutako muskulua: " + ariketaActual.getLandutako_muskulua());
+			lblSerieName.setText("Seriea: " + ariketaActual.getSeries().get(posSerie).getIzena());
+			lblSerieRepes.setText("Repetizioak: " + String.valueOf(ariketaActual.getSeries().get(posSerie).getRepetizioak()));
 		}
 
 		JLabel lblWorkouta = new JLabel("Workout-a: " + selectedWorkout.getIzena());
@@ -220,9 +222,17 @@ public class AriketakView extends JFrame {
 		lblKronoArikHeader.setBounds(426, 330, 134, 14);
 		panel.add(lblKronoArikHeader);
 		
-		KronometroAriketak ka = new KronometroAriketak(thisClass);
-		KronometroSerie ks = new KronometroSerie(thisClass);
+		JLabel lblKronoKontaketa = new JLabel("");
+		lblKronoKontaketa.setFont(new Font("Tahoma", Font.PLAIN, 50));
+		lblKronoKontaketa.setHorizontalAlignment(SwingConstants.CENTER);
+		lblKronoKontaketa.setBounds(426, 190, 134, 60);
+		lblKronoKontaketa.setVisible(false);
+		panel.add(lblKronoKontaketa);
 		
+		KronometroAriketak ka = new KronometroAriketak(thisClass);
+		KronometroSerie ks = new KronometroSerie();
+		
+
 		// LISTENERS
 
 		btnAmaitu.addActionListener(new ActionListener() {
@@ -236,9 +246,12 @@ public class AriketakView extends JFrame {
 
 		btnStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if (posSerie == 0) {
+					KronometroKontaketa kk = new KronometroKontaketa(lblKronoKontaketa, lblSerieName, lblSerieRepes,ka, ks);
+				}
 				if (ka.isAlive()) {
 					kronometroNagusia.startRunning();
-					ka.startRunning();
+		
 				} else {
 					ka.start();
 					kronometroNagusia.updateLbl(lblKronometroNagusia);
@@ -252,6 +265,7 @@ public class AriketakView extends JFrame {
 				lblKronoArikHeader.setVisible(true);
 				btnStart.setVisible(false);
 				btnPause.setVisible(true);
+				btnHurrengoSerie.setVisible(true);
 			}
 		});
 
@@ -266,35 +280,46 @@ public class AriketakView extends JFrame {
 
 		btnHurrengoSerie.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (posSerieHurrengoa < ariketaActual.getSeries().size()) {
-					lblSerieName.setText("Seriea: " + ariketaActual.getSeries().get(posSerieHurrengoa).getIzena());
-					lblSerieRepes.setText("Repetizioak: " + String.valueOf(ariketaActual.getSeries().get(posSerieHurrengoa).getRepetizioak()));
+				posSerie++;
+				if (posSerie < ariketaActual.getSeries().size()) {
+					lblSerieName.setText("Seriea: " + ariketaActual.getSeries().get(posSerie).getIzena());
+					lblSerieRepes.setText("Repetizioak: " + String.valueOf(ariketaActual.getSeries().get(posSerie).getRepetizioak()));
+
 					ks.resetCrono();
-					posSerieHurrengoa++;
 				} else {
-					lblSerieName.setText("");
-					lblSerieRepes.setFont(new Font("Tahoma", Font.PLAIN, 17));
-					lblSerieRepes.setText("SERIEAK AMAITUTA");
-					ks.stopCrono();
+			
+					
+					ks.stopRunning();
+					ks.resetCrono();
 					ka.resetCrono();
-					ka.stopCrono();
+					ka.stopRunning();
+					JOptionPane.showMessageDialog(null, "Serie guztia bukatu da", "Serie bukatua",
+                            JOptionPane.INFORMATION_MESSAGE);
 					posAriketa++;
-					posSerieHurrengoa = 0;
-					btnHurrengoSerie.setVisible(false);
+					posSerie = 0;
+					
 					if (posAriketa < ariketaList.size()) {
 						btnPause.setVisible(false);
 						btnStart.setVisible(true);
 						
 						ariketaActual = ariketaList.get(posAriketa);
+						lblKronometroAriketa.setText("0:0");
 						lblAriketaHeader.setText("Ariketa: " + ariketaActual.getIzena());
 						lblDeskrAriketa.setText("Deskribapena: " + ariketaActual.getDeskribapena());
 						lblLandutakoMuskulua.setText("Landutako muskulua: " + ariketaActual.getLandutako_muskulua());
+						lblSerieName.setText("Seriea: " + ariketaActual.getSeries().get(posSerie).getIzena());
+						lblSerieRepes.setText("Repetizioak: " + String.valueOf(ariketaActual.getSeries().get(posSerie).getRepetizioak()));
+						btnHurrengoSerie.setVisible(false);
 						
 					} else {
 						JOptionPane.showMessageDialog(null, "Ariketa guztia bukatu da", "Ariketa bukatua",
 								JOptionPane.INFORMATION_MESSAGE);
+					
 						kronometroNagusia.stopCrono();
 						ka.stopCrono();
+						ks.stopCrono();
+						kronometroNagusia.stopCrono();
+						dispose();
 						WorkoutsView workoutsView = new WorkoutsView();
 						workoutsView.setVisible(true);
 					}	

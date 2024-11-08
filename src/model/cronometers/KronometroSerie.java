@@ -12,15 +12,12 @@ public class KronometroSerie extends Thread {
 	private int minutua = 0;
 	private int segundoa = 0;
 	private boolean stop = false;
-	private int posSerie = 0;
 
 	private boolean isRunning = true;
-	private AriketakView frame;
 
-	public KronometroSerie(AriketakView frame) {
-		this.frame = frame;
-		frame.lblSerieName.setText("Seriea: " + frame.ariketaActual.getSeries().get(posSerie).getIzena());
-		frame.lblSerieRepes.setText("Repetizioak: " + String.valueOf(frame.ariketaActual.getSeries().get(posSerie).getRepetizioak()));
+
+	public KronometroSerie() {
+		
 	}
 
 	public void run() {
@@ -36,7 +33,7 @@ public class KronometroSerie extends Thread {
 
 				}
 			}
-
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
