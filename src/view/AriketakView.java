@@ -247,14 +247,15 @@ public class AriketakView extends JFrame {
 		// START BOTOIA
 		btnStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (posSerie == 0) {
+				if (posSerie == 0 && ka.getSegundoa() == 0) {
 					KronometroKontaketa kk = new KronometroKontaketa(lblKronoKontaketa, lblSerieName, lblSerieRepes, ka,
 							ks);
 				}
 				if (ka.isAlive()) {
 					kronometroNagusia.startRunning();
-
+					ka.startRunning();
 				} else {
+					
 					ka.start();
 					kronometroNagusia.updateLbl(lblKronometroNagusia);
 					ks.start();
