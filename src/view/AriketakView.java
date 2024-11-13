@@ -327,5 +327,24 @@ public class AriketakView extends JFrame {
 				}
 			}
 		});
+		
+		// LOGOUT BOTOIA
+		btnLogout.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				GlobalVariables.loggedUser = null;
+				dispose();
+				LoginView login = new LoginView("");
+				login.setVisible(true);
+			}
+		});
+		
+		// NIRE PROFILA BOTOIA
+		btnNireProfila.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				ProfileView profile = new ProfileView();
+				profile.setVisible(true);
+			}
+		});
 	}
 }
