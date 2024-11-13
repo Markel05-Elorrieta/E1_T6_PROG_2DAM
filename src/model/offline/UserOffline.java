@@ -103,6 +103,7 @@ public class UserOffline {
 		}
 	}
 	
+	/*
 	public void updateUser(String newPassword) {
 		for (int i = 0; i < this.userList.size(); i++) {
 			if (this.userList.get(i).getUsername().equals(GlobalVariables.loggedUser.getUsername())) {	
@@ -133,6 +134,8 @@ public class UserOffline {
 			}
 		}
 	}
+	*/
+	
 	
 	
 }

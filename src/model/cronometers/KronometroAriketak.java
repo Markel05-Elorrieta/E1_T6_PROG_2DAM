@@ -104,26 +104,5 @@ public class KronometroAriketak extends Thread {
 		this.segundoa = segundoa;
 	}
 	
-	private void updateFrame() {
-		frame.posAriketa++;
-		try {
-			frame.ariketaActual = frame.ariketaList.get(frame.posAriketa);
-			frame.lblAriketaHeader.setText("Ariketa: " + frame.ariketaActual.getIzena());
-			frame.lblDeskrAriketa.setText("Deskribapena: " + frame.ariketaActual.getDeskribapena());
-			frame.lblLandutakoMuskulua.setText("Landutako muskulua: " + frame.ariketaActual.getLandutako_muskulua());
-			frame.lblKronometroAriketa.setText("00:00");
-			this.resetCrono();
-		} catch (IndexOutOfBoundsException e) {
-			/* llamar a mi amiga la db */
-			frame.kronometroNagusia.stopCrono();
-			this.stopCrono();
-		    JOptionPane.showMessageDialog(null, "Ariketa guztia bukatu da", "Ariketa bukatua", JOptionPane.INFORMATION_MESSAGE);
-		    frame.dispose();
-		    WorkoutsView workoutsView = new WorkoutsView();
-		    workoutsView.setVisible(true);
-			
-		}
-		
-	}
 
 }

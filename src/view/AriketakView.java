@@ -305,7 +305,7 @@ public class AriketakView extends JFrame {
 						btnPause.setVisible(false);
 						btnStart.setVisible(true);
 						ariketaActual = ariketaList.get(posAriketa);
-						lblKronometroAriketa.setText("0:0");
+						lblKronometroAriketa.setText("");
 						lblAriketaHeader.setText("Ariketa: " + ariketaActual.getIzena());
 						lblDeskrAriketa.setText("Deskribapena: " + ariketaActual.getDeskribapena());
 						lblLandutakoMuskulua.setText("Landutako muskulua: " + ariketaActual.getLandutako_muskulua());
@@ -314,12 +314,13 @@ public class AriketakView extends JFrame {
 								+ String.valueOf(ariketaActual.getSeries().get(posSerie).getRepetizioak()));
 						btnHurrengoSerie.setVisible(false);
 					} else {
-						JOptionPane.showMessageDialog(null, "'" + selectedWorkout.getIzena() + "' workout-aren ariketa guztiak bukatu dira! Workout menura bueltatuko zara.", "Ariketak bukatuta",
-								JOptionPane.INFORMATION_MESSAGE);
+						
 						kronometroNagusia.stopCrono();
 						ka.stopCrono();
 						ks.stopCrono();
-						kronometroNagusia.stopCrono();
+						// call db
+						JOptionPane.showMessageDialog(null, "'" + selectedWorkout.getIzena() + "' workout-aren ariketa guztiak bukatu dira! Workout menura bueltatuko zara.", "Ariketak bukatuta",
+								JOptionPane.INFORMATION_MESSAGE);
 						dispose();
 						WorkoutsView workoutsView = new WorkoutsView();
 						workoutsView.setVisible(true);
