@@ -176,7 +176,6 @@ public class UserDAO {
 		userDR.update("jaiotze_data", updateUser.getBirthdate());
 		userDR.update("email", updateUser.getEmail());
 		userDR.update("telefonoa", updateUser.getPhone());
-		userDR.update("maila", updateUser.getMaila());
 		userDR.update("argazkia", updateUser.getpPhoto());
 
 		// Update loggedUser
