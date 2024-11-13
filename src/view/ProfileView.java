@@ -225,9 +225,9 @@ public class ProfileView extends JFrame {
 		// ATZERA BUTTON
 		btnAtzera.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				dispose();
 				WorkoutsView workoutsView = new WorkoutsView();
 				workoutsView.setVisible(true);
-				dispose();
 			}
 		});
 

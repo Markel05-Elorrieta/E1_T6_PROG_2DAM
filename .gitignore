@@ -8,6 +8,3 @@ target/
 # Ignore specific files
 README.md
 /src/resources/JEM_private_key.json
-
-# Ignore backup files
-/src/resources/backup/*
